@@ -29,7 +29,7 @@ function setupMiddleware(app) {
 
     // Basic middleware
     app.use(express.json());
-    app.use(express.static(join(__dirname, '..', 'build')));
+    app.use(express.static(join(__dirname, '..', '..', 'build')));
     app.use(cors({
         origin: [
             'http://localhost:3000', 
@@ -48,7 +48,7 @@ function setupMiddleware(app) {
 
 function setupRouting(app) {
         // Routes
-        app.use('/', userRouter);
+        app.use('/api', userRouter);
 }
 
 // Setup process signal handlers
@@ -97,6 +97,10 @@ async function initialize() {
 
         setupRouting(app);
 
+        app.get('*', (req, res) => {
+            res.sendFile(path.join(__dirname, '..', '..', 'build', 'index.html'))
+        });
+
         // Start the server
         const server = app.listen(PORT, '0.0.0.0', () => {
             console.log(`Server listening at http://localhost:${PORT}`);
@@ -108,7 +112,7 @@ async function initialize() {
         // Initialize database and start stock updates
         await setUpDatabase(client);
 
-        await updateStockData()
+        //await updateStockData()
     } catch (error) {
         console.error('Failed to initialize server:', error);
         process.exit(1);
