@@ -31,10 +31,11 @@ function setupMiddleware(app) {
     app.use(express.json());
     app.use(express.static(join(__dirname, '..', 'build')));
     app.use(cors({
-        origin: ['http://localhost:3000', 
-		 'http://localhost:5000',
-		 'http://35.208.160.118',
-		 'http://kevinshaughnessy.ca'
+        origin: [
+            'http://localhost:3000', 
+            'http://localhost:5000',
+            'http://35.208.160.118',
+            'http://kevinshaughnessy.ca'
 		]
     }));
 
@@ -47,7 +48,7 @@ function setupMiddleware(app) {
 
 function setupRouting(app) {
         // Routes
-        app.use('/api/user', userRouter);
+        app.use('/', userRouter);
 }
 
 // Setup process signal handlers
