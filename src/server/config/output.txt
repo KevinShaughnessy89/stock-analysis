@@ -1,0 +1,2020 @@
+Current Mongosh Log ID:	67197eb79a0ce74b52fe6910
+Connecting to:		mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.2
+Using MongoDB:		8.0.1
+Using Mongosh:		2.3.2
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-10-23T13:54:46.286-06:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2024-10-23T13:54:48.263-06:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+   2024-10-23T13:54:48.263-06:00: For customers running the current memory allocator, we suggest changing the contents of the following sysfsFile
+   2024-10-23T13:54:48.263-06:00: For customers running the current memory allocator, we suggest changing the contents of the following sysfsFile
+   2024-10-23T13:54:48.263-06:00: We suggest setting the contents of sysfsFile to 0.
+   2024-10-23T13:54:48.263-06:00: We suggest setting swappiness to 0 or 1, as swapping can cause performance problems.
+------
+
+test> switched to db stock_db
+stock_db> ... ... {
+  timestamp: ISODate('2024-06-03T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 100.79,
+  open: 100.37,
+  low: 98.97,
+  _id: ObjectId('67197d4d421094bc739f346e'),
+  volume: 4508226,
+  close: 99.76
+}
+{
+  timestamp: ISODate('2024-06-03T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 366.495,
+  open: 363.51,
+  low: 360.79,
+  _id: ObjectId('67197d4e421094bc739f34d2'),
+  volume: 585658,
+  close: 366.4
+}
+{
+  timestamp: ISODate('2024-06-04T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 99.402,
+  open: 99,
+  low: 97.68,
+  _id: ObjectId('67197d4d421094bc739f346d'),
+  volume: 4988057,
+  close: 98.61
+}
+{
+  timestamp: ISODate('2024-06-04T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 369.49,
+  open: 366.19,
+  low: 365.235,
+  _id: ObjectId('67197d4e421094bc739f34d1'),
+  volume: 701561,
+  close: 369.22
+}
+{
+  timestamp: ISODate('2024-06-05T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 99.65,
+  open: 98.82,
+  low: 97.87,
+  _id: ObjectId('67197d4d421094bc739f346c'),
+  volume: 3115445,
+  close: 99.06
+}
+{
+  timestamp: ISODate('2024-06-05T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 372.01,
+  open: 371,
+  low: 365.27,
+  _id: ObjectId('67197d4e421094bc739f34d0'),
+  volume: 639975,
+  close: 370.65
+}
+{
+  timestamp: ISODate('2024-06-06T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 99.55,
+  open: 98.8,
+  low: 98.16,
+  _id: ObjectId('67197d4d421094bc739f346b'),
+  volume: 2509997,
+  close: 98.22
+}
+{
+  timestamp: ISODate('2024-06-06T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 370.8,
+  open: 370.8,
+  low: 367.18,
+  _id: ObjectId('67197d4e421094bc739f34cf'),
+  volume: 395703,
+  close: 370.47
+}
+{
+  timestamp: ISODate('2024-06-07T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 101.96,
+  open: 99.51,
+  low: 98.4,
+  _id: ObjectId('67197d4d421094bc739f346a'),
+  volume: 5636659,
+  close: 100.86
+}
+{
+  timestamp: ISODate('2024-06-07T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 373.75,
+  open: 370.72,
+  low: 369.91,
+  _id: ObjectId('67197d4e421094bc739f34ce'),
+  volume: 400032,
+  close: 371.06
+}
+{
+  timestamp: ISODate('2024-06-10T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 101.84,
+  open: 100.43,
+  low: 100.28,
+  _id: ObjectId('67197d4d421094bc739f3469'),
+  volume: 3507587,
+  close: 100.66
+}
+{
+  timestamp: ISODate('2024-06-10T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 373.97,
+  open: 370.69,
+  low: 370,
+  _id: ObjectId('67197d4e421094bc739f34cd'),
+  volume: 582748,
+  close: 373.8
+}
+{
+  timestamp: ISODate('2024-06-11T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 101.47,
+  open: 100.1,
+  low: 99.225,
+  _id: ObjectId('67197d4d421094bc739f3468'),
+  volume: 2831634,
+  close: 101.32
+}
+{
+  timestamp: ISODate('2024-06-11T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 377.04,
+  open: 373.57,
+  low: 371.61,
+  _id: ObjectId('67197d4e421094bc739f34cc'),
+  volume: 668186,
+  close: 376.9
+}
+{
+  timestamp: ISODate('2024-06-12T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 103.68,
+  open: 102.62,
+  low: 100.76,
+  _id: ObjectId('67197d4d421094bc739f3467'),
+  volume: 3704729,
+  close: 101.21
+}
+{
+  timestamp: ISODate('2024-06-12T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 380.79,
+  open: 379.99,
+  low: 377.3,
+  _id: ObjectId('67197d4e421094bc739f34cb'),
+  volume: 679792,
+  close: 379.35
+}
+{
+  timestamp: ISODate('2024-06-13T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 102.8,
+  open: 102.02,
+  low: 100.74,
+  _id: ObjectId('67197d4d421094bc739f3466'),
+  volume: 5034653,
+  close: 101.54
+}
+{
+  timestamp: ISODate('2024-06-13T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 381.6,
+  open: 378.81,
+  low: 373.225,
+  _id: ObjectId('67197d4e421094bc739f34ca'),
+  volume: 573637,
+  close: 376.71
+}
+{
+  timestamp: ISODate('2024-06-14T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 101.42,
+  open: 100.5,
+  low: 99.305,
+  _id: ObjectId('67197d4d421094bc739f3465'),
+  volume: 2685142,
+  close: 100.9
+}
+{
+  timestamp: ISODate('2024-06-14T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 376.055,
+  open: 370.76,
+  low: 370,
+  _id: ObjectId('67197d4e421094bc739f34c9'),
+  volume: 593721,
+  close: 375.41
+}
+{
+  timestamp: ISODate('2024-06-17T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 101.44,
+  open: 99.98,
+  low: 99.92,
+  _id: ObjectId('67197d4d421094bc739f3464'),
+  volume: 3490032,
+  close: 100.53
+}
+{
+  timestamp: ISODate('2024-06-17T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 382.915,
+  open: 376,
+  low: 375.815,
+  _id: ObjectId('67197d4e421094bc739f34c8'),
+  volume: 538236,
+  close: 382.82
+}
+{
+  timestamp: ISODate('2024-06-18T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 101.465,
+  open: 100.07,
+  low: 100.06,
+  _id: ObjectId('67197d4d421094bc739f3463'),
+  volume: 3446167,
+  close: 100.77
+}
+{
+  timestamp: ISODate('2024-06-18T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 384.63,
+  open: 383.47,
+  low: 379.755,
+  _id: ObjectId('67197d4e421094bc739f34c7'),
+  volume: 598195,
+  close: 383.6
+}
+{
+  timestamp: ISODate('2024-06-20T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 102.34,
+  open: 100.26,
+  low: 100.19,
+  _id: ObjectId('67197d4d421094bc739f3462'),
+  volume: 3476766,
+  close: 101.66
+}
+{
+  timestamp: ISODate('2024-06-20T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 385.67,
+  open: 383.43,
+  low: 382.59,
+  _id: ObjectId('67197d4e421094bc739f34c6'),
+  volume: 879173,
+  close: 384.6
+}
+{
+  timestamp: ISODate('2024-06-21T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 102.44,
+  open: 101.93,
+  low: 100.945,
+  _id: ObjectId('67197d4d421094bc739f3461'),
+  volume: 7866227,
+  close: 102.39
+}
+{
+  timestamp: ISODate('2024-06-21T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 386.34,
+  open: 385.9,
+  low: 382.85,
+  _id: ObjectId('67197d4e421094bc739f34c5'),
+  volume: 1043888,
+  close: 386.04
+}
+{
+  timestamp: ISODate('2024-06-24T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 103.5,
+  open: 102.18,
+  low: 101.68,
+  _id: ObjectId('67197d4d421094bc739f3460'),
+  volume: 2947967,
+  close: 102.99
+}
+{
+  timestamp: ISODate('2024-06-24T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 390.9,
+  open: 386.17,
+  low: 385.53,
+  _id: ObjectId('67197d4e421094bc739f34c4'),
+  volume: 702444,
+  close: 388.16
+}
+{
+  timestamp: ISODate('2024-06-25T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 103.18,
+  open: 102.88,
+  low: 101.29,
+  _id: ObjectId('67197d4d421094bc739f345f'),
+  volume: 5164160,
+  close: 102.05
+}
+{
+  timestamp: ISODate('2024-06-25T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 391.65,
+  open: 388.69,
+  low: 387.41,
+  _id: ObjectId('67197d4e421094bc739f34c3'),
+  volume: 857255,
+  close: 390.36
+}
+{
+  timestamp: ISODate('2024-06-26T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 101.8,
+  open: 101.62,
+  low: 100.57,
+  _id: ObjectId('67197d4d421094bc739f345e'),
+  volume: 2356088,
+  close: 101.45
+}
+{
+  timestamp: ISODate('2024-06-26T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 387.37,
+  open: 387.37,
+  low: 380.72,
+  _id: ObjectId('67197d4e421094bc739f34c2'),
+  volume: 658841,
+  close: 384.23
+}
+{
+  timestamp: ISODate('2024-06-27T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 104.04,
+  open: 101.96,
+  low: 101.64,
+  _id: ObjectId('67197d4d421094bc739f345d'),
+  volume: 4338345,
+  close: 103.17
+}
+{
+  timestamp: ISODate('2024-06-27T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 387.97,
+  open: 385.88,
+  low: 384.15,
+  _id: ObjectId('67197d4e421094bc739f34c1'),
+  volume: 611908,
+  close: 386.4
+}
+{
+  timestamp: ISODate('2024-06-28T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 103.97,
+  open: 103.01,
+  low: 101.66,
+  _id: ObjectId('67197d4d421094bc739f345c'),
+  volume: 6196466,
+  close: 102.19
+}
+{
+  timestamp: ISODate('2024-06-28T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 389.87,
+  open: 386.75,
+  low: 385.31,
+  _id: ObjectId('67197d4e421094bc739f34c0'),
+  volume: 1737726,
+  close: 386.05
+}
+{
+  timestamp: ISODate('2024-07-01T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 103.4494,
+  open: 102.86,
+  low: 100.205,
+  _id: ObjectId('67197d4d421094bc739f345b'),
+  volume: 2705605,
+  close: 100.61
+}
+{
+  timestamp: ISODate('2024-07-01T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 389.08,
+  open: 389.08,
+  low: 384.66,
+  _id: ObjectId('67197d4e421094bc739f34bf'),
+  volume: 427801,
+  close: 386.37
+}
+{
+  timestamp: ISODate('2024-07-02T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 101.93,
+  open: 100.56,
+  low: 100.46,
+  _id: ObjectId('67197d4d421094bc739f345a'),
+  volume: 2291274,
+  close: 101.62
+}
+{
+  timestamp: ISODate('2024-07-02T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 388.17,
+  open: 387.07,
+  low: 384.99,
+  _id: ObjectId('67197d4e421094bc739f34be'),
+  volume: 368083,
+  close: 386.76
+}
+{
+  timestamp: ISODate('2024-07-03T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 102.15,
+  open: 101.29,
+  low: 100.68,
+  _id: ObjectId('67197d4d421094bc739f3459'),
+  volume: 1230776,
+  close: 101.62
+}
+{
+  timestamp: ISODate('2024-07-03T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 388.33,
+  open: 386.32,
+  low: 385.06,
+  _id: ObjectId('67197d4e421094bc739f34bd'),
+  volume: 277114,
+  close: 385.8
+}
+{
+  timestamp: ISODate('2024-07-05T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 101.66,
+  open: 101.4,
+  low: 100.64,
+  _id: ObjectId('67197d4d421094bc739f3458'),
+  volume: 3059577,
+  close: 101.32
+}
+{
+  timestamp: ISODate('2024-07-05T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 387.18,
+  open: 387.17,
+  low: 384.51,
+  _id: ObjectId('67197d4e421094bc739f34bc'),
+  volume: 859650,
+  close: 386.87
+}
+{
+  timestamp: ISODate('2024-07-08T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 102.74,
+  open: 101.51,
+  low: 100.62,
+  _id: ObjectId('67197d4d421094bc739f3457'),
+  volume: 2338695,
+  close: 101.1
+}
+{
+  timestamp: ISODate('2024-07-08T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 391.495,
+  open: 388.31,
+  low: 388,
+  _id: ObjectId('67197d4e421094bc739f34bb'),
+  volume: 696525,
+  close: 390.57
+}
+{
+  timestamp: ISODate('2024-07-09T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 101.46,
+  open: 100.85,
+  low: 99.472,
+  _id: ObjectId('67197d4d421094bc739f3456'),
+  volume: 2809735,
+  close: 99.69
+}
+{
+  timestamp: ISODate('2024-07-09T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 392.34,
+  open: 391.22,
+  low: 389.64,
+  _id: ObjectId('67197d4e421094bc739f34ba'),
+  volume: 627079,
+  close: 390.72
+}
+{
+  timestamp: ISODate('2024-07-10T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 101.83,
+  open: 99.81,
+  low: 98.26,
+  _id: ObjectId('67197d4d421094bc739f3455'),
+  volume: 4519547,
+  close: 101.67
+}
+{
+  timestamp: ISODate('2024-07-10T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 392.52,
+  open: 392.52,
+  low: 387.98,
+  _id: ObjectId('67197d4e421094bc739f34b9'),
+  volume: 636579,
+  close: 391.05
+}
+{
+  timestamp: ISODate('2024-07-11T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 104.27,
+  open: 102.38,
+  low: 101.8002,
+  _id: ObjectId('67197d4d421094bc739f3454'),
+  volume: 4581327,
+  close: 103.23
+}
+{
+  timestamp: ISODate('2024-07-11T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 392.8002,
+  open: 390.36,
+  low: 386.53,
+  _id: ObjectId('67197d4e421094bc739f34b8'),
+  volume: 604886,
+  close: 388.69
+}
+{
+  timestamp: ISODate('2024-07-12T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 105.3,
+  open: 103.79,
+  low: 103.69,
+  _id: ObjectId('67197d4d421094bc739f3453'),
+  volume: 3381190,
+  close: 104.04
+}
+{
+  timestamp: ISODate('2024-07-12T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 394.5,
+  open: 389.3,
+  low: 388.84,
+  _id: ObjectId('67197d4e421094bc739f34b7'),
+  volume: 482627,
+  close: 390.16
+}
+{
+  timestamp: ISODate('2024-07-15T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 104.9975,
+  open: 104.9,
+  low: 102.57,
+  _id: ObjectId('67197d4d421094bc739f3452'),
+  volume: 3316717,
+  close: 102.72
+}
+{
+  timestamp: ISODate('2024-07-15T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 394.6,
+  open: 390.34,
+  low: 390.06,
+  _id: ObjectId('67197d4e421094bc739f34b6'),
+  volume: 535002,
+  close: 394.39
+}
+{
+  timestamp: ISODate('2024-07-16T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 103.69,
+  open: 100.87,
+  low: 100.87,
+  _id: ObjectId('67197d4d421094bc739f3451'),
+  volume: 3609174,
+  close: 103.31
+}
+{
+  timestamp: ISODate('2024-07-16T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 398.88,
+  open: 395.56,
+  low: 394.74,
+  _id: ObjectId('67197d4e421094bc739f34b5'),
+  volume: 514368,
+  close: 396.07
+}
+{
+  timestamp: ISODate('2024-07-17T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 104.8,
+  open: 102.86,
+  low: 102.69,
+  _id: ObjectId('67197d4d421094bc739f3450'),
+  volume: 3567941,
+  close: 104.64
+}
+{
+  timestamp: ISODate('2024-07-17T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 396.035,
+  open: 395.06,
+  low: 391.1,
+  _id: ObjectId('67197d4e421094bc739f34b4'),
+  volume: 523795,
+  close: 393.71
+}
+{
+  timestamp: ISODate('2024-07-18T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 105.52,
+  open: 104.22,
+  low: 103.44,
+  _id: ObjectId('67197d4d421094bc739f344f'),
+  volume: 3023902,
+  close: 104.02
+}
+{
+  timestamp: ISODate('2024-07-18T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 395.72,
+  open: 393.99,
+  low: 392.39,
+  _id: ObjectId('67197d4e421094bc739f34b3'),
+  volume: 397266,
+  close: 394.46
+}
+{
+  timestamp: ISODate('2024-07-19T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 104.75,
+  open: 104.75,
+  low: 103.13,
+  _id: ObjectId('67197d4d421094bc739f344e'),
+  volume: 2884897,
+  close: 103.92
+}
+{
+  timestamp: ISODate('2024-07-19T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 396.85,
+  open: 396.85,
+  low: 388.77,
+  _id: ObjectId('67197d4e421094bc739f34b2'),
+  volume: 809346,
+  close: 390.19
+}
+{
+  timestamp: ISODate('2024-07-22T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 105.04,
+  open: 104.06,
+  low: 102.4,
+  _id: ObjectId('67197d4d421094bc739f344d'),
+  volume: 2686587,
+  close: 104.97
+}
+{
+  timestamp: ISODate('2024-07-22T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 396.28,
+  open: 392.27,
+  low: 390.77,
+  _id: ObjectId('67197d4e421094bc739f34b1'),
+  volume: 596488,
+  close: 396.15
+}
+{
+  timestamp: ISODate('2024-07-23T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 105.27,
+  open: 105,
+  low: 104.17,
+  _id: ObjectId('67197d4d421094bc739f344c'),
+  volume: 2172621,
+  close: 104.73
+}
+{
+  timestamp: ISODate('2024-07-23T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 399.6196,
+  open: 396.32,
+  low: 395.805,
+  _id: ObjectId('67197d4e421094bc739f34b0'),
+  volume: 444689,
+  close: 396.55
+}
+{
+  timestamp: ISODate('2024-07-24T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 105.1,
+  open: 104.56,
+  low: 103.08,
+  _id: ObjectId('67197d4d421094bc739f344b'),
+  volume: 3252198,
+  close: 103.25
+}
+{
+  timestamp: ISODate('2024-07-24T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 395.355,
+  open: 395.05,
+  low: 389.51,
+  _id: ObjectId('67197d4e421094bc739f34af'),
+  volume: 541739,
+  close: 390.6
+}
+{
+  timestamp: ISODate('2024-07-25T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 104.79,
+  open: 102.72,
+  low: 101.77,
+  _id: ObjectId('67197d4d421094bc739f344a'),
+  volume: 4598084,
+  close: 103.39
+}
+{
+  timestamp: ISODate('2024-07-25T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 395.0448,
+  open: 393.15,
+  low: 385.17,
+  _id: ObjectId('67197d4e421094bc739f34ae'),
+  volume: 827626,
+  close: 385.65
+}
+{
+  timestamp: ISODate('2024-07-26T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 128.025,
+  open: 112.685,
+  low: 112.685,
+  _id: ObjectId('67197d4d421094bc739f3449'),
+  volume: 32748920,
+  close: 127.16
+}
+{
+  timestamp: ISODate('2024-07-26T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 395.85,
+  open: 385.6,
+  low: 385.6,
+  _id: ObjectId('67197d4e421094bc739f34ad'),
+  volume: 408125,
+  close: 393.71
+}
+{
+  timestamp: ISODate('2024-07-29T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 128.65,
+  open: 128,
+  low: 124.13,
+  _id: ObjectId('67197d4d421094bc739f3448'),
+  volume: 10816738,
+  close: 125.16
+}
+{
+  timestamp: ISODate('2024-07-29T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 397.75,
+  open: 394.11,
+  low: 393.92,
+  _id: ObjectId('67197d4e421094bc739f34ac'),
+  volume: 351179,
+  close: 395.42
+}
+{
+  timestamp: ISODate('2024-07-30T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 127.69,
+  open: 125.85,
+  low: 124.1074,
+  _id: ObjectId('67197d4d421094bc739f3447'),
+  volume: 6746475,
+  close: 126.75
+}
+{
+  timestamp: ISODate('2024-07-30T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 402.56,
+  open: 397.63,
+  low: 393.97,
+  _id: ObjectId('67197d4e421094bc739f34ab'),
+  volume: 544222,
+  close: 395.33
+}
+{
+  timestamp: ISODate('2024-07-31T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 128.6,
+  open: 126.63,
+  low: 125.33,
+  _id: ObjectId('67197d4d421094bc739f3446'),
+  volume: 6889922,
+  close: 127.55
+}
+{
+  timestamp: ISODate('2024-07-31T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 400.9,
+  open: 398.24,
+  low: 395.88,
+  _id: ObjectId('67197d4e421094bc739f34aa'),
+  volume: 678373,
+  close: 398.92
+}
+{
+  timestamp: ISODate('2024-08-01T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 127.94,
+  open: 127.5,
+  low: 124.43,
+  _id: ObjectId('67197d4d421094bc739f3445'),
+  volume: 5563739,
+  close: 126.47
+}
+{
+  timestamp: ISODate('2024-08-01T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 403.53,
+  open: 399.86,
+  low: 394.23,
+  _id: ObjectId('67197d4e421094bc739f34a9'),
+  volume: 857177,
+  close: 398.58
+}
+{
+  timestamp: ISODate('2024-08-02T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 127.745,
+  open: 125.81,
+  low: 124.78,
+  _id: ObjectId('67197d4d421094bc739f3444'),
+  volume: 4021383,
+  close: 125.24
+}
+{
+  timestamp: ISODate('2024-08-02T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 410.67,
+  open: 399.52,
+  low: 396.11,
+  _id: ObjectId('67197d4e421094bc739f34a8'),
+  volume: 1293684,
+  close: 410.3
+}
+{
+  timestamp: ISODate('2024-08-05T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 125.3154,
+  open: 119.57,
+  low: 119.31,
+  _id: ObjectId('67197d4d421094bc739f3443'),
+  volume: 6669666,
+  close: 124.61
+}
+{
+  timestamp: ISODate('2024-08-05T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 410.7675,
+  open: 400.01,
+  low: 396.7,
+  _id: ObjectId('67197d4e421094bc739f34a7'),
+  volume: 1407944,
+  close: 399.64
+}
+{
+  timestamp: ISODate('2024-08-06T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 126.13,
+  open: 123.36,
+  low: 122.72,
+  _id: ObjectId('67197d4d421094bc739f3442'),
+  volume: 4334268,
+  close: 124.89
+}
+{
+  timestamp: ISODate('2024-08-06T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 411.9,
+  open: 401.36,
+  low: 401.36,
+  _id: ObjectId('67197d4e421094bc739f34a6'),
+  volume: 1562170,
+  close: 402.85
+}
+{
+  timestamp: ISODate('2024-08-07T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 126.57,
+  open: 125.39,
+  low: 122.69,
+  _id: ObjectId('67197d4d421094bc739f3441'),
+  volume: 3410105,
+  close: 122.83
+}
+{
+  timestamp: ISODate('2024-08-07T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 412.64,
+  open: 407.69,
+  low: 404.07,
+  _id: ObjectId('67197d4e421094bc739f34a5'),
+  volume: 950328,
+  close: 404.34
+}
+{
+  timestamp: ISODate('2024-08-08T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 125.74,
+  open: 122.45,
+  low: 122.18,
+  _id: ObjectId('67197d4d421094bc739f3440'),
+  volume: 2932882,
+  close: 125.13
+}
+{
+  timestamp: ISODate('2024-08-08T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 412.88,
+  open: 405.85,
+  low: 403.2,
+  _id: ObjectId('67197d4e421094bc739f34a4'),
+  volume: 484183,
+  close: 412.18
+}
+{
+  timestamp: ISODate('2024-08-09T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 124.64,
+  open: 124.64,
+  low: 123.335,
+  _id: ObjectId('67197d4d421094bc739f343f'),
+  volume: 3247914,
+  close: 124.17
+}
+{
+  timestamp: ISODate('2024-08-09T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 413.28,
+  open: 411.5,
+  low: 406.59,
+  _id: ObjectId('67197d4e421094bc739f34a3'),
+  volume: 340434,
+  close: 410.76
+}
+{
+  timestamp: ISODate('2024-08-12T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 124.0899,
+  open: 124,
+  low: 122.54,
+  _id: ObjectId('67197d4d421094bc739f343e'),
+  volume: 2585947,
+  close: 123.36
+}
+{
+  timestamp: ISODate('2024-08-12T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 414.03,
+  open: 410.76,
+  low: 408.92,
+  _id: ObjectId('67197d4e421094bc739f34a2'),
+  volume: 486311,
+  close: 412.76
+}
+{
+  timestamp: ISODate('2024-08-13T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 125.4,
+  open: 123.43,
+  low: 122.74,
+  _id: ObjectId('67197d4d421094bc739f343d'),
+  volume: 3056591,
+  close: 125.35
+}
+{
+  timestamp: ISODate('2024-08-13T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 417.43,
+  open: 413.55,
+  low: 411.84,
+  _id: ObjectId('67197d4e421094bc739f34a1'),
+  volume: 782880,
+  close: 412
+}
+{
+  timestamp: ISODate('2024-08-14T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 127.04,
+  open: 124.97,
+  low: 124.6298,
+  _id: ObjectId('67197d4d421094bc739f343c'),
+  volume: 3252959,
+  close: 126.17
+}
+{
+  timestamp: ISODate('2024-08-14T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 419.57,
+  open: 411.2,
+  low: 411.2,
+  _id: ObjectId('67197d4e421094bc739f34a0'),
+  volume: 1022827,
+  close: 418.59
+}
+{
+  timestamp: ISODate('2024-08-15T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 127.9368,
+  open: 127.32,
+  low: 126.17,
+  _id: ObjectId('67197d4d421094bc739f343b'),
+  volume: 3359903,
+  close: 127.16
+}
+{
+  timestamp: ISODate('2024-08-15T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 424.55,
+  open: 420.38,
+  low: 418.38,
+  _id: ObjectId('67197d4e421094bc739f349f'),
+  volume: 630821,
+  close: 421.94
+}
+{
+  timestamp: ISODate('2024-08-16T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 127.34,
+  open: 126.74,
+  low: 126.02,
+  _id: ObjectId('67197d4d421094bc739f343a'),
+  volume: 3812693,
+  close: 127.05
+}
+{
+  timestamp: ISODate('2024-08-16T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 423.47,
+  open: 422.55,
+  low: 418.98,
+  _id: ObjectId('67197d4e421094bc739f349e'),
+  volume: 438176,
+  close: 421.37
+}
+{
+  timestamp: ISODate('2024-08-19T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 127.85,
+  open: 127.08,
+  low: 126.53,
+  _id: ObjectId('67197d4d421094bc739f3439'),
+  volume: 2243571,
+  close: 127.08
+}
+{
+  timestamp: ISODate('2024-08-19T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 423.26,
+  open: 422.01,
+  low: 420.38,
+  _id: ObjectId('67197d4e421094bc739f349d'),
+  volume: 411952,
+  close: 422.44
+}
+{
+  timestamp: ISODate('2024-08-20T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 128.0653,
+  open: 126.99,
+  low: 126.88,
+  _id: ObjectId('67197d4d421094bc739f3438'),
+  volume: 2792905,
+  close: 127.7
+}
+{
+  timestamp: ISODate('2024-08-20T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 426.87,
+  open: 424.41,
+  low: 423.61,
+  _id: ObjectId('67197d4e421094bc739f349c'),
+  volume: 425909,
+  close: 426.38
+}
+{
+  timestamp: ISODate('2024-08-21T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 129.99,
+  open: 127.84,
+  low: 127.66,
+  _id: ObjectId('67197d4d421094bc739f3437'),
+  volume: 3664550,
+  close: 129.23
+}
+{
+  timestamp: ISODate('2024-08-21T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 429.32,
+  open: 425.84,
+  low: 424.09,
+  _id: ObjectId('67197d4e421094bc739f349b'),
+  volume: 708459,
+  close: 425.72
+}
+{
+  timestamp: ISODate('2024-08-22T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 129.75,
+  open: 129.1,
+  low: 128.3,
+  _id: ObjectId('67197d4d421094bc739f3436'),
+  volume: 2300641,
+  close: 128.6
+}
+{
+  timestamp: ISODate('2024-08-22T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 427.4203,
+  open: 426.78,
+  low: 423.05,
+  _id: ObjectId('67197d4e421094bc739f349a'),
+  volume: 660506,
+  close: 424.46
+}
+{
+  timestamp: ISODate('2024-08-23T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 130.65,
+  open: 129.23,
+  low: 128.85,
+  _id: ObjectId('67197d4d421094bc739f3435'),
+  volume: 2618842,
+  close: 130.55
+}
+{
+  timestamp: ISODate('2024-08-23T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 430.76,
+  open: 426.54,
+  low: 425.56,
+  _id: ObjectId('67197d4e421094bc739f3499'),
+  volume: 680885,
+  close: 430.4
+}
+{
+  timestamp: ISODate('2024-08-26T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 131.92,
+  open: 129.6,
+  low: 129.6,
+  _id: ObjectId('67197d4d421094bc739f3434'),
+  volume: 3915794,
+  close: 131.85
+}
+{
+  timestamp: ISODate('2024-08-26T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 433.28,
+  open: 431.29,
+  low: 428.28,
+  _id: ObjectId('67197d4e421094bc739f3498'),
+  volume: 475165,
+  close: 430.23
+}
+{
+  timestamp: ISODate('2024-08-27T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 132.62,
+  open: 131.32,
+  low: 130.95,
+  _id: ObjectId('67197d4d421094bc739f3433'),
+  volume: 2878736,
+  close: 131.4
+}
+{
+  timestamp: ISODate('2024-08-27T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 433.51,
+  open: 430.83,
+  low: 430.535,
+  _id: ObjectId('67197d4e421094bc739f3497'),
+  volume: 626008,
+  close: 432.36
+}
+{
+  timestamp: ISODate('2024-08-28T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 132.62,
+  open: 131.4,
+  low: 131.15,
+  _id: ObjectId('67197d4d421094bc739f3432'),
+  volume: 3274045,
+  close: 131.61
+}
+{
+  timestamp: ISODate('2024-08-28T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 436.45,
+  open: 433.96,
+  low: 433.0474,
+  _id: ObjectId('67197d4e421094bc739f3496'),
+  volume: 418696,
+  close: 435.21
+}
+{
+  timestamp: ISODate('2024-08-29T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 133.18,
+  open: 131.65,
+  low: 131.34,
+  _id: ObjectId('67197d4d421094bc739f3431'),
+  volume: 2992832,
+  close: 132.91
+}
+{
+  timestamp: ISODate('2024-08-29T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 439.14,
+  open: 435,
+  low: 435,
+  _id: ObjectId('67197d4e421094bc739f3495'),
+  volume: 393173,
+  close: 437.15
+}
+{
+  timestamp: ISODate('2024-08-30T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 134.99,
+  open: 133.07,
+  low: 132.61,
+  _id: ObjectId('67197d4d421094bc739f3430'),
+  volume: 6092831,
+  close: 134.69
+}
+{
+  timestamp: ISODate('2024-08-30T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 443.88,
+  open: 438.61,
+  low: 437.15,
+  _id: ObjectId('67197d4e421094bc739f3494'),
+  volume: 940972,
+  close: 442.04
+}
+{
+  timestamp: ISODate('2024-09-03T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 133.78,
+  open: 133.01,
+  low: 130.21,
+  _id: ObjectId('67197d4d421094bc739f342f'),
+  volume: 4024084,
+  close: 130.85
+}
+{
+  timestamp: ISODate('2024-09-03T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 448.98,
+  open: 446.51,
+  low: 437.22,
+  _id: ObjectId('67197d4e421094bc739f3493'),
+  volume: 924327,
+  close: 440.37
+}
+{
+  timestamp: ISODate('2024-09-04T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 132.86,
+  open: 131.19,
+  low: 130.85,
+  _id: ObjectId('67197d4d421094bc739f342e'),
+  volume: 3188715,
+  close: 132.15
+}
+{
+  timestamp: ISODate('2024-09-04T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 440.44,
+  open: 440.37,
+  low: 435.03,
+  _id: ObjectId('67197d4e421094bc739f3492'),
+  volume: 1000768,
+  close: 437.45
+}
+{
+  timestamp: ISODate('2024-09-05T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 132.95,
+  open: 131.92,
+  low: 130.7,
+  _id: ObjectId('67197d4d421094bc739f342d'),
+  volume: 2725955,
+  close: 131.4
+}
+{
+  timestamp: ISODate('2024-09-05T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 437.35,
+  open: 436.79,
+  low: 431.555,
+  _id: ObjectId('67197d4e421094bc739f3491'),
+  volume: 568147,
+  close: 437.31
+}
+{
+  timestamp: ISODate('2024-09-06T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 132.1,
+  open: 130.5,
+  low: 128.02,
+  _id: ObjectId('67197d4d421094bc739f342c'),
+  volume: 3562233,
+  close: 128.6
+}
+{
+  timestamp: ISODate('2024-09-06T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 439.0665,
+  open: 436.47,
+  low: 430.45,
+  _id: ObjectId('67197d4e421094bc739f3490'),
+  volume: 732493,
+  close: 431.5
+}
+{
+  timestamp: ISODate('2024-09-09T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 130.98,
+  open: 129.39,
+  low: 128.19,
+  _id: ObjectId('67197d4d421094bc739f342b'),
+  volume: 3616263,
+  close: 128.46
+}
+{
+  timestamp: ISODate('2024-09-09T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 440.39,
+  open: 434.19,
+  low: 432.53,
+  _id: ObjectId('67197d4e421094bc739f348f'),
+  volume: 1073458,
+  close: 438.87
+}
+{
+  timestamp: ISODate('2024-09-10T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 130.16,
+  open: 128.85,
+  low: 128.46,
+  _id: ObjectId('67197d4d421094bc739f342a'),
+  volume: 2732510,
+  close: 130.09
+}
+{
+  timestamp: ISODate('2024-09-10T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 442.44,
+  open: 439.01,
+  low: 437.56,
+  _id: ObjectId('67197d4e421094bc739f348e'),
+  volume: 761702,
+  close: 438.1
+}
+{
+  timestamp: ISODate('2024-09-11T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 130.38,
+  open: 129.5,
+  low: 127.12,
+  _id: ObjectId('67197d4d421094bc739f3429'),
+  volume: 3283879,
+  close: 130.23
+}
+{
+  timestamp: ISODate('2024-09-11T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 436.55,
+  open: 436.55,
+  low: 428.89,
+  _id: ObjectId('67197d4e421094bc739f348d'),
+  volume: 952057,
+  close: 435.89
+}
+{
+  timestamp: ISODate('2024-09-12T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 132.72,
+  open: 130.3,
+  low: 130.1,
+  _id: ObjectId('67197d4d421094bc739f3428'),
+  volume: 3978880,
+  close: 132.03
+}
+{
+  timestamp: ISODate('2024-09-12T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 441.22,
+  open: 433.96,
+  low: 433.48,
+  _id: ObjectId('67197d4e421094bc739f348c'),
+  volume: 1016499,
+  close: 439.8
+}
+{
+  timestamp: ISODate('2024-09-13T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 133.37,
+  open: 131.88,
+  low: 131.35,
+  _id: ObjectId('67197d4d421094bc739f3427'),
+  volume: 2670119,
+  close: 133.18
+}
+{
+  timestamp: ISODate('2024-09-13T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 442.38,
+  open: 439.26,
+  low: 438.27,
+  _id: ObjectId('67197d4e421094bc739f348b'),
+  volume: 543799,
+  close: 441.76
+}
+{
+  timestamp: ISODate('2024-09-16T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 135.28,
+  open: 133.98,
+  low: 133.83,
+  _id: ObjectId('67197d4d421094bc739f3426'),
+  volume: 3069311,
+  close: 134.61
+}
+{
+  timestamp: ISODate('2024-09-16T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 445.21,
+  open: 443.2,
+  low: 441.03,
+  _id: ObjectId('67197d4e421094bc739f348a'),
+  volume: 611573,
+  close: 443.18
+}
+{
+  timestamp: ISODate('2024-09-17T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 134.43,
+  open: 134.09,
+  low: 132.31,
+  _id: ObjectId('67197d4d421094bc739f3425'),
+  volume: 3969018,
+  close: 133.57
+}
+{
+  timestamp: ISODate('2024-09-17T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 444.38,
+  open: 443.06,
+  low: 437.55,
+  _id: ObjectId('67197d4e421094bc739f3489'),
+  volume: 714901,
+  close: 438.91
+}
+{
+  timestamp: ISODate('2024-09-18T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 134.28,
+  open: 133.26,
+  low: 131.755,
+  _id: ObjectId('67197d4d421094bc739f3424'),
+  volume: 2960934,
+  close: 133.36
+}
+{
+  timestamp: ISODate('2024-09-18T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 440.41,
+  open: 438.13,
+  low: 433.24,
+  _id: ObjectId('67197d4e421094bc739f3488'),
+  volume: 604780,
+  close: 436.58
+}
+{
+  timestamp: ISODate('2024-09-19T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 135.32,
+  open: 134.4,
+  low: 133.32,
+  _id: ObjectId('67197d4d421094bc739f3423'),
+  volume: 2691488,
+  close: 133.84
+}
+{
+  timestamp: ISODate('2024-09-19T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 440.92,
+  open: 440,
+  low: 437.14,
+  _id: ObjectId('67197d4e421094bc739f3487'),
+  volume: 903869,
+  close: 438.81
+}
+{
+  timestamp: ISODate('2024-09-20T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 134.95,
+  open: 133.01,
+  low: 132.771,
+  _id: ObjectId('67197d4d421094bc739f3422'),
+  volume: 11579638,
+  close: 134.77
+}
+{
+  timestamp: ISODate('2024-09-20T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 442.89,
+  open: 437.35,
+  low: 436.57,
+  _id: ObjectId('67197d4e421094bc739f3486'),
+  volume: 1360553,
+  close: 442.57
+}
+{
+  timestamp: ISODate('2024-09-23T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 136.09,
+  open: 134.7,
+  low: 134.69,
+  _id: ObjectId('67197d4d421094bc739f3421'),
+  volume: 2638392,
+  close: 135.64
+}
+{
+  timestamp: ISODate('2024-09-23T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 447.47,
+  open: 443.11,
+  low: 441.4,
+  _id: ObjectId('67197d4e421094bc739f3485'),
+  volume: 449514,
+  close: 447.11
+}
+{
+  timestamp: ISODate('2024-09-24T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 137.94,
+  open: 136.47,
+  low: 136.35,
+  _id: ObjectId('67197d4d421094bc739f3420'),
+  volume: 3145327,
+  close: 137.22
+}
+{
+  timestamp: ISODate('2024-09-24T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 450.54,
+  open: 448.2,
+  low: 443.1401,
+  _id: ObjectId('67197d4e421094bc739f3484'),
+  volume: 675732,
+  close: 450.13
+}
+{
+  timestamp: ISODate('2024-09-25T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 137.89,
+  open: 137.23,
+  low: 136.04,
+  _id: ObjectId('67197d4d421094bc739f341f'),
+  volume: 3580080,
+  close: 136.6
+}
+{
+  timestamp: ISODate('2024-09-25T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 452,
+  open: 451.45,
+  low: 448.5,
+  _id: ObjectId('67197d4e421094bc739f3483'),
+  volume: 490431,
+  close: 450.49
+}
+{
+  timestamp: ISODate('2024-09-26T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 140.72,
+  low: 137.55,
+  close: 139.44,
+  volume: 4111107,
+  _id: ObjectId('67197d4d421094bc739f341e'),
+  open: 137.56
+}
+{
+  timestamp: ISODate('2024-09-26T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 451.3,
+  open: 449.62,
+  low: 447.5343,
+  _id: ObjectId('67197d4e421094bc739f3482'),
+  volume: 496761,
+  close: 448.11
+}
+{
+  timestamp: ISODate('2024-09-27T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 139.29,
+  low: 137.05,
+  close: 137.3,
+  volume: 2956081,
+  _id: ObjectId('67197d4d421094bc739f341d'),
+  open: 139
+}
+{
+  timestamp: ISODate('2024-09-27T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 448.06,
+  open: 447.26,
+  low: 444.1,
+  _id: ObjectId('67197d4e421094bc739f3481'),
+  volume: 515615,
+  close: 446.36
+}
+{
+  timestamp: ISODate('2024-09-30T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 137.95,
+  low: 135.23,
+  close: 136.7,
+  volume: 3814148,
+  _id: ObjectId('67197d4d421094bc739f341c'),
+  open: 137.83
+}
+{
+  timestamp: ISODate('2024-09-30T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 450.95,
+  open: 446.76,
+  low: 444.79,
+  _id: ObjectId('67197d4e421094bc739f3480'),
+  volume: 692536,
+  close: 449.63
+}
+{
+  timestamp: ISODate('2024-10-01T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 137.34,
+  low: 134.9,
+  close: 137.06,
+  volume: 3050502,
+  _id: ObjectId('67197d4d421094bc739f341b'),
+  open: 136
+}
+{
+  timestamp: ISODate('2024-10-01T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 449.87,
+  open: 449.81,
+  low: 446.28,
+  _id: ObjectId('67197d4e421094bc739f347f'),
+  volume: 504130,
+  close: 449.08
+}
+{
+  timestamp: ISODate('2024-10-02T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 137.22,
+  low: 135.37,
+  close: 135.43,
+  volume: 2624867,
+  _id: ObjectId('67197d4d421094bc739f341a'),
+  open: 137.22
+}
+{
+  timestamp: ISODate('2024-10-02T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 450.24,
+  open: 447.13,
+  low: 446.4201,
+  _id: ObjectId('67197d4e421094bc739f347e'),
+  volume: 362174,
+  close: 449.5
+}
+{
+  timestamp: ISODate('2024-10-03T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 135.6,
+  low: 133.8401,
+  close: 134.78,
+  volume: 2504927,
+  _id: ObjectId('67197d4d421094bc739f3419'),
+  open: 135
+}
+{
+  timestamp: ISODate('2024-10-03T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 449.58,
+  open: 448.2,
+  low: 443.82,
+  _id: ObjectId('67197d4e421094bc739f347d'),
+  volume: 612075,
+  close: 449.11
+}
+{
+  timestamp: ISODate('2024-10-04T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 135.93,
+  low: 134.0451,
+  close: 135.27,
+  volume: 2387396,
+  _id: ObjectId('67197d4d421094bc739f3418'),
+  open: 135.84
+}
+{
+  timestamp: ISODate('2024-10-04T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 450.54,
+  open: 449.25,
+  low: 445.6206,
+  _id: ObjectId('67197d4e421094bc739f347c'),
+  volume: 627220,
+  close: 450.3
+}
+{
+  timestamp: ISODate('2024-10-07T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 135.27,
+  low: 133.83,
+  close: 134.85,
+  volume: 2254425,
+  _id: ObjectId('67197d4d421094bc739f3417'),
+  open: 134.72
+}
+{
+  timestamp: ISODate('2024-10-07T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 452.515,
+  open: 449.62,
+  low: 448.48,
+  _id: ObjectId('67197d4e421094bc739f347b'),
+  volume: 621570,
+  close: 449.19
+}
+{
+  timestamp: ISODate('2024-10-08T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 135.0399,
+  low: 133.3022,
+  close: 134.69,
+  volume: 2882081,
+  _id: ObjectId('67197d4d421094bc739f3416'),
+  open: 134.48
+}
+{
+  timestamp: ISODate('2024-10-08T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 458.91,
+  open: 452.52,
+  low: 452.48,
+  _id: ObjectId('67197d4e421094bc739f347a'),
+  volume: 700575,
+  close: 457.91
+}
+{
+  timestamp: ISODate('2024-10-09T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 135.545,
+  low: 134.23,
+  close: 135.01,
+  volume: 2671470,
+  _id: ObjectId('67197d4d421094bc739f3415'),
+  open: 134.59
+}
+{
+  timestamp: ISODate('2024-10-09T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 467.89,
+  open: 457.76,
+  low: 455.38,
+  _id: ObjectId('67197d4e421094bc739f3479'),
+  volume: 676088,
+  close: 466.55
+}
+{
+  timestamp: ISODate('2024-10-10T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 134.49,
+  low: 132.93,
+  close: 133.46,
+  volume: 3060118,
+  _id: ObjectId('67197d4d421094bc739f3414'),
+  open: 134.43
+}
+{
+  timestamp: ISODate('2024-10-10T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 467.45,
+  open: 466.55,
+  low: 461.46,
+  _id: ObjectId('67197d4e421094bc739f3478'),
+  volume: 701008,
+  close: 464.63
+}
+{
+  timestamp: ISODate('2024-10-11T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 134.859,
+  low: 133.1,
+  close: 134.75,
+  volume: 3103642,
+  _id: ObjectId('67197d4d421094bc739f3413'),
+  open: 133.4
+}
+{
+  timestamp: ISODate('2024-10-11T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 469.01,
+  open: 465.99,
+  low: 463.71,
+  _id: ObjectId('67197d4e421094bc739f3477'),
+  volume: 531283,
+  close: 467.94
+}
+{
+  timestamp: ISODate('2024-10-14T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 135.9,
+  low: 134.025,
+  close: 135.76,
+  volume: 2207917,
+  _id: ObjectId('67197d4d421094bc739f3412'),
+  open: 134.4
+}
+{
+  timestamp: ISODate('2024-10-14T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 475.97,
+  open: 469.83,
+  low: 468.96,
+  _id: ObjectId('67197d4e421094bc739f3476'),
+  volume: 487536,
+  close: 472.99
+}
+{
+  timestamp: ISODate('2024-10-15T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 136.95,
+  low: 135,
+  close: 135.73,
+  volume: 2465932,
+  _id: ObjectId('67197d4d421094bc739f3411'),
+  open: 136
+}
+{
+  timestamp: ISODate('2024-10-15T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 477.89,
+  open: 476.12,
+  low: 473.03,
+  _id: ObjectId('67197d4e421094bc739f3475'),
+  volume: 577089,
+  close: 473.41
+}
+{
+  timestamp: ISODate('2024-10-16T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 137.05,
+  low: 135.33,
+  close: 136.35,
+  volume: 2021056,
+  _id: ObjectId('67197d4d421094bc739f3410'),
+  open: 135.6
+}
+{
+  timestamp: ISODate('2024-10-16T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 476.83,
+  open: 471.65,
+  low: 469.4201,
+  _id: ObjectId('67197d4e421094bc739f3474'),
+  volume: 426600,
+  close: 476.55
+}
+{
+  timestamp: ISODate('2024-10-17T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 136.66,
+  low: 135.115,
+  close: 135.68,
+  volume: 2328475,
+  _id: ObjectId('67197d4d421094bc739f340f'),
+  open: 136.61
+}
+{
+  timestamp: ISODate('2024-10-17T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 480.2799,
+  open: 479.04,
+  low: 476.37,
+  _id: ObjectId('67197d4e421094bc739f3473'),
+  volume: 484425,
+  close: 477.62
+}
+{
+  timestamp: ISODate('2024-10-18T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 136.12,
+  low: 134.29,
+  close: 135.14,
+  volume: 2791646,
+  _id: ObjectId('67197d4d421094bc739f340e'),
+  open: 135.69
+}
+{
+  timestamp: ISODate('2024-10-18T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 476.82,
+  open: 476.07,
+  low: 473.65,
+  _id: ObjectId('67197d4e421094bc739f3472'),
+  volume: 651118,
+  close: 475.2
+}
+{
+  timestamp: ISODate('2024-10-21T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 135.84,
+  low: 133.75,
+  close: 134.84,
+  volume: 5940581,
+  _id: ObjectId('67197d4d421094bc739f340d'),
+  open: 135.28
+}
+{
+  timestamp: ISODate('2024-10-21T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 478.5,
+  open: 475.96,
+  low: 475.51,
+  _id: ObjectId('67197d4e421094bc739f3471'),
+  volume: 627792,
+  close: 477.1
+}
+{
+  timestamp: ISODate('2024-10-22T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 141.34,
+  low: 130.82,
+  close: 131.73,
+  volume: 13082258,
+  _id: ObjectId('67197d4d421094bc739f340c'),
+  open: 140.19
+}
+{
+  timestamp: ISODate('2024-10-22T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 476.1405,
+  open: 472.7,
+  low: 469.98,
+  _id: ObjectId('67197d4e421094bc739f3470'),
+  volume: 615470,
+  close: 470.18
+}
+{
+  timestamp: ISODate('2024-10-23T00:00:00.000Z'),
+  symbol: 'MMM',
+  high: 132.15,
+  low: 125.9128,
+  close: 127.91,
+  volume: 8084410,
+  _id: ObjectId('67197d4d421094bc739f340b'),
+  open: 131.22
+}
+{
+  timestamp: ISODate('2024-10-23T00:00:00.000Z'),
+  symbol: 'MSI',
+  high: 472.36,
+  open: 469.96,
+  low: 466.1,
+  _id: ObjectId('67197d4e421094bc739f346f'),
+  volume: 835039,
+  close: 467.08
+}
+
+stock_db> 
