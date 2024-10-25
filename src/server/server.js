@@ -1,5 +1,5 @@
 import express from 'express';
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import cors from 'cors';
 import cron from 'node-cron';
 import { dirname, join } from 'path';
@@ -32,9 +32,9 @@ function setupMiddleware(app) {
     app.use(express.static(join(__dirname, '..', '..', 'build')));
     app.use(cors({
         origin: [
-            'http://localhost:3000', 
-            'http://localhost:5000',
-            'http://35.208.160.118',
+            'https://localhost:3000', 
+            'https://localhost:5000',
+            'https://35.208.160.118',
             'https://kevinshaughnessy.ca'
 		]
     }));
@@ -60,13 +60,9 @@ function setupProcessHandlers(server) {
             process.exit(0);
         });
     });
-
-    process.once('SIGUSR2', () => {
-        process.kill(process.pid, 'SIGUSR2');
-    });
-
+    
     process.on('SIGINT', () => {
-        process.kill(process.pid, 'SIGINT');
+        process.exit(0);
     });
 }
 
@@ -96,10 +92,6 @@ async function initialize() {
         setupSchedulers();
 
         setupRouting(app);
-
-        app.get('*', (req, res) => {
-            res.sendFile(join(__dirname, '..', '..', 'build', 'index.html'))
-        });
 
         // Start the server
         const server = app.listen(PORT, '0.0.0.0', () => {

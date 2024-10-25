@@ -21,7 +21,6 @@ const databaseParams = [ {
 export async function setUpDatabase(client) {
     // Daily Stock Prices
     try{
-        console.log("this is being run");
         const db = client.db(DB_NAME);
         
         const setupComplete = await db.collection(SYSTEM_FLAG).findOne({_id: 'database_setup'});

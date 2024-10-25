@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@nivo/bar": "^0.87.0",
     "@nivo/core": "^0.87.0",
     "@nivo/heatmap": "^0.87.0",
@@ -19,6 +20,7 @@
     "concurrently": "^9.0.1",
     "cors": "^2.8.5",
     "d3": "^7.0.0",
+    "d3-time-format": "^4.1.0",
     "dotenv": "^16.4.5",
     "express": "^4.17.1",
     "mongodb": "^6.9.0",
@@ -31,16 +33,16 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.0"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://localhost:5000",
   "scripts": {
     "start": "react-scripts start",
     "stop": "sudo lsof -ti :5000 | xargs kill",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "node src/server/server.js",
     "server:dev": "nodemon --delay 500ms src/server/server.js",
-    "dev": "concurrently \"yarn server:dev\" \"yarn start\""
+    "dev": "concurrently \"yarn server:dev\" \"yarn start\"",
+    "server": "yarn build && yarn server:dev"
   },
   "eslintConfig": {
     "extends": [

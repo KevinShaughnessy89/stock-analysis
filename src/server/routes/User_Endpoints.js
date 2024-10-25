@@ -1,20 +1,21 @@
 import express from 'express';
 import path from 'path';
-import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
+
 // Databases
 import { StockMarket_DB } from '../config/DatabaseRegistry.js';
+import { groups } from 'd3';
 
-const COLLECTION_NAME_DAILY = 'daily-price';
+const COLLECTION_NAME_DAILY = 'daily_price';
 
 const userRouter = express.Router();
 const __dirname = path.dirname(__filename);
 
 userRouter.get('/', (req, res) => {
-    res.sendFile(join(__dirname, '..', '..', '..', 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', '..', '..', 'build', 'index.html'));
 })
 
 userRouter.post("/scrape", async (req, res) => {
@@ -40,6 +41,34 @@ userRouter.post("/scrape", async (req, res) => {
     }
 });
 
+userRouter.get('/data/symbols', async (req, res) => {
+    try {
+
+        const collection = StockMarket_DB.getDb().collection(COLLECTION_NAME_DAILY);
+
+        let groupStage = {
+            $group: {
+                _id: '$symbol'
+            }
+        };
+
+        let projectStage = {
+            $project: {
+                _id: 0,
+                symbol: '$_id'
+            }
+        };
+
+        const pipeline = [groupStage, projectStage];
+
+        const results = await collection.aggregate(pipeline).toArray();
+
+        res.status(200).json(results)
+    } catch (error) {
+        console.error("Error getting symbols: ", error);
+    } 
+});
+
 userRouter.get('/data/chart', async (req, res) => {
     try {
         console.log("Get request for daily stock prices");
@@ -47,7 +76,7 @@ userRouter.get('/data/chart', async (req, res) => {
 
         const count = await collection.countDocuments();
         if (count === 0) {
-            return res.status(404).json({
+            return res.json({
                 message: 'No documents found in the collection',
                 totalDocuments: 0
             });
@@ -55,39 +84,27 @@ userRouter.get('/data/chart', async (req, res) => {
 
         const { symbol, startDate, endDate } = req.query;
 
-        // const pipeline = [];
-
-        // const matchStage = {
-        //     $match: {
-        //         symbol: symbol,
-        //         timestamp: { 
-        //             $gte: new Date(startDate), 
-        //             $lte: new Date(endDate) 
-        //         }
-        //     }
-        // };
+        console.log('Query parameters:', {
+            symbol,
+            startDate,
+            endDate
+        });
         
-        // const groupStage = {
-        //     $group: {
-        //         _id: symbol,
-        //         averageHigh: { $avg: '$high' },
-        //         averageLow: { $avg: '$low'}
-        //     }
-        // };
+        const pipeline = [];
 
-        // const sortStage = {
-        //     $sort: {
-        //         averageHigh: -1
-        //     }
-        // };
-        
-        // const result = await collection.aggregate([
-        //     matchStage,
-        //     groupStage,
-        //     sortStage
-        // ]).toArray();
+        const matchStage = {
+            $match: {
+                symbol: symbol,
+                timestamp: { 
+                    $gte: new Date(startDate), 
+                    $lte: new Date(endDate) 
+                }
+            }
+        };
+    
+        pipeline.push(matchStage);
 
-        const result = await collection.find({}).toArray();
+        const result = await collection.aggregate(pipeline).toArray();
         
         if (result.length == 0) {
             return res.json({
@@ -95,7 +112,7 @@ userRouter.get('/data/chart', async (req, res) => {
                 criteria: { symbol, startData, endDate }
             });
         }
-        res.json(result);
+        res.status(200).json(result);
 
     } catch (error) {
         console.error("Error getting company list: ", error);
@@ -103,6 +120,8 @@ userRouter.get('/data/chart', async (req, res) => {
     }
 });
 
-userRouter
+userRouter.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', '..', '..', 'public', '404.html'))
+});
 
 export default userRouter;

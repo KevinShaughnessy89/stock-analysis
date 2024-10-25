@@ -1,51 +1,84 @@
 import { ResponsiveLine } from '@nivo/line'
 import { useEffect, useState } from 'react'
 import { getPriceData } from './apis.js';
+import { timeFormat } from 'd3-time-format'
 
-const DEFAULT_SYMBOL = 'MSI';
-const DEFAULT_START_DATE = '2024-06-01T00:00:00.000Z';
-const DEFAULT_END_DATE = '2024-06-10T00:00:00.000Z';
+const DEFAULT_SYMBOL = 'MMM';
+const DEFAULT_START_DATE = '2024-10-15T00:00:00.000Z';
+const DEFAULT_END_DATE = '2024-10-17T00:00:00.000Z';
 
 const MinimalLineChart = () => {
-    console.log("1. Component starting");  // First
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
-  
-    console.log("2. After useState");  // Second
+    const [loading, setLoading] = useState(true);
   
     useEffect(() => {
-      console.log("3. useEffect starting");  // Third
       const fetchData = async () => {
-        console.log("4. fetchData starting"); // Fourth
         try {
-          console.log("5. Before API call"); // Fifth
           const results = await getPriceData(DEFAULT_SYMBOL, DEFAULT_START_DATE, DEFAULT_END_DATE);
-          console.log("6. API returned:", results); // Sixth
           setData(results);
+          setLoading(false);
         } catch (error) {
-          console.log("Error:", error); // If there's an error
           setError(error);
+          console.log("Error displaying graph: ", error);
         }
       };
   
       fetchData();
     }, []);
   
-    console.log("7. Rendering, data is:", data);  // This will run multiple times
-  
+    // Add conditional rendering
+    if (loading) {
+      return <div>Loading...</div>;
+    }
 
+    if (!data) {
+      return <div>No data!</div>
+    }
+
+    console.log("7. Rendering, data is:", data);  // This will run multiple times
+    
     return (
         <div>
             <div style={{ height: '300px' }}>
                 <ResponsiveLine
                     data={data}
-                    margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
-                    axisBottom={null}
-                    axisLeft={null}
+                    margin={{ top: 50, right: 50, bottom: 70, left: 60 }}
+                    curve="natural"
+                    enableArea={true}
+                    enablePoints={false}
+                    useMesh={true}
+                    xScale={{
+                      type: 'time',
+                      precision: 'day'
+                    }}
+                    yScale={{
+                      type: 'linear',
+                      min: 'auto',
+                      max: 'auto'
+                    }}
+                    axisBottom={{
+                      tickSize: 10,
+                      tickValues: 5,
+                      tickPadding: 5,
+                      format: (value) => new Date(value).toLocaleDateString(),
+                      tickRotation: 0,
+                      legend: 'Day',
+                      legendOffset: 36,
+                      legendPosition: 'middle'
+                    }}
+                    axisLeft={{
+                      tickSize: 5,
+                      tickPadding: 5,
+                      tickRotation: 0,
+                      legend: 'Price',
+                      legendOffset: -40,
+                      legendPosition: 'middle'
+                    }}
                 />
             </div>
             <div>
-                <p>{JSON.stringify(data)}</p>
+                <p>This is a placeholder.</p>
             </div>
         </div>
     )
