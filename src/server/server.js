@@ -35,7 +35,7 @@ function setupMiddleware(app) {
             'http://localhost:3000', 
             'http://localhost:5000',
             'http://35.208.160.118',
-            'http://kevinshaughnessy.ca'
+            'https://kevinshaughnessy.ca'
 		]
     }));
 
@@ -98,7 +98,7 @@ async function initialize() {
         setupRouting(app);
 
         app.get('*', (req, res) => {
-            res.sendFile(path.join(__dirname, '..', '..', 'build', 'index.html'))
+            res.sendFile(join(__dirname, '..', '..', 'build', 'index.html'))
         });
 
         // Start the server
@@ -112,7 +112,6 @@ async function initialize() {
         // Initialize database and start stock updates
         await setUpDatabase(client);
 
-        //await updateStockData()
     } catch (error) {
         console.error('Failed to initialize server:', error);
         process.exit(1);

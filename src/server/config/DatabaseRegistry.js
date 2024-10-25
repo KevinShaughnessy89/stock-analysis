@@ -35,6 +35,7 @@ export async function setUpDatabase(client) {
                 { upsert: true}
             );
         } else {
+            StockMarket_DB.connect();
             console.log("Database already exists.")
         }
     }
