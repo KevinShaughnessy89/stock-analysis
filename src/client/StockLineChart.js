@@ -1,48 +1,18 @@
 import { ResponsiveLine } from '@nivo/line'
 import { useEffect, useState } from 'react'
-import { getPriceData } from './apis.js';
 import { timeFormat } from 'd3-time-format'
 
 const DEFAULT_SYMBOL = 'MMM';
 const DEFAULT_START_DATE = '2024-10-15T00:00:00.000Z';
 const DEFAULT_END_DATE = '2024-10-17T00:00:00.000Z';
 
-const MinimalLineChart = () => {
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const results = await getPriceData(DEFAULT_SYMBOL, DEFAULT_START_DATE, DEFAULT_END_DATE);
-          setData(results);
-          setLoading(false);
-        } catch (error) {
-          setError(error);
-          console.log("Error displaying graph: ", error);
-        }
-      };
-  
-      fetchData();
-    }, []);
-  
-    // Add conditional rendering
-    if (loading) {
-      return <div>Loading...</div>;
-    }
-
-    if (!data) {
-      return <div>No data!</div>
-    }
-
-    console.log("7. Rendering, data is:", data);  // This will run multiple times
+const StockLineChart = ({ selectedPriceData }) => {
     
     return (
         <div>
             <div style={{ height: '300px' }}>
                 <ResponsiveLine
-                    data={data}
+                    data={selectedPriceData}
                     margin={{ top: 50, right: 50, bottom: 70, left: 60 }}
                     curve="natural"
                     enableArea={true}
@@ -61,7 +31,13 @@ const MinimalLineChart = () => {
                       tickSize: 10,
                       tickValues: 5,
                       tickPadding: 5,
-                      format: (value) => new Date(value).toLocaleDateString(),
+                      format: (value) => {
+                        if (!value) return '';
+                        const date = new Date(value);
+                        return date instanceof Date && !isNaN(date) 
+                          ? date.toLocaleDateString() 
+                          : '';
+                      },
                       tickRotation: 0,
                       legend: 'Day',
                       legendOffset: 36,
@@ -84,4 +60,4 @@ const MinimalLineChart = () => {
     )
 }
 
-export default MinimalLineChart
+export default StockLineChart

@@ -44,3 +44,13 @@ const api = axios.create({
       throw error;
     }
   }
+
+export async function getSymbols() {
+  try {
+    console.log("did we get here");
+    const response = await axios.get('/data/symbols');
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching stock symbols: ", error);
+  }
+}

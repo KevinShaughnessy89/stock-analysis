@@ -109,7 +109,7 @@ userRouter.get('/data/chart', async (req, res) => {
         if (result.length == 0) {
             return res.json({
                 message: 'No documents found',
-                criteria: { symbol, startData, endDate }
+                criteria: { symbol, startDate, endDate }
             });
         }
         res.status(200).json(result);
