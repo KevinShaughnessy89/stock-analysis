@@ -11,18 +11,23 @@
     "@nivo/line": "^0.87.0",
     "@nivo/pie": "^0.87.0",
     "@nivo/scatterplot": "^0.87.0",
+    "@radix-ui/react-select": "^2.1.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "add": "^2.0.6",
     "axios": "^1.7.7",
     "chart.js": "^4.4.5",
     "cheerio": "^1.0.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "concurrently": "^9.0.1",
     "cors": "^2.8.5",
     "d3": "^7.0.0",
     "d3-time-format": "^4.1.0",
     "dotenv": "^16.4.5",
     "express": "^4.17.1",
+    "lucide-react": "^0.453.0",
     "mongodb": "^6.9.0",
     "mongoose": "^8.7.2",
     "node-cron": "^3.0.3",
@@ -31,16 +36,21 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
+    "select": "^1.1.2",
+    "shadcn-ui": "^0.9.2",
+    "tailwind-merge": "^2.5.4",
+    "tailwindcss": "^3.4.14",
+    "tailwindcss-animate": "^1.0.7",
     "web-vitals": "^2.1.0"
   },
   "proxy": "https://localhost:5000",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "craco start",
     "stop": "sudo lsof -ti :5000 | xargs kill",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server:dev": "NODE_ENV=development nodemon --delay 500ms --inspect src/server/server.js",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
+    "server:dev": "NODE_ENV=development nodemon --inspect=0.0.0.0:9229 src/server/server.js --delay 500ms",
     "dev": "concurrently \"yarn server:dev\" \"yarn start\"",
     "server": "yarn build && yarn server:dev"
   },
@@ -63,6 +73,9 @@
     ]
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "@craco/craco": "^7.1.0",
+    "autoprefixer": "^10.4.20",
+    "nodemon": "^3.1.7",
+    "postcss": "^8.4.47"
   }
 }

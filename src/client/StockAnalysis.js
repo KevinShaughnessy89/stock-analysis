@@ -53,7 +53,7 @@ const StockAnalysis = () => {
             {isLoading && <div><h2>Loading...</h2></div>} 
             {!isLoading && <div><StockLineChart selectedPriceData={priceData} /></div>} 
         </div>
-    )
+    );
 }
 
 export default StockAnalysis;

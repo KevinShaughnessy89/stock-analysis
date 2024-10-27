@@ -1,0 +1,40 @@
+.select-trigger {
+    width: 200px;
+    background: linear-gradient(to right, rgb(3, 7, 18), rgb(17, 24, 39));
+    border-color: rgb(20, 83, 45);
+    color: rgb(74, 222, 128);
+    transition: all 300ms;
+  }
+  
+  .select-trigger:hover {
+    background: linear-gradient(to right, rgb(17, 24, 39), rgb(31, 41, 55));
+    border-color: rgb(21, 128, 61);
+    color: rgb(134, 239, 172);
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.2);
+  }
+  
+  .select-trigger:focus {
+    --ring-color: rgb(20, 83, 45);
+    border-color: rgb(21, 128, 61);
+  }
+  
+  .select-content {
+    background: linear-gradient(to right, rgb(3, 7, 18), rgb(17, 24, 39));
+    border-color: rgb(20, 83, 45);
+  }
+  
+  .select-item {
+    color: rgb(74, 222, 128);
+  }
+  
+  .select-item:hover,
+  .select-item:focus {
+    background-color: rgba(20, 83, 45, 0.2);
+    color: rgb(134, 239, 172);
+  }
+  
+  .select-container {
+    padding: 2rem;
+    background-color: black;
+    border-radius: 0.75rem;
+  }

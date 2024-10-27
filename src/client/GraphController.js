@@ -1,7 +1,15 @@
 import { useEffect,useState } from 'react';
 import { getSymbols } from './apis.js';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select"
+import './GraphController.css';
 
-async function GraphController({ onSymbolSelect }) {
+function GraphController({ onSymbolSelect }) {
 
     const [symbolList, setSymbolList] = useState([]);
     const [startDate, setStartDate] = useState(new Date('2024-10-15'));
@@ -42,17 +50,21 @@ async function GraphController({ onSymbolSelect }) {
     console.log('isLoading:', isLoading); // Check loading state
 
     return (
-        <details>
-            <summary>Select Symbol</summary>
-            <div className="drop-menu">
-                {/* { {symbolList.map((item) => (
-                    <button key={item.symbol} onClick={() => {
-                        console.log("In the map");
-                        onSymbolSelect(item.symbol);
-                    }}>{item.symbol}</button>} */}
-            </div>
-        </details>
-    )
+        <div className='select-container'>
+            <Select>
+                <SelectTrigger className='select-trigger'>
+                    <SelectValue placeholder="Select Symbol" />
+                </SelectTrigger>
+                <SelectContent className='select-content'>
+                    {symbolList.map((item) => (
+                        <SelectItem key={item.symbol} value={item.symbol} className='select-item'>
+                            {item.symbol}
+                        </SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
+        </div>
+    );
 }
 
 export default GraphController;
