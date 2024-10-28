@@ -1,28 +1,34 @@
 import { useEffect,useState } from 'react';
 import { getSymbols } from './apis.js';
+import { Button } from "@/components/ui/button"
+import { Check } from "lucide-react";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select"
-import './GraphController.css';
-
-function GraphController({ onSymbolSelect }) {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+  } from "@/components/ui/command"
+  import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+  } from "@/components/ui/popover"
+   
+function GraphController({ onSymbolSelect , selectedSymbol }) {
 
     const [symbolList, setSymbolList] = useState([]);
     const [startDate, setStartDate] = useState(new Date('2024-10-15'));
     const [endDate, setEndDate] = useState(new Date('2024-10-22'));
     const [isLoading, setIsLoading] = useState(true);
+    const [open, setOpen] = useState(false);
 
     useEffect( () => {
 
         const fetchData = async () => {
             try {
-                console.log("1");
                 setIsLoading(true);
-                console.log('2');
                 const symbols = await getSymbols();
                 console.log('Symbols received:', symbols); // Check what we're getting
                 setSymbolList(symbols);            
@@ -36,8 +42,6 @@ function GraphController({ onSymbolSelect }) {
             }
         }
 
-        console.log("do we at least get here?");
-
         void fetchData();
 
     }, []);
@@ -46,23 +50,36 @@ function GraphController({ onSymbolSelect }) {
         return (<div>Loading...</div>);
     }
 
-    console.log('Current symbolList:', symbolList); // Check state
-    console.log('isLoading:', isLoading); // Check loading state
 
     return (
-        <div className='select-container'>
-            <Select>
-                <SelectTrigger className='select-trigger'>
-                    <SelectValue placeholder="Select Symbol" />
-                </SelectTrigger>
-                <SelectContent className='select-content'>
-                    {symbolList.map((item) => (
-                        <SelectItem key={item.symbol} value={item.symbol} className='select-item'>
-                            {item.symbol}
-                        </SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
+        <div>
+        <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+                <Button variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-between">
+                    {selectedSymbol ? symbolList.find((item) => item.value === selectedSymbol.value)?.label : "Search symbols..."}
+                </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[200px] p-0">
+                <Command>
+                    <CommandInput placeholder="Search symbols..." />
+                    <CommandList>
+                        <CommandEmpty>No symbol found.</CommandEmpty>
+                        <CommandGroup>
+                            {symbolList.map((item) => (
+                                <CommandItem key={item.value} value={item.value}
+                                             onSelect={(currentValue) => {
+                                                 onSymbolSelect(currentValue === item.value ? "" : item.label);
+                                                 setOpen(false);
+                                             }}>
+                                <Check className={`mr-2 h-4 w-4 ${selectedSymbol === item.value ? "opacity-100" : "opacity-0"}`}/>
+                                {item.label}
+                                </CommandItem>
+                            ))}
+                        </CommandGroup>
+                    </CommandList>
+                </Command>
+            </PopoverContent>
+        </Popover>
         </div>
     );
 }

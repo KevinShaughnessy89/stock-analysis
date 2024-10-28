@@ -55,7 +55,8 @@ userRouter.get('/data/symbols', async (req, res) => {
         let projectStage = {
             $project: {
                 _id: 0,
-                symbol: '$_id'
+                value: '$_id',
+                label: '$_id'
             }
         };
 

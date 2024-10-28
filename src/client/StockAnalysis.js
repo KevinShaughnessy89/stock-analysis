@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { getPriceData } from './apis.js'
 import StockLineChart from './StockLineChart.js';
 import GraphController from './GraphController.js';
+import '../index.css'
 
 const DEFAULT_SYMBOL = 'MSI';
 const DEFAULT_START_DATE = '2024-10-15T00:00:00.000Z';
@@ -27,7 +28,7 @@ const StockAnalysis = () => {
             try {
                 console.log("FEFDFDA");
                 setIsLoading(true);
-                const data = await getPriceData(symbol, DEFAULT_START_DATE, DEFAULT_END_DATE);
+                const data = await getPriceData(symbol.value, DEFAULT_START_DATE, DEFAULT_END_DATE);
                 console.log('do we get here');
                 setPriceData(data);
             } catch (error) {
@@ -48,8 +49,8 @@ const StockAnalysis = () => {
     //   }
 
     return (
-        <div>
-            <GraphController onSymbolSelect={setSymbol} />
+        <div className='bg-gray-900'>
+            <GraphController onSymbolSelect={setSymbol} selectedSymbol={symbol} />
             {isLoading && <div><h2>Loading...</h2></div>} 
             {!isLoading && <div><StockLineChart selectedPriceData={priceData} /></div>} 
         </div>
