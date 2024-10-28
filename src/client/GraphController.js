@@ -56,11 +56,11 @@ function GraphController({ onSymbolSelect , selectedSymbol }) {
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-between">
-                    {selectedSymbol ? symbolList.find((item) => item.value === selectedSymbol.value)?.label : "Search symbols..."}
+                    {selectedSymbol ? symbolList.find((item) => item.value === selectedSymbol)?.label : "Search symbols..."}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[200px] p-0">
-                <Command>
+                <Command className="dark:bg-gray-800">
                     <CommandInput placeholder="Search symbols..." />
                     <CommandList>
                         <CommandEmpty>No symbol found.</CommandEmpty>
@@ -68,7 +68,8 @@ function GraphController({ onSymbolSelect , selectedSymbol }) {
                             {symbolList.map((item) => (
                                 <CommandItem key={item.value} value={item.value}
                                              onSelect={(currentValue) => {
-                                                 onSymbolSelect(currentValue === item.value ? "" : item.label);
+                                                console.log("current value: ", currentValue, 'item value: ', item.value);
+                                                 onSymbolSelect(selectedSymbol === item.value ? "" : currentValue);
                                                  setOpen(false);
                                              }}>
                                 <Check className={`mr-2 h-4 w-4 ${selectedSymbol === item.value ? "opacity-100" : "opacity-0"}`}/>

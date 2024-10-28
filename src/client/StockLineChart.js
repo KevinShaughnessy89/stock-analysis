@@ -7,7 +7,6 @@ const DEFAULT_START_DATE = '2024-10-15T00:00:00.000Z';
 const DEFAULT_END_DATE = '2024-10-17T00:00:00.000Z';
 
 const StockLineChart = ({ selectedPriceData }) => {
-  console.log("Price data received:", selectedPriceData);
     return (
         <div>
             <div style={{ height: '300px' }}>
