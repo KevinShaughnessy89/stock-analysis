@@ -2,21 +2,37 @@ import { ResponsiveLine } from '@nivo/line'
 import { useEffect, useState } from 'react'
 import { timeFormat } from 'd3-time-format'
 
-const DEFAULT_SYMBOL = 'MMM';
-const DEFAULT_START_DATE = '2024-10-15T00:00:00.000Z';
-const DEFAULT_END_DATE = '2024-10-17T00:00:00.000Z';
+const StockLineChart = ({ graphState }) => {
 
-const StockLineChart = ({ selectedPriceData }) => {
+    console.log("graphState: ", graphState);
+
     return (
         <div>
             <div style={{ height: '300px' }}>
                 <ResponsiveLine
-                    data={selectedPriceData}
+                    data={graphState.isValid ? graphState.priceData : 
+                    [
+                      {id: "empty", 
+                        data: [
+                          {x: new Date(NaN),
+                           y: null
+                          }
+                      ]}
+                    ]}
                     margin={{ top: 50, right: 50, bottom: 70, left: 60 }}
+                    theme={{
+                      textColor: "#ffffff"
+                    }}
                     curve="natural"
                     enableArea={true}
                     enablePoints={false}
-                    useMesh={true}
+                    useMesh={graphState.isValid}
+                    // Motion
+                    animate={true}
+                    motionConfig="gentle"
+                    motionDamping={15}
+                    motionStiffness={90}
+                    // Axis scale
                     xScale={{
                       type: 'time',
                       precision: 'day'
@@ -31,7 +47,7 @@ const StockLineChart = ({ selectedPriceData }) => {
                       tickValues: 5,
                       tickPadding: 5,
                       format: (value) => {
-                        if (!value) return '';
+                        if (isNaN(value)) return '';
                         const date = new Date(value);
                         return date instanceof Date && !isNaN(date) 
                           ? date.toLocaleDateString() 

@@ -28,7 +28,9 @@ function setupMiddleware(app) {
     });
 
     // Basic middleware
-    app.use(express.json());
+    app.use(express.json({
+        strict: true
+    )});
     app.use(express.static(join(__dirname, '..', '..', 'build')));
     app.use(cors({
         origin: [
