@@ -7,7 +7,7 @@ const StockLineChart = ({ graphState }) => {
     console.log("graphState: ", graphState);
 
     return (
-        <div>
+        <div className="">
             <div style={{ height: '300px' }}>
                 <ResponsiveLine
                     data={graphState.isValid ? graphState.priceData : 

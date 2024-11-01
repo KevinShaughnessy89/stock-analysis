@@ -18,7 +18,7 @@ const databaseParams = [ {
     }
 ]
 
-export async function setUpDatabase(client) {
+export async function connectDatabase(client) {
     // Daily Stock Prices
     try{
         const db = client.db(DB_NAME);
@@ -35,7 +35,6 @@ export async function setUpDatabase(client) {
             );
         } else {
             StockMarket_DB.connect();
-            console.log("Database already exists.")
         }
     }
     catch (error) {

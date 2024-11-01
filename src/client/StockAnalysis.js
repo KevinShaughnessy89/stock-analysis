@@ -48,7 +48,7 @@ const StockAnalysis = () => {
     }, [symbol, startDate, endDate])
 
     return (
-        <div className='min-h-screen bg-background text-foreground dark'>
+        <div className='min-h-screen bg-background text-foreground  w-full h-full'>
             <SymbolSelector onSymbolSelect={setSymbol} selectedSymbol={symbol} />
             <GraphCalender onStartDateChange={setStartDate} onEndDateChange={setEndDate} />
             <StockLineChart graphState={graphState} />

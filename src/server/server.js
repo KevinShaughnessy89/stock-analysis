@@ -2,19 +2,23 @@ import express from 'express';
 import { MongoClient } from 'mongodb';
 import cors from 'cors';
 import cron from 'node-cron';
-import { dirname, join } from 'path';
+import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import userRouter from "./routes/User_Endpoints.js";
-import { setUpDatabase } from './config/DatabaseRegistry.js';
+import { connectDatabase } from './config/DatabaseRegistry.js';
 import { updateStockData } from './domain/stockData.js';
+import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
+import { globalErrorHandler } from './middleware/errorHandling.js';
 
 // Constants and configuration
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const uri = 'mongodb://0.0.0.0:27017/...';
+const uri = process.env.MONGODB_URI;
 const PORT = process.env.PORT || 5000;
-dotenv.config();
+
+dotenv.config({ path: resolve(__dirname, '../../.env')});
 
 // Express app initialization
 const app = express();
@@ -23,14 +27,15 @@ const app = express();
 function setupMiddleware(app) {
     // Request logging
     app.use((req, res, next) => {
-        console.log(`Received request: ${req.method} ${req.url}`);
+        console.log(`Received request: ${req.method} ${req.url} ${req.path}`);
         next();
     });
 
     // Basic middleware
     app.use(express.json({
         strict: true
-    )});
+    }));
+
     app.use(express.static(join(__dirname, '..', '..', 'build')));
     app.use(cors({
         origin: [
@@ -41,11 +46,9 @@ function setupMiddleware(app) {
 		]
     }));
 
-    // Error handling middleware (should be last)
-    app.use((err, req, res, next) => {
-        console.error(err);
-        res.status(500).json({ error: "Internal Server Error" });
-    });
+    app.use(cookieParser());
+
+    app.use(globalErrorHandler);
 }
 
 function setupRouting(app) {
@@ -81,12 +84,29 @@ async function setupSchedulers() {
     })
 }
 
-// Main initialization function
-async function initialize() {
+async function setupDatabase() {
     try {
         // Connect to MongoDB
         const client = await MongoClient.connect(uri);
         console.log("Connected to MongoDB.");
+
+        // Connect to mongoose
+        await mongoose.connect(uri);
+        console.log("mongoose connected to MongoDB.");
+
+        connectDatabase(client);
+    }
+    catch (error) {
+        console.error("Error connecting to database: ", error);
+        process.exit(1);
+    }
+}
+
+// Main initialization function
+async function initialize() {
+    try {
+
+        setupDatabase();
 
         // Setup Express middleware and routes
         setupMiddleware(app);
@@ -102,9 +122,6 @@ async function initialize() {
 
         // Setup process handlers
         setupProcessHandlers(server);
-
-        // Initialize database and start stock updates
-        await setUpDatabase(client);
 
     } catch (error) {
         console.error('Failed to initialize server:', error);

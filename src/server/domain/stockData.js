@@ -98,8 +98,40 @@ async function getStockData(symbol)
           } else if (error.request) {
             console.error('Error request:', error.request);
           } else {
-            console.error('Error message:', error.message);        }
+               console.error('Error message:', error.message);        }
     }
 }
 
-updateStockData();
+export async function getStockNews(topic) {
+    try {
+        const response = await axios.get(BASE_URL, {
+            params: {
+                function: 'NEWS_SENTIMENT',
+                topics: topic
+            },
+            headers: {
+                'User-Agent': 'request'
+            },
+            timeout: 10000
+        });
+
+        if (response.status === 429) {
+            console.error("API limit reached.");
+        }
+
+        return {
+            data: response.data,
+            status: response.status
+        }
+    } catch (error) {
+        if (error.response) {
+            console.error('Error data:', error.response.data);
+            console.error('Error status:', error.response.status);
+            console.error('Error headers:', error.response.headers);
+          } else if (error.request) {
+            console.error('Error request:', error.request);
+          } else {
+               console.error('Error message:', error.message);        
+        }
+    }
+}

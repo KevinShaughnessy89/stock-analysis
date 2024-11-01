@@ -2,44 +2,139 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-
+import AuthServices from '../services/authServices.js';
 const __filename = fileURLToPath(import.meta.url);
+import WebScraper from '../services/WebScraper.js';
+import { getStockNews } from '../domain/stockData.js';
 
 // Databases
 import { StockMarket_DB } from '../config/DatabaseRegistry.js';
 import { groups } from 'd3';
+import { User } from '../models/userModel.js';
 
 const COLLECTION_NAME_DAILY = 'daily_price';
 
 const userRouter = express.Router();
 const __dirname = path.dirname(__filename);
 
+// TODO - Implement error handling with globalErrorHandler
+
 userRouter.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', '..', '..', 'build', 'index.html'));
-})
+});
 
-userRouter.post("/scrape", async (req, res) => {
-    const {url} = req.body;
-
-    if (!url) {
-        console.log("URL is missing in the request");
-        return res.status(400).json({ error: 'URL is required' });
-    }
-
+userRouter.post('/user/register', AuthServices.sameOrigin, async (req,res) => {
     try {
-        const scraper = new WebScraper();
-        const scrapedData = await scraper.scrapeAll(url);
-        console.log("Data being sent:", scrapedData);
-        res.json(scrapedData);
-    } catch(error) {
-        console.error("Error in POST route: /scraped: ", error);
-        res.status(500).json({ 
-            error: 'Failed to scrape website',
-            message: error.message,
-            stack: error.stack
-        });
+
+        const {username, password, email} = req.body;
+
+        const result = await AuthServices.register( // returns token and user pointer
+            {
+                username: username,
+                password: password,
+                email: email
+            }
+        );
+
+        res.status(200).json({message: `Registration successful for user: ${username}`});
+
+    }
+    catch (error) {
+        console.error("Error registering user: ", error);
     }
 });
+
+userRouter.post('/user/login', async (req, res) => {
+    try {
+
+        const {username, password} = req.body;
+
+        const result = await AuthServices.login({
+            username: username,
+            password: password
+        });
+
+        console.log("login complete.")
+
+        res.cookie('jwt', result.token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+            maxAge: 3600000
+        })
+        
+        res.json({
+            success: true
+        })
+    }
+    catch (error) {
+        console.error("Error logging in user: ", error);
+    }
+})
+
+userRouter.post('/user/logout', AuthServices.sameOrigin, async (req, res) => {
+    res.clearCookies('jwt');
+    res.status(200).json({message: "Logout successful."});
+});
+
+userRouter.get('/user/info',   (req, res, next) => {
+    console.log("Request received, cookies:", req.cookies);
+    console.log("Query params:", req.query);
+    next();
+  }, AuthServices.verifyToken, async (req, res) => {
+
+    console.log("/user/info/ endpoint reached with fields: ", req.query.fields);
+    
+    const fields = req.query.fields?.split(',').reduce((obj, field) => {
+        obj[field] = 1;
+        return obj;
+    }, {})
+    
+    console.log("Found field: ", fields)
+    const existingUser = await User.findById(req.decoded.id, fields);
+    console.log("Found user: ", existingUser)
+
+    if (!existingUser) {
+        return res.status(200).json({guest: true});
+    }
+
+    return res.status(200).json(existingUser);
+
+})
+
+
+userRouter.post("/scrape", async (req, res) => {
+    try {
+        
+        const {url} = req.body;
+        
+        if (!url) {
+            console.log("URL is missing in the request");
+            return res.status(400).json({ error: 'URL is required' });
+        }
+        
+        const scraper = new WebScraper();
+        const scrapedData = await scraper.getRawHtml(url);
+        console.log("Data being sent:", scrapedData);
+        return (scrapedData);
+    } 
+    catch(error) {
+        console.error("Error in POST route: /scrape: ", error);
+    }
+});
+
+userRouter.post('/data/news', async (req, res) => {
+    try {
+
+        const topic = req.body.topic;
+
+        const news = await getStockNews(topic);
+        return news.data;
+    }
+    catch (error) {
+        console.error("Error getting stock news: ", error);
+    }
+)
 
 userRouter.get('/data/symbols', async (req, res) => {
     try {
