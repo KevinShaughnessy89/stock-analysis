@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { getPriceData } from './apis.js'
 import StockLineChart from './StockLineChart.js';
 import SymbolSelector from './SymbolSelecter.js';
 import GraphCalender from './GraphCalender.js';
 import { isValid } from "date-fns";
+import { makeApiCall } from '../common/makeApiCall.js';
 
 const DEFAULT_START_DATE = '2024-10-15T00:00:00.000Z';
 const DEFAULT_END_DATE = '2024-10-17T00:00:00.000Z';
@@ -32,7 +32,12 @@ const StockAnalysis = () => {
         if (symbol !== "" && isValid(startDate) && isValid(endDate)) {
             const fetchData = async () => {
                 try {
-                    const data = await getPriceData(symbol, startDate, endDate);
+                    const data = await makeApiCall('getPriceData', {
+                        symbol: symbol,
+                        startDate: startDate,
+                        endDate: endDate
+                    });
+                    console.log("Returned DATA: ", data);
                     setGraphState({
                         isValid: true,
                         priceData: data

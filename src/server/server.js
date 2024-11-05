@@ -5,18 +5,20 @@ import cron from 'node-cron';
 import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import userRouter from "./routes/User_Endpoints.js";
 import { connectDatabase } from './config/DatabaseRegistry.js';
-import { updateStockData } from './domain/stockData.js';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import { globalErrorHandler } from './middleware/errorHandling.js';
+import { updateDatabase } from './api/apiController.js';
 
 // Constants and configuration
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const uri = process.env.MONGODB_URI;
 const PORT = process.env.PORT || 5000;
+
+// Routers
+import { routers, createEndpoints } from './routes/endpointHandler.js'
 
 dotenv.config({ path: resolve(__dirname, '../../.env')});
 
@@ -27,7 +29,12 @@ const app = express();
 function setupMiddleware(app) {
     // Request logging
     app.use((req, res, next) => {
-        console.log(`Received request: ${req.method} ${req.url} ${req.path}`);
+        console.log('==== Incoming Request ====');
+        console.log(`Time: ${new Date().toISOString()}`);
+        console.log(`Method: ${req.method}`);
+        console.log(`URL: ${req.url}`);
+        console.log(`Headers:`, req.headers);
+        console.log('========================');
         next();
     });
 
@@ -52,8 +59,10 @@ function setupMiddleware(app) {
 }
 
 function setupRouting(app) {
-        // Routes
-        app.use('/api', userRouter);
+        createEndpoints();
+        app.use('/api/user', routers.userRouter.data);
+        app.use('/api/data', routers.dataRouter.data);
+        app.use('/api', routers.systemRouter.data);
 }
 
 // Setup process signal handlers
@@ -72,11 +81,11 @@ function setupProcessHandlers(server) {
 }
 
 async function setupSchedulers() {
-    cron.schedule('0 18 * * *', async () => {
+    cron.schedule('* * * * *', async () => {
         try {
-            console.log('Updating stock price data...');
-            await updateStockData();
-            console.log('Update complete.');
+            console.log('Beginning scheduled update.');
+            await updateDatabase();
+            console.log('Scheduled update complete.');
         }
         catch (error) {
             console.error('Error updating stock price: ', error);

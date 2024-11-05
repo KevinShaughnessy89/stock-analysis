@@ -104,10 +104,12 @@ async function getStockData(symbol)
 
 export async function getStockNews(topic) {
     try {
+        console.log("Making API call")
         const response = await axios.get(BASE_URL, {
             params: {
                 function: 'NEWS_SENTIMENT',
-                topics: topic
+                topics: topic,
+                apikey: API_KEY
             },
             headers: {
                 'User-Agent': 'request'
@@ -115,14 +117,14 @@ export async function getStockNews(topic) {
             timeout: 10000
         });
 
+        console.log(response);
+        
         if (response.status === 429) {
             console.error("API limit reached.");
         }
 
-        return {
-            data: response.data,
-            status: response.status
-        }
+        return response.data.feed;
+
     } catch (error) {
         if (error.response) {
             console.error('Error data:', error.response.data);

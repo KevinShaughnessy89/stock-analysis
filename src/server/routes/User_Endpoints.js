@@ -6,6 +6,14 @@ import AuthServices from '../services/authServices.js';
 const __filename = fileURLToPath(import.meta.url);
 import WebScraper from '../services/WebScraper.js';
 import { getStockNews } from '../domain/stockData.js';
+import axios from 'axios'
+
+const STOCK_SYMBOLS = [
+    'MMM', 'MSI', 'GD', 'EMR', 'ETN', 'SHW',
+    'HUM', 'ITW', 'APD', 'ADSK', 'MCK', 'PAYX'];
+const API_KEY = 'VY7DZFI0W1AD27KR';
+const BASE_URL = 'https://www.alphavantage.co/query?'
+
 
 // Databases
 import { StockMarket_DB } from '../config/DatabaseRegistry.js';
@@ -103,38 +111,62 @@ userRouter.get('/user/info',   (req, res, next) => {
 })
 
 
-userRouter.post("/scrape", async (req, res) => {
-    try {
+// userRouter.post("/scrape", async (req, res) => {
+//     try {
         
-        const {url} = req.body;
+//         const {url} = req.body;
         
-        if (!url) {
-            console.log("URL is missing in the request");
-            return res.status(400).json({ error: 'URL is required' });
-        }
+//         if (!url) {
+//             console.log("URL is missing in the request");
+//             return res.status(400).json({ error: 'URL is required' });
+//         }
         
-        const scraper = new WebScraper();
-        const scrapedData = await scraper.getRawHtml(url);
-        console.log("Data being sent:", scrapedData);
-        return (scrapedData);
-    } 
-    catch(error) {
-        console.error("Error in POST route: /scrape: ", error);
-    }
-});
+//         const scraper = new WebScraper();
+//         const scrapedData = await scraper.getRawHtml(url);
+//         console.log("Data being sent:", scrapedData);
+//         return (scrapedData);
+//     } 
+//     catch(error) {
+//         console.error("Error in POST route: /scrape: ", error);
+//     }
+// });
 
 userRouter.post('/data/news', async (req, res) => {
     try {
+        console.log("Making API call")
+        const response = await axios.get(BASE_URL, {
+            params: {
+                function: 'NEWS_SENTIMENT',
+                ...(req.body.topics && { topics: req.body.topics }),
+                ...(req.body.tickers && { tickers: req.body.tickers }),
+                apikey: API_KEY
+            },
+            headers: {
+                'User-Agent': 'request'
+            },
+            timeout: 10000
+        });
 
-        const topic = req.body.topic;
+        console.log(response);
+        
+        if (response.status === 429) {
+            console.error("API limit reached.");
+        }
 
-        const news = await getStockNews(topic);
-        return news.data;
+        return response.data.feed;
+
+    } catch (error) {
+        if (error.response) {
+            console.error('Error data:', error.response.data);
+            console.error('Error status:', error.response.status);
+            console.error('Error headers:', error.response.headers);
+          } else if (error.request) {
+            console.error('Error request:', error.request);
+          } else {
+               console.error('Error message:', error.message);        
+        }
     }
-    catch (error) {
-        console.error("Error getting stock news: ", error);
-    }
-)
+});
 
 userRouter.get('/data/symbols', async (req, res) => {
     try {

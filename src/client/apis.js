@@ -164,14 +164,16 @@ export async function getSymbols() {
 
 export async function queryNews(request) {
   try {
+    console.log("sending topic: ", request)
     
-    const response = await localApi.get('/data/news', {
+    const response = await localApi.post('/data/news', {
      topic: request
     });
 
-    return response.data;
+    console.log("recieved client side: ", response)
+    return response;
   }
   catch (error) {
-    console.error("Error queries news endpoint: ", error);
+    console.error("Error querying news endpoint: ", error);
   }
 }
