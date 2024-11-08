@@ -9,7 +9,8 @@ import { connectDatabase } from './config/DatabaseRegistry.js';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import { globalErrorHandler } from './middleware/errorHandling.js';
-import { updateDatabase } from './api/apiController.js';
+import { updateDatabase } from './api/apiManager.js';
+import AuthService from './services/authService.js';
 
 // Constants and configuration
 const __filename = fileURLToPath(import.meta.url);
@@ -18,7 +19,7 @@ const uri = process.env.MONGODB_URI;
 const PORT = process.env.PORT || 5000;
 
 // Routers
-import { routers, createEndpoints } from './routes/endpointHandler.js'
+import { routers, createEndpoints } from './routes/endpointManager.js'
 
 dotenv.config({ path: resolve(__dirname, '../../.env')});
 
@@ -81,10 +82,10 @@ function setupProcessHandlers(server) {
 }
 
 async function setupSchedulers() {
-    cron.schedule('* * * * *', async () => {
+    cron.schedule('12 * * * *', async () => {
         try {
             console.log('Beginning scheduled update.');
-            await updateDatabase();
+            // await updateDatabase();
             console.log('Scheduled update complete.');
         }
         catch (error) {
