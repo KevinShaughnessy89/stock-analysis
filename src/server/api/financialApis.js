@@ -27,24 +27,24 @@ export const financialApis = {
         symbols: TICKERS,
         model: SentimentSchema
     },
-    newsSentimentTopics: {
-        method: 'GET',
-        baseURL: 'https://www.alphavantage.co',
-        endpoint: '/query?',
-        params: {
-            topics: true,
-        },
-        appendParams: {
-            apikey:  'VY7DZFI0W1AD27KR',
-            function: 'NEWS_SENTIMENT',
-        },
-        transform: (data) => {
-            return transformSentimentArticles(data);
-        },
-        collection: 'news_sentiment_topics',
-        symbols: TOPICS,
-        model: SentimentSchema
-    },
+    // newsSentimentTopics: {
+    //     method: 'GET',
+    //     baseURL: 'https://www.alphavantage.co',
+    //     endpoint: '/query?',
+    //     params: {
+    //         topics: true,
+    //     },
+    //     appendParams: {
+    //         apikey:  'VY7DZFI0W1AD27KR',
+    //         function: 'NEWS_SENTIMENT',
+    //     },
+    //     transform: (data) => {
+    //         return transformSentimentArticles(data);
+    //     },
+    //     collection: 'news_sentiment_topics',
+    //     symbols: TOPICS,
+    //     model: SentimentSchema
+    // },
     dailyPrice: {
         method: 'GET',
         baseURL: 'https://www.alphavantage.co',

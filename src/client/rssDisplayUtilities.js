@@ -9,13 +9,13 @@ export async function getRssFeed(url) {
         title: article.title,
         description: article.description,
         author: article.author,
-        url: article.link
+        link: article.link
     }));
 
     return processedData;
 }
 
 export async function saveFeedItem(feedItem) {
-
-    const request = await makeApiCall(apiEndpoints.saveFeedItem, {}, { feedItem });
+    console.log("feed item:" , feedItem);
+    const request = await makeApiCall(apiEndpoints.saveFeedItem, {}, feedItem );
 }

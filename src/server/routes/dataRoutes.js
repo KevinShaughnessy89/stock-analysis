@@ -1,4 +1,6 @@
 import { StockMarket_DB } from "../config/DatabaseRegistry.js";
+import { calculateAverage } from "../statistics/processPriceData.js";
+
 const COLLECTION_NAME_DAILY = "daily_price";
 
 export const dataRoutes = {
@@ -97,5 +99,26 @@ export const dataRoutes = {
             }
         ]
     },
+    getPriceAverage: {
+        path: '/prices/average',
+        method: 'GET',
+        pipeline: [
+            {
+                name: 'queryDatabase',
+                handler: async (req, res, next) => {
+                    console.log("did we get here")
+                    const {symbol, startDate, endDate} = req.query;
+
+                    const data = await calculateAverage(symbol, startDate, endDate);
+                    console.log("data: ", data);
+                    if (data) {
+                        res.status(200).json(data);
+                    } else {
+                        res.status(400).json({message: 'Error retrieving price averages'});
+                    }
+                }
+            }
+        ]
+    }
     
 }

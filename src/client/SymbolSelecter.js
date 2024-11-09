@@ -1,7 +1,8 @@
 import { useEffect,useState } from 'react';
 import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react";
-import { makeApiCall, makeDetailedApiCall } from '../common/makeApiCall.js';
+import { makeApiCall } from '../common/makeApiCall.js';
+import { apiEndpoints } from './apiEndpoints.js';
 import {
     Command,
     CommandEmpty,
@@ -25,7 +26,7 @@ function SymbolSelector({ onSymbolSelect , selectedSymbol }) {
 
         const fetchData = async () => {
             try {
-                const response = await makeDetailedApiCall('getStockSymbols');
+                const response = await makeApiCall(apiEndpoints.getStockSymbols);
                 console.log(response);
                 setSymbolList(response);            
                 return;

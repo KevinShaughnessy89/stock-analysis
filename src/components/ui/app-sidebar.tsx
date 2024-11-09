@@ -27,6 +27,11 @@ const items = [
         title: 'Preferences',
         url: '/preferences',
         icon: Settings
+    },
+    {
+        title: 'Dashboard',
+        url: '/dashboard',
+        icon: Home
     }
 ]
 

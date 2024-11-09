@@ -27,24 +27,28 @@ const userSchema = new mongoose.Schema({
         minlength: [3, 'Username must be at least 3 characters.'],
         maxlength: [30, "Username can't be more than 30 characters."]
     },
-    savedFeeds: [{
-        title: {
-            type: String,
-            required: true
-        },
-        link: {
-            type: String,
-            required: true
-        },
-        description: {
-            type: String,
-            required: true
-        },
-        savedAt: {
-            type: Date,
-            default: Date.now
-        }
+    savedFeeds: {
+        type: [{
+            title: {
+                type: String,
+                required: true
+            },
+            link: {
+                type: String,
+                required: true
+            },
+            description: {
+                type: String,
+                required: true
+            },
+            savedAt: {
+                type: Date,
+                default: Date.now
+            }
     }],
+    default: []
+    },
+    
 
     // Profiles
     // https://claude.ai/chat/aa7bb8bb-9f5c-4a30-9c03-bd3cfc0d7de6

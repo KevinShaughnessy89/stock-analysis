@@ -14,7 +14,7 @@ const RSSDisplay = ({article, setIndex, feedConfig, setFeedConfig}) => {
         <div>
             <Card className="h-128 w-96">
                 <CardHeader className='space-y-2'>
-                    <CardTitle className='w-full h-32 overflow-y-auto'><a href={article?.url}>{article?.title}</a></CardTitle>
+                    <CardTitle className='w-full h-32 overflow-y-auto'><a href={article?.link}>{article?.title}</a></CardTitle>
                     <CardDescription className='h-20 p-0 m-0 overflow-y-auto'>
                         <p className='shadow-md p-0 m-0 rounded-lg h-full'>{article?.description} - {article?.author}</p>
                     </CardDescription>

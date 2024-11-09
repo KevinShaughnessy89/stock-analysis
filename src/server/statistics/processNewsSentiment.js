@@ -1,13 +1,13 @@
-import { makeDetailedApiCall } from "../common/makeApiCall";
-import { StockMarket_DB } from "../server/config/DatabaseRegistry";
+import { makeDetailedApiCall } from "../../common/makeApiCall";
+import { StockMarket_DB } from "../config/DatabaseRegistry";
 
 const COLLECTION_NAME = 'news_sentiment';
 
 async function calculateOverallSentimentScore(symbol, startDate, endDate) {
 
-    const data = StockMarket_DB.findDocuments(COLLECTION_NAME, {
-        symbol: symbol
-    });
+    // const data = await StockMarket_DB.findDocuments(COLLECTION_NAME, {
+    //     symbol: symbol
+    // });
 
     const matchStage = {
         symbol: symbol,

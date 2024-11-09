@@ -78,11 +78,31 @@ export const userRoutes = {
                 name: 'clearCookies',
                 handler: async (req, res, next) => {
                     try {
-                        res.clearCookies('jwt');
+                        res.clearCookie('jwt');
                         res.status(200).json({ message: "Logout successful." });
                     }
                     catch (error) {
                         next(error);
+                    }
+                }
+            }
+        ]
+    },
+    verifyUser: {
+        path: '/auth/verify',
+        method: 'GET',
+        pipeline: [
+            {
+                name: 'verifyCookie',
+                handler: async (req, res, next) => {
+                    AuthService.verifyToken(req, res, next);
+                },
+                name: 'sendResponse',
+                handler: async (req, res, next) => {
+                    if (req.decoded) {
+                        res.status(200).json({ message: `user: ${req.decoded.id} authenticated`})
+                    } else {
+                        res.status(400).json({ message: 'Server could not verify user token'})
                     }
                 }
             }
@@ -135,13 +155,13 @@ export const userRoutes = {
                 handler: async (req, res, next) => {
                     try {
                         const userId = req.decoded.id;
-
+                        
                         const feedItem = {
                             title: req.body.title,
                             link: req.body.link,
                             description: req.body.description
                         };
-
+                        console.log("Feed item: ", feedItem);
                         const updatedUser = await User.findByIdAndUpdate(
                             userId,
                             { $push: { savedFeeds: feedItem }},

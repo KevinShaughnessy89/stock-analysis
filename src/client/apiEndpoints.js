@@ -1,3 +1,5 @@
+import { useAuthStore } from "./authStore.js";
+
 const DOMAIN = 'https://kevinshaughnessy.ca'
 
 export const apiEndpoints = {
@@ -8,7 +10,7 @@ export const apiEndpoints = {
         headers: {
             'Content-Type': 'application/JSON'
         },
-        queryParams: {
+        params: {
             startDate: true,
             endDate: true,
             symbol: true
@@ -25,6 +27,19 @@ export const apiEndpoints = {
                 )}];
                 return finalOutput;
             }
+        }
+    },
+    getPriceAverage: {
+        method: 'GET',
+        baseURL: DOMAIN,
+        endpoint: '/api/data/prices/average',
+        headers: {
+            'Content-Type': 'applications/JSON'
+        },
+        params: {
+            symbol: true,
+            startDate: true,
+            endDate: true
         }
     },
     getRSS: {
@@ -63,7 +78,31 @@ export const apiEndpoints = {
         },
         responseHandlers: {
             200: (response) => {
-                localStorage.setItem('token', response.token);
+                useAuthStore.getState().setIsAuthenticated(true);
+                return response.success;
+            }
+        }
+    },
+    logoutUser: {
+        method: 'POST',
+        baseURL: DOMAIN,
+        endpoint: '/api/user/logout',
+        responseHandlers: {
+            200: (response) => {
+                useAuthStore.getState().setIsAuthenticated(false);
+            }
+        }
+    },
+    verifyCookie: {
+        method: 'GET',
+        baseURL: DOMAIN,
+        endpoint: '/api/auth/verify',
+        optional: {
+            credentials: 'include'
+        },
+        responseHandlers: {
+            200: (response) => {
+                useAuthStore.getState().setIsAuthenticated(true);
                 return response.success;
             }
         }

@@ -16,8 +16,11 @@ import {
   } from "@/components/ui/dropdown-menu"
 import { rssFeeds } from './rssFeeds.js';
 import { saveFeedItem } from './rssDisplayUtilities.js';
+import { useAuthStore } from './authStore.js';
 
 const RSSFeedController = ({article, setIndex, feedConfig, setFeedConfig}) => {
+
+    const isAuthenticated = useAuthStore(state => state.isAuthenticated);
 
     const nextClick = () => {
         setIndex(prevIndex => {
@@ -64,11 +67,11 @@ const RSSFeedController = ({article, setIndex, feedConfig, setFeedConfig}) => {
                         </DropdownMenuGroup>
                     </DropdownMenuContent>
             </DropdownMenu>
-            <Button variant='outline' className='' onClick={() => saveFeedItem({
+            {isAuthenticated && (<Button variant='outline' className='' onClick={() => saveFeedItem({
                 title: article.title,
                 link: article.link,
                 description: article.description
-            })}>Save</Button>
+            })}>Save</Button>)}
         </div>
     )
 }

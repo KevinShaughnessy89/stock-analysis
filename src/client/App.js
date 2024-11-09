@@ -1,28 +1,53 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/ui/app-sidebar"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import Dashboard from "./Dashboard.js";
+import { useAuthStore } from "./authStore.js";
 import StockAnalysis from "./StockAnalysis.js";
-import UserRegistration from "./registration.js";
-import Login from './Login.js'
-import RSSComponent from "./RSSComponent.js";
 import UserPreferences from './UserPreferences.js'
+import RSSComponent from "./RSSComponent.js";
+import { makeApiCall } from "@/common/makeApiCall.js";
+import { apiEndpoints } from "./apiEndpoints.js";
+import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
+
 function App() {
+
+    useEffect(async () => {
+
+        const checkAuthStatus = async () => {
+            try {
+                const response = await makeApiCall(apiEndpoints.verifyCookie);
+            }
+            catch (error) {
+                console.error("Error verifying cookie: ", error)
+            }
+        }
+
+        checkAuthStatus();
+
+        return (useAuthStore.getState().logout());
+    }, []);
+
     return (
-        <BrowserRouter>
-            <SidebarProvider>
-                <div className="flex min-h-screen bg-background text-foreground  w-full h-full">
-                    <AppSidebar />
-                    <main className="flex-1 w-full ">
-                        <SidebarTrigger />
-                        <Routes>
-                            <Route path='/analytics' element={<StockAnalysis />} />
-                            <Route path='/rss' element={<RSSComponent />} />
-                            <Route path='/preferences' element={<UserPreferences />} />
-                        </Routes>
-                    </main>
-                </div>
-            </SidebarProvider>
-        </BrowserRouter>
+        // <div className='m-6'>
+        <Card className='w-[350px] h-[350px] border-[0.5px] border-opacity-25 rounded-lg'>
+            <BrowserRouter>
+                <SidebarProvider>
+                    <div className="flex min-h-screen bg-background text-foreground  w-full h-full">
+                        <AppSidebar />
+                        <main className="flex-1 w-full ">
+                            <Routes>
+                                <Route path='/analytics' element={<StockAnalysis />} />
+                                <Route path='/rss' element={<RSSComponent />} />
+                                <Route path='/preferences' element={<UserPreferences />} />
+                            </Routes>
+                        </main>
+                    </div>
+                </SidebarProvider>
+            </BrowserRouter>
+        </Card>
+        // </div>
     );
 }
 

@@ -4,8 +4,9 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { loginUser } from './apis.js'
 import { useNavigate } from 'react-router-dom';
+import { makeApiCall } from '@/common/makeApiCall.js';
+import { apiEndpoints } from './apiEndpoints.js';
 
 const Login = ({className = ""}) => {
     const navigate = useNavigate();
@@ -50,9 +51,7 @@ const Login = ({className = ""}) => {
 
         if (Object.keys(newErrors).length === 0) {
             try {
-                console.log("Attempting login with form data: ", formData)
-                const result = await loginUser(formData);
-                console.log("Login attempt complete in Login.js")
+                const result = await makeApiCall(apiEndpoints.loginUser, {}, formData);
                 
                 if (result) {
                     setSuccess(true);
@@ -63,7 +62,6 @@ const Login = ({className = ""}) => {
                     password: '',
                 });
 
-                console.log('here');
                 window.location.reload();            }
             catch (error) {
                 setErrors(error);

@@ -14,7 +14,7 @@ const RSSComponent = () => {
         title: "",
         description: "",
         author: "",
-        url: ""
+        link: ""
     });
 
     const [feedConfig, setFeedConfig] = useState(Object.values(Object.values(rssFeeds)[0])[0]);

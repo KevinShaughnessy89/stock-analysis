@@ -17,9 +17,9 @@ export function UserDisplay({className = ""}) {
                 const data = await makeApiCall(apiEndpoints['getUserInfo'], {
                     fields: 'username'
                 });
-
-                if (!data) {
-                    setUsername("Guest");
+                console.log("Username: ", data);
+                if (data.guest === true) {
+                    return;
                 } else {
                     setUsername(data.username)
                 }
