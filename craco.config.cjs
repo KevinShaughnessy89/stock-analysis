@@ -131,31 +131,27 @@ module.exports = {
   },
   babel: {
     presets: [
-      [
-        '@babel/preset-env',
-        {
-          useBuiltIns: 'usage',
-          corejs: 3,
-          modules: false, // Important for tree shaking
-        },
-        [
-          '@babel/preset-react', {
-          runtime: 'automatic' // Add this line
-        }
-        ],
+      ['@babel/preset-env', {
+        useBuiltIns: 'usage',
+        corejs: 3,
+        modules: false,
+      }],
+      ['@babel/preset-react', {
+        runtime: 'automatic'
+      }],
       '@babel/preset-typescript'
     ],
     plugins: [
       process.env.NODE_ENV === 'development' && require.resolve('react-refresh/babel'),
       '@babel/plugin-transform-runtime',
-      '@babel/plugin-transform-react-jsx'  // Add this line
-    ].filter(Boolean),
+      '@babel/plugin-transform-react-jsx'
+    ].filter(Boolean)
   },
-  devServer: {
-    hot: true,
-    watchOptions: {
-      poll: false,
-      ignored: /node_modules/,
-    },
-  }
+    devServer: {
+      hot: true,
+      watchOptions: {
+        poll: false,
+        ignored: /node_modules/,
+      }
+    }
 };
