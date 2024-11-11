@@ -1,0 +1,2 @@
+(self.webpackChunkweb_scraper=self.webpackChunkweb_scraper||[]).push([[8703],{16269:(r,e,t)=>{function n(r){try{if(!t.g.localStorage)return!1}catch(n){return!1}var e=t.g.localStorage[r];return null!=e&&"true"===String(e).toLowerCase()}r.exports=function(r,e){if(n("noDeprecation"))return r;var t=!1;return function(){if(!t){if(n("throwDeprecation"))throw new Error(e);n("traceDeprecation")?console.trace(e):console.warn(e),t=!0}return r.apply(this,arguments)}}}}]);
+//# sourceMappingURL=vendor.util-deprecate.63a6e01b.js.map

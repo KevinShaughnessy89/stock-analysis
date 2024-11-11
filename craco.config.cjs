@@ -6,14 +6,14 @@ const webpack = require('webpack');
 
 // Optimized worker pool settings
 const jsWorkerPool = {
-  workers: Math.max(os.cpus().length - 1, 1), // Use all CPUs except one
+  workers: Math.max(os.cpus().length - 1, 1),
   poolTimeout: 2000,
   poolParallelJobs: 100,
   workerParallelJobs: 50,
-  workerNodeArgs: ['--max-old-space-size=4096'], // Increase memory limit
+  workerNodeArgs: ['--max-old-space-size=4096'],
 };
 
-// Warm up thread-loader with commonly used loaders
+// Warm up thread-loader
 threadLoader.warmup(jsWorkerPool, [
   'babel-loader',
   '@babel/preset-env',
@@ -28,27 +28,59 @@ module.exports = {
     },
     plugins: {
       add: [
+        // Provide React globally
         new webpack.ProvidePlugin({
-          React: 'react'
+          React: 'react',
+          JSX: 'react',
+          Buffer: ['buffer', 'Buffer'],
+          process: 'process'
         })
       ]
     },
     configure: (webpackConfig) => {
-      // Keep existing extensions
+      // Extensions
       webpackConfig.resolve.extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
-      // Enable caching with larger cache
+      // Node.js polyfills
+      webpackConfig.resolve.fallback = {
+        ...webpackConfig.resolve.fallback,
+        crypto: require.resolve('crypto-browserify'),
+        stream: require.resolve('stream-browserify'),
+        buffer: require.resolve('buffer/'),
+        process: require.resolve('process/browser'),
+        path: require.resolve('path-browserify'),
+        util: require.resolve('util/'),
+        assert: require.resolve('assert/'),
+        fs: false,
+        os: false
+      };
+
+      // Enhanced plugins configuration
+      webpackConfig.plugins = [
+        ...webpackConfig.plugins,
+        new webpack.ProvidePlugin({
+          process: 'process/browser'
+        }),
+        new webpack.DefinePlugin({
+          'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+        })
+      ];
+
+      // Filesystem cache
       webpackConfig.cache = {
         type: 'filesystem',
         cacheDirectory: path.resolve(__dirname, '.webpack-cache'),
         compression: 'gzip',
-        maxAge: 172800000 // 48 hours
+        maxAge: 172800000, // 48 hours
+        buildDependencies: {
+          config: [__filename]
+        }
       };
 
-      // Optimize minimizer
+      // Optimization configuration
       webpackConfig.optimization = {
         ...webpackConfig.optimization,
-        minimize: true,
+        minimize: process.env.NODE_ENV === 'production',
         minimizer: [
           new TerserPlugin({
             parallel: true,
@@ -100,7 +132,7 @@ module.exports = {
         },
       };
 
-      // Optimized rules with thread-loader
+      // Enhanced rules with thread-loader and explicit babel config
       webpackConfig.module.rules.unshift({
         test: /\.(js|jsx|ts|tsx)$/,
         use: [
@@ -113,18 +145,40 @@ module.exports = {
             options: {
               cacheDirectory: true,
               cacheCompression: false,
-              compact: true,
+              compact: process.env.NODE_ENV === 'production',
+              presets: [
+                ['@babel/preset-env', {
+                  useBuiltIns: 'usage',
+                  corejs: 3,
+                  modules: false,
+                }],
+                ['@babel/preset-react', {
+                  runtime: 'automatic',
+                  development: process.env.NODE_ENV === 'development',
+                  importSource: 'react'
+                }],
+                '@babel/preset-typescript'
+              ],
+              plugins: [
+                process.env.NODE_ENV === 'development' && require.resolve('react-refresh/babel'),
+                ['@babel/plugin-transform-runtime', {
+                  regenerator: true,
+                }],
+                ['@babel/plugin-transform-react-jsx', {
+                  runtime: 'automatic'
+                }]
+              ].filter(Boolean)
             }
           }
         ],
         exclude: /node_modules/,
       });
 
-      // Add performance hints
+      // Performance hints
       webpackConfig.performance = {
         maxEntrypointSize: 512000,
         maxAssetSize: 512000,
-        hints: false
+        hints: process.env.NODE_ENV === 'production' ? 'warning' : false
       };
 
       return webpackConfig;
@@ -138,21 +192,27 @@ module.exports = {
         modules: false,
       }],
       ['@babel/preset-react', {
-        runtime: 'automatic'
+        runtime: 'automatic',
+        development: process.env.NODE_ENV === 'development',
+        importSource: 'react'
       }],
       '@babel/preset-typescript'
     ],
     plugins: [
       process.env.NODE_ENV === 'development' && require.resolve('react-refresh/babel'),
-      '@babel/plugin-transform-runtime',
-      '@babel/plugin-transform-react-jsx'
+      ['@babel/plugin-transform-runtime', {
+        regenerator: true,
+      }],
+      ['@babel/plugin-transform-react-jsx', {
+        runtime: 'automatic'
+      }]
     ].filter(Boolean)
   },
-    devServer: {
-      hot: true,
-      watchOptions: {
-        poll: false,
-        ignored: /node_modules/,
-      }
+  devServer: {
+    hot: true,
+    watchOptions: {
+      poll: false,
+      ignored: /node_modules/,
     }
+  }
 };
