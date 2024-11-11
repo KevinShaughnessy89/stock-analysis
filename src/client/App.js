@@ -31,7 +31,6 @@ function App() {
 
     return (
         // <div className='m-6'>
-        <Card className='w-[350px] h-[350px] border-[0.5px] border-opacity-25 rounded-lg'>
             <BrowserRouter>
                 <SidebarProvider>
                     <div className="flex min-h-screen bg-background text-foreground  w-full h-full">
@@ -46,7 +45,6 @@ function App() {
                     </div>
                 </SidebarProvider>
             </BrowserRouter>
-        </Card>
         // </div>
     );
 }

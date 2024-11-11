@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkweb_scraper=self.webpackChunkweb_scraper||[]).push([[363],{58168:(r,e,n)=>{function a(){return a=Object.assign?Object.assign.bind():function(r){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var a in n)({}).hasOwnProperty.call(n,a)&&(r[a]=n[a])}return r},a.apply(null,arguments)}n.d(e,{A:()=>a})}}]);
+//# sourceMappingURL=vendor.babel.95c42ccb.js.map

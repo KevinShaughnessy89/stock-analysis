@@ -170,6 +170,24 @@ class Database {
             console.error("Error deleting document(s) in collection: ", collectionName);
         }
     }
+
+    async query(queryConfig, params = {}) {
+
+        const updateFields = () => {
+
+            return (
+                queryConfig.params.map((stage) => {
+                    
+                    Object.entries(params).forEach(([key, value]) => {
+                        if (key in queryConfig.pipeline) {
+                            stage[key] = value;
+                        }
+                    })
+              }
+            ))
+        }
+        })
+    }
 }
 
 export default Database;

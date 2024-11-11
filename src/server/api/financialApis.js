@@ -1,4 +1,5 @@
 import { SentimentSchema, PriceDataSchema } from "../models/financialModels.js";
+import dotenv from "dotenv";
 
 const TOPICS = [
     'financial_markets',
@@ -17,7 +18,7 @@ export const financialApis = {
             tickers: true,
         },
         appendParams: {
-            apikey:  'VY7DZFI0W1AD27KR',
+            apikey:  process.env.ALPHA_VANTAGE_KEY,
             function: 'NEWS_SENTIMENT',
         },
         transform: (data) => {
@@ -53,7 +54,7 @@ export const financialApis = {
             symbol: true
         },
         appendParams: {
-            apikey:  'VY7DZFI0W1AD27KR',
+            apikey:  'process.env.ALPHA_VANTAGE_KEY',
             function: 'TIME_SERIES_DAILY',
         },
         transform: (data) => {

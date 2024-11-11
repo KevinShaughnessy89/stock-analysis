@@ -1,31 +1,50 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const threadLoader = require('thread-loader');
+const os = require('os');
 
-// More conservative thread pool settings
+// Optimized worker pool settings
 const jsWorkerPool = {
-  workers: 2, // Reduced from max CPUs
+  workers: Math.max(os.cpus().length - 1, 1), // Use all CPUs except one
   poolTimeout: 2000,
-  poolParallelJobs: 50,
+  poolParallelJobs: 100,
+  workerParallelJobs: 50,
+  workerNodeArgs: ['--max-old-space-size=4096'], // Increase memory limit
 };
-threadLoader.warmup(jsWorkerPool, ['babel-loader']);
+
+// Warm up thread-loader with commonly used loaders
+threadLoader.warmup(jsWorkerPool, [
+  'babel-loader',
+  '@babel/preset-env',
+  '@babel/preset-react',
+  '@babel/preset-typescript'
+]);
 
 module.exports = {
   webpack: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
+    plugins: {
+      add: [
+        new webpack.ProvidePlugin({
+          React: 'react'
+        })
+      ]
+    },
     configure: (webpackConfig) => {
       // Keep existing extensions
       webpackConfig.resolve.extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
-      // Enable caching
+      // Enable caching with larger cache
       webpackConfig.cache = {
         type: 'filesystem',
-        cacheDirectory: path.resolve(__dirname, '.webpack-cache')
+        cacheDirectory: path.resolve(__dirname, '.webpack-cache'),
+        compression: 'gzip',
+        maxAge: 172800000 // 48 hours
       };
 
-      // Optimize minimizer with logging
+      // Optimize minimizer
       webpackConfig.optimization = {
         ...webpackConfig.optimization,
         minimize: true,
@@ -33,8 +52,22 @@ module.exports = {
           new TerserPlugin({
             parallel: true,
             terserOptions: {
+              parse: {
+                ecma: 8,
+              },
               compress: {
-                drop_console: false, // Enable console for debugging
+                ecma: 5,
+                warnings: false,
+                comparisons: false,
+                inline: 2,
+              },
+              mangle: {
+                safari10: true,
+              },
+              output: {
+                ecma: 5,
+                comments: false,
+                ascii_only: true,
               },
             },
           }),
@@ -43,8 +76,8 @@ module.exports = {
         runtimeChunk: 'single',
         splitChunks: {
           chunks: 'all',
-          maxInitialRequests: 20, // Reduced from Infinity
-          minSize: 20000, // Increased minimum size
+          maxInitialRequests: Infinity,
+          minSize: 0,
           cacheGroups: {
             vendor: {
               test: /[\\/]node_modules[\\/]/,
@@ -54,12 +87,19 @@ module.exports = {
                 )[1];
                 return `vendor.${packageName.replace('@', '')}`;
               },
+              priority: -10,
+              reuseExistingChunk: true,
+            },
+            default: {
+              minChunks: 2,
+              priority: -20,
+              reuseExistingChunk: true,
             },
           },
         },
       };
 
-      // Simplified rules
+      // Optimized rules with thread-loader
       webpackConfig.module.rules.unshift({
         test: /\.(js|jsx|ts|tsx)$/,
         use: [
@@ -67,10 +107,24 @@ module.exports = {
             loader: 'thread-loader',
             options: jsWorkerPool
           },
-          'babel-loader'
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+              cacheCompression: false,
+              compact: true,
+            }
+          }
         ],
         exclude: /node_modules/,
       });
+
+      // Add performance hints
+      webpackConfig.performance = {
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000,
+        hints: false
+      };
 
       return webpackConfig;
     }
@@ -82,14 +136,19 @@ module.exports = {
         {
           useBuiltIns: 'usage',
           corejs: 3,
+          modules: false, // Important for tree shaking
         },
-      ],
-      '@babel/preset-react',
+        [
+          '@babel/preset-react', {
+          runtime: 'automatic' // Add this line
+        }
+        ],
       '@babel/preset-typescript'
     ],
     plugins: [
       process.env.NODE_ENV === 'development' && require.resolve('react-refresh/babel'),
-      '@babel/plugin-transform-runtime'
+      '@babel/plugin-transform-runtime',
+      '@babel/plugin-transform-react-jsx'  // Add this line
     ].filter(Boolean),
   },
   devServer: {

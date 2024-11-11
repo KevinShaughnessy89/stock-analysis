@@ -1,4 +1,5 @@
 import { useAuthStore } from "./authStore.js";
+import dotenv from "dotenv";
 
 const DOMAIN = 'https://kevinshaughnessy.ca'
 
@@ -53,7 +54,7 @@ export const apiEndpoints = {
             rss_url: true,
         },
         appendParams: {
-            api_key: 'tvlifvtazfbwrh0i26jwpm2ovnc1bwmxzkoyvqus',
+            api_key: process.env.RSS_KEY,
             count: 10
         }
     },
@@ -144,7 +145,7 @@ export const apiEndpoints = {
             function: true,
         },
         appendParams: {
-            apikey:  'VY7DZFI0W1AD27KR',
+            apikey:  process.env.ALPHA_VANTAGE_KEY,
         }
     },
     getUserPreferences: {

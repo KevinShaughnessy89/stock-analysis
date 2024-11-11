@@ -4,10 +4,7 @@ import { SidebarProvider, Sidebar, SidebarContent } from "@/components/ui/sideba
 const Dashboard = () => {
 
     return (
-        <div className='m-6'>
-            <Card className='w-screen h-screen border-[0.5px] border-opacity-25 rounded-xl'>
-
-            </Card>
+        <div className='m-6 border'>
         </div>
     )
 }

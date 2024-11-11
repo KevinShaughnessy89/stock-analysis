@@ -15,7 +15,7 @@ import AuthService from './services/authService.js';
 // Constants and configuration
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const uri = process.env.MONGODB_URI;
+const uri = process.env.DATABASE_URL;
 const PORT = process.env.PORT || 5000;
 
 // Routers
