@@ -28,12 +28,9 @@ module.exports = {
     },
     plugins: {
       add: [
-        // Provide React globally
         new webpack.ProvidePlugin({
           React: 'react',
-          JSX: 'react',
-          Buffer: ['buffer', 'Buffer'],
-          process: 'process'
+          JSX: 'react'
         })
       ]
     },
@@ -41,27 +38,34 @@ module.exports = {
       // Extensions
       webpackConfig.resolve.extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
-      // Node.js polyfills
+      // Simplified Node.js polyfills - explicitly false out problematic ones
       webpackConfig.resolve.fallback = {
         ...webpackConfig.resolve.fallback,
-        crypto: require.resolve('crypto-browserify'),
-        stream: require.resolve('stream-browserify'),
-        buffer: require.resolve('buffer/'),
-        process: require.resolve('process/browser'),
-        path: require.resolve('path-browserify'),
-        util: require.resolve('util/'),
-        assert: require.resolve('assert/'),
-        vm: require.resolve('vm-browserify'),
+        crypto: false,
+        stream: false,
+        assert: false,
+        http: false,
+        https: false,
+        os: false,
+        url: false,
+        vm: false,
+        path: false,
         fs: false,
-        os: false
+        buffer: false,
+        process: false,
+        util: false,
+        buffer: false,
+        querystring: false,
+        zlib: false,
+        dns: false,
+        net: false,
+        tls: false,
+        child_process: false
       };
 
       // Enhanced plugins configuration
       webpackConfig.plugins = [
         ...webpackConfig.plugins,
-        new webpack.ProvidePlugin({
-          process: 'process/browser'
-        }),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         })
