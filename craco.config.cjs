@@ -51,6 +51,7 @@ module.exports = {
         path: require.resolve('path-browserify'),
         util: require.resolve('util/'),
         assert: require.resolve('assert/'),
+        vm: require.resolve('vm-browserify'),
         fs: false,
         os: false
       };
