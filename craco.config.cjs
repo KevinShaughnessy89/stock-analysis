@@ -2,6 +2,7 @@ const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const threadLoader = require('thread-loader');
 const os = require('os');
+const webpack = require('webpack');
 
 // Optimized worker pool settings
 const jsWorkerPool = {
