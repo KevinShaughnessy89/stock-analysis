@@ -12,29 +12,37 @@ jobs:
       NODE_VERSION: '18.19.0'
       DEPLOY_PATH: '~/app'
     steps:
+
       - name: Checkout Repo
         uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
+
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
+
       - name: Create .ENV File
         run: |
           touch .env
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
           echo "ALPHA_VANTAGE_KEY=${{ secrets.ALPHA_VANTAGE_KEY }}" >> .env
           echo "RSS_KEY=${{ secrets.RSS_KEY }}" >> .env
+
       - name: Build Application
         run: yarn build
+
       - name: Authentication
         uses: google-github-actions/auth@v1
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
       - name: Setup Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
+        
       - name: Deploy To VM
         run: |
           gcloud compute scp --recurse build/* ${{ secrets.VM_NAME }}:${{ env.DEPLOY_PATH }} --zone=${{ secrets.ZONE }}

@@ -43,7 +43,7 @@ const UserRegistration = () => {
             newErrors.email = 'Please enter a valid email';
         }
 
-        if (formData.password != formData.confirmPassword) {
+        if (formData.password !== formData.confirmPassword) {
             newErrors.confirmPassword = 'Error: passwords do not match';
         }
 
@@ -54,6 +54,7 @@ const UserRegistration = () => {
         if (success === true) {
             navigate(0);        
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [success])
 
     const handleSubmit = async (e) => {
@@ -64,7 +65,7 @@ const UserRegistration = () => {
 
         if (Object.keys(newErrors).length === 0) {
             try {
-                const result = await makeApiCall(apiEndpoints.registerUser, formData);
+                await makeApiCall(apiEndpoints.registerUser, formData);
                 console.log("Form submitted");
                 setSuccess(true);
                 setFormData({

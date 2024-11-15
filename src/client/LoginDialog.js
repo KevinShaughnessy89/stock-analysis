@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import UserTabs from './UserTabs.js'
-import { LogIn, Settings } from "lucide-react";
+import { LogIn } from "lucide-react";
 import { Button } from '@/components/ui/button'
 
 const LoginDialog = ({className = ""}) => {

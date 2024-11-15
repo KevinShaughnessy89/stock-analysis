@@ -93,7 +93,7 @@
   "scripts": {
     "start": "craco start",
     "stop": "sudo lsof -ti :5000 | xargs kill",
-    "build": "FAST_REFRESH=true craco build",
+    "build": "GENERATE_SOURCEMAP=false craco build",
     "test": "craco test",
     "eject": "craco eject",
     "server:dev": "NODE_ENV=development nodemon --inspect=0.0.0.0:9229 src/server/server.js --delay 500ms",
@@ -119,6 +119,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/plugin-transform-runtime": "^7.25.9",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",

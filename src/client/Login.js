@@ -23,6 +23,7 @@ const Login = ({className = ""}) => {
         if (success === true) {
             navigate(0);        
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [success])
 
     const validateForm = () => {

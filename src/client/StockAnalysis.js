@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import StockLineChart from './StockLineChart.js';
 import SymbolSelector from './SymbolSelecter.js';
 import StockStats from './StockStats.js';
@@ -11,8 +11,6 @@ const DEFAULT_START_DATE = '2024-10-15T00:00:00.000Z';
 const DEFAULT_END_DATE = '2024-10-17T00:00:00.000Z';
 
 const StockAnalysis = () => {
-
-    const isFirstRender = useRef(true);
 
     const [symbol, setSymbol] = useState("");
     const [startDate, setStartDate] = useState(new Date(DEFAULT_START_DATE));

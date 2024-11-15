@@ -17,5 +17,5 @@ export async function getRssFeed(url) {
 
 export async function saveFeedItem(feedItem) {
     console.log("feed item:" , feedItem);
-    const request = await makeApiCall(apiEndpoints.saveFeedItem, {}, feedItem );
+    await makeApiCall(apiEndpoints.saveFeedItem, {}, feedItem );
 }

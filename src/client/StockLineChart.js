@@ -1,6 +1,4 @@
 import { ResponsiveLine } from '@nivo/line'
-import { useEffect, useState } from 'react'
-import { timeFormat } from 'd3-time-format'
 
 const StockLineChart = ({ graphState }) => {
 

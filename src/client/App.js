@@ -1,19 +1,17 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/ui/app-sidebar"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
-import Dashboard from "./Dashboard.js";
 import { useAuthStore } from "./authStore.js";
 import StockAnalysis from "./StockAnalysis.js";
 import UserPreferences from './UserPreferences.js'
 import RSSComponent from "./RSSComponent.js";
 import { makeApiCall } from "@/common/makeApiCall.js";
 import { apiEndpoints } from "./apiEndpoints.js";
-import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 
 function App() {
 
-    useEffect(async () => {
+    useEffect(() => {
 
         const checkAuthStatus = async () => {
             try {

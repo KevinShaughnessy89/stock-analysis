@@ -21,6 +21,7 @@ export function GraphCalender({onStartDateChange, onEndDateChange}) {
         console.log("date.to: ", date?.to, " valid:", isValid(date?.to));
         onEndDateChange(date?.to);
         onStartDateChange(date?.from);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [date])
 
     return (

@@ -5,7 +5,7 @@ export const UserAvatar = ({className = "", username}) => {
     return (
         <Avatar className={`${className}`}>
             <AvatarImage src="http://kevinshaughnessy.ca/avatar.png" />
-            <AvatarFallback>{username == "Guest" ? "G" : username.charAt(0).toUpperCase()}</AvatarFallback>
+            <AvatarFallback>{username === "Guest" ? "G" : username.charAt(0).toUpperCase()}</AvatarFallback>
         </Avatar>
     );
 }

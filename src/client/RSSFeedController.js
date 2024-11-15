@@ -1,18 +1,10 @@
 import { Button } from '@/components/ui/button';
-import { useEffect, useState } from 'react';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuPortal,
     DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
-    DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import { rssFeeds } from './rssFeeds.js';
 import { saveFeedItem } from './rssDisplayUtilities.js';

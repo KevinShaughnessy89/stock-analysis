@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { getRssFeed } from './rssDisplayUtilities.js';
-import RSSFeedController from './RSSFeedController.js'
 import RSSDisplay from './RSSDisplay.js';
 import { rssFeeds } from './rssFeeds.js';
 
@@ -45,6 +44,7 @@ const RSSComponent = () => {
 
     useEffect(() => {
         setArticle(aggregateFeed[index]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [index])
 
 
