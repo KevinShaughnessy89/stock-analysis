@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_VERSION: '18.19.0'
-      DEPLOY_PATH: '~/app'
+      DEPLOY_PATH: '/home/app'
     steps:
 
       - name: Checkout Repo
