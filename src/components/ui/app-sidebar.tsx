@@ -1,4 +1,4 @@
-import { LineChart, Home, Inbox, Search } from "lucide-react"
+import { LineChart, Home, Inbox, Settings } from "lucide-react"
 import UserDisplay from "@/client/UserDisplay.js";
 import { Separator } from '@/components/ui/separator'
 import {
