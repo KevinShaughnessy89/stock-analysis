@@ -15,7 +15,7 @@ function App() {
 
         const checkAuthStatus = async () => {
             try {
-                const response = await makeApiCall(apiEndpoints.verifyCookie);
+                await makeApiCall(apiEndpoints.verifyCookie);
             }
             catch (error) {
                 console.error("Error verifying cookie: ", error)

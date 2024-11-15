@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { apiEndpoints } from '../client/apiEndpoints.js';
 
 const logApiDetails = (stage, details) => {
   const timestamp = new Date().toISOString();
