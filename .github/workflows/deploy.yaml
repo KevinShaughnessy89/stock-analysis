@@ -59,7 +59,6 @@ jobs:
           # 4. Install dependencies and restart
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
             cd /home/sa_107039506943432980720/production && \
-            pwd && find . -type d \
-            yarn install --frozen-lockfile --production && \
+            yarn install 2>&1 --frozen-lockfile --production && \
             cd src/server && pm2 kill && pm2 start server.js
           "
