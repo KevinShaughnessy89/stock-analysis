@@ -42,25 +42,25 @@ jobs:
 
       - name: Setup Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
-        
+
       - name: Deploy To VM
-          run: |
-            # 1. First find out our OS Login username
-            export OSLOGIN_USER=$(gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command='whoami' | tr -d '\r')
-            echo "OS Login user is: $OSLOGIN_USER"
-            
-            # 2. Create app directory if it doesn't exist
-            gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
-              sudo mkdir -p /home/$OSLOGIN_USER/app && \
-              sudo chown $OSLOGIN_USER:$OSLOGIN_USER /home/$OSLOGIN_USER/app
-            "
-              
-            # 3. Copy the files using the correct path
-            gcloud compute scp --recurse build/* ${{ secrets.VM_NAME }}:/home/$OSLOGIN_USER/app --zone=${{ secrets.ZONE }}
-            
-            # 4. Install dependencies and restart
-            gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
-              cd /home/$OSLOGIN_USER/app && \
-              yarn install --frozen-lockfile --production && \
-              pm2 restart all
-            "
+        run: |
+          # 1. First find out our OS Login username
+          export OSLOGIN_USER=$(gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command='whoami' | tr -d '\r')
+          echo "OS Login user is: $OSLOGIN_USER"
+
+          # 2. Create app directory if it doesn't exist
+          gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
+            sudo mkdir -p /home/$OSLOGIN_USER/app && \
+            sudo chown $OSLOGIN_USER:$OSLOGIN_USER /home/$OSLOGIN_USER/app
+          "
+
+          # 3. Copy the files using the correct path
+          gcloud compute scp --recurse build/* ${{ secrets.VM_NAME }}:/home/$OSLOGIN_USER/app --zone=${{ secrets.ZONE }}
+
+          # 4. Install dependencies and restart
+          gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
+            cd /home/$OSLOGIN_USER/app && \
+            yarn install --frozen-lockfile --production && \
+            pm2 restart all
+          "
