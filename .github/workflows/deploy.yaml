@@ -16,6 +16,13 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
+      - name: After Checkout
+        run: |
+          echo "Current directory"
+          pwd
+          echo "All files"
+          ls -la
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
