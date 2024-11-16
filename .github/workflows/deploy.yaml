@@ -45,7 +45,12 @@ jobs:
         
       - name: Deploy To VM
         run: |
-          gcloud compute scp --recurse build/* ${{ secrets.VM_NAME }}:${{ env.DEPLOY_PATH }} --zone=${{ secrets.ZONE }}
+          gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command='
+            whoami && \
+            ls -la /home/kevinshaughnessy89/app && \
+            id
+          '
+          gcloud compute scp -v --recurse build/* ${{ secrets.VM_NAME }}:/home/kevinshaughnessy89/app --zone=${{ secrets.ZONE }}
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command='
             cd ${{ env.DEPLOY_PATH }} && \
             yarn install --frozen-lockfile --production && \
