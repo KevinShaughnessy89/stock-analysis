@@ -47,6 +47,7 @@ jobs:
         run: |
           # 2. Create app directory if it doesn't exist
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
+            whoami && \
             sudo mkdir -p /home/runner/app && \
             sudo chown runner:runner /home/runner/app
           "
