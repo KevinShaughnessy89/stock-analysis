@@ -45,14 +45,24 @@ jobs:
         
       - name: Deploy To VM
         run: |
+          # 1. First enable OS Login (only needs to be done once)
+          gcloud compute instances add-metadata ${{ secrets.VM_NAME }} \
+          --zone=${{ secrets.ZONE }} \
+          --metadata=enable-oslogin=TRUE
+
+          # 2. Verify who we are and check permissions (optional debug step)
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command='
             whoami && \
             ls -la /home/kevinshaughnessy89/app && \
             id
           '
-          gcloud compute scp -v --recurse build/* ${{ secrets.VM_NAME }}:/home/kevinshaughnessy89/app --zone=${{ secrets.ZONE }}
+
+          # 3. Copy the files
+          gcloud compute scp --recurse build/* ${{ secrets.VM_NAME }}:/home/kevinshaughnessy89/app --zone=${{ secrets.ZONE }}
+
+          # 4. Install dependencies and restart
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command='
-            cd ${{ env.DEPLOY_PATH }} && \
+            cd /home/kevinshaughnessy89/app && \
             yarn install --frozen-lockfile --production && \
             pm2 restart all
           '
