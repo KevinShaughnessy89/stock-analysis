@@ -48,16 +48,16 @@ jobs:
           # 2. Create app directory if it doesn't exist
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
             whoami && \
-            sudo mkdir -p /home/runner/app && \
-            sudo chown runner:runner /home/runner/app
+            sudo mkdir -p /home/sa_107039506943432980720/app && \
+            sudo chown sa_107039506943432980720:sa_107039506943432980720 /home/sa_107039506943432980720/app
           "
 
           # 3. Copy the files using the correct path
-          gcloud compute scp --recurse build/* ${{ secrets.VM_NAME }}:/home/runner/app --zone=${{ secrets.ZONE }}
+          gcloud compute scp --recurse build/* ${{ secrets.VM_NAME }}:/home/sa_107039506943432980720/app --zone=${{ secrets.ZONE }}
 
           # 4. Install dependencies and restart
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
-            cd /home/runner/app && \
+            cd /home/sa_107039506943432980720/app && \
             yarn install --frozen-lockfile --production && \
             pm2 restart all
           "
