@@ -62,20 +62,9 @@ jobs:
             sudo chmod -R 755 /home/sa_107039506943432980720/production
           "
           # 3. Copy the files using rsync
-          gcloud compute scp \
-            --recurse \
-            --zone=${{ secrets.ZONE }} \
-            --rsync \
-            --delete \
-            src/ \
-            build/ \
-            craco.config.cjs \
-            package.json \
-            public/ \
-            tailwind.config.js \
-            tsconfig.json \
-            yarn.lock \
-            ${{ secrets.VM_NAME }}:/home/sa_107039506943432980720/production
+          gcloud compute scp --recurse \
+            src/ build/ craco.config.cjs package.json public/ tailwind.config.js tsconfig.json yarn.lock \
+            ${{ secrets.VM_NAME }}:/home/sa_107039506943432980720/production --zone=${{ secrets.ZONE }}
 
           # 4. Install dependencies and restart
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
