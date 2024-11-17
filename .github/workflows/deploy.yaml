@@ -54,10 +54,12 @@ jobs:
         run: |
           # 2. Create app directory if it doesn't exist
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
-            whoami && \
-            pwd && \
             sudo mkdir -p /home/sa_107039506943432980720/production && \
             sudo chown sa_107039506943432980720:sa_107039506943432980720 /home/sa_107039506943432980720/production
+            export PM2_HOME="/home/sa_107039506943432980720/.pm2"
+            sudo mkdir -p /home/sa_107039506943432980720/.pm2
+            sudo chown -R sa_107039506943432980720:sa_107039506943432980720 /home/sa_107039506943432980720/.pm2
+            sudo chmod -R 755 /home/production
           "
 
           # 3. Copy the files using the correct path
@@ -67,8 +69,6 @@ jobs:
 
           # 4. Install dependencies and restart
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
-            export PM2_HOME="/home/shared/.pm2" && \
-            sudo chown -R sa_107039506943432980720:pm2users /home/shared/.pm2 && \
             cd /home/sa_107039506943432980720/production && \
             yarn install --frozen-lockfile --production && \
             cd src/server && pm2 kill && pm2 start server.js
