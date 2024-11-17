@@ -68,7 +68,8 @@ jobs:
           # 4. Install dependencies and restart
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
             export PM2_HOME="/home/shared/.pm2" && \
+            sudo chown -R sa_107039506943432980720:pm2users /home/shared/.pm2 && \
             cd /home/sa_107039506943432980720/production && \
-            yarn install --verbose --frozen-lockfile --production && \
+            yarn install --frozen-lockfile --production && \
             cd src/server && pm2 kill && pm2 start server.js
           "
