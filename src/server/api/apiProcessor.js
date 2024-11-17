@@ -1,5 +1,4 @@
 import { makeApiCall } from "../../common/makeApiCall.js";
-import { config } from "dotenv";
 import { financialApis } from "./financialApis.js";
 import { StockMarket_DB } from "../config/DatabaseRegistry.js";
 

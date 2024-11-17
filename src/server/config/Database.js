@@ -1,5 +1,4 @@
 import {MongoClient} from 'mongodb';
-import 'dotenv/config';
 
 class Database {
 
@@ -11,8 +10,8 @@ class Database {
 
     async connect() {
     if (!this.client) {
-        const uri = process.env.MONGODB_URI;
-        console.log("URI:", process.env.MONGODB_URI);  // Add this before MongoClient
+        const uri = process.env.DATABASE_URL;
+        console.log("URI:", process.env.DATABASE_URL);  // Add this before MongoClient
         this.client = new MongoClient(uri);
 
         try {
@@ -186,7 +185,6 @@ class Database {
               }
             ))
         }
-        })
     }
 }
 

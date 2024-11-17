@@ -1,5 +1,4 @@
 import { useAuthStore } from "./authStore.js";
-// import dotenv from "dotenv"; - Might be needed to fix compilation error
 
 const DOMAIN = 'https://kevinshaughnessy.ca'
 

@@ -42,6 +42,7 @@
     "add": "^2.0.6",
     "assert": "^2.1.0",
     "axios": "^1.7.7",
+    "bcryptjs": "^2.4.3",
     "bits-ui": "^0.21.16",
     "buffer": "^6.0.3",
     "button": "^1.1.1",
@@ -61,6 +62,7 @@
     "dotenv": "^16.4.5",
     "embla-carousel-react": "^8.3.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.453.0",
     "mongodb": "^6.9.0",
     "mongoose": "^8.7.2",
@@ -85,6 +87,7 @@
     "tailwindcss": "^3.4.14",
     "tailwindcss-animate": "^1.0.7",
     "util": "^0.12.5",
+    "validator": "^13.12.0",
     "vaul": "^1.1.0",
     "web-vitals": "^2.1.0",
     "zustand": "^5.0.1"

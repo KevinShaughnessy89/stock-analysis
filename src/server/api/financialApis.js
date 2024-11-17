@@ -1,5 +1,4 @@
 import { SentimentSchema, PriceDataSchema } from "../models/financialModels.js";
-import dotenv from "dotenv";
 
 const TOPICS = [
     'financial_markets',
