@@ -42,6 +42,7 @@ function App() {
                         </main>
                     </div>
                 </SidebarProvider>
+                <h1>This is a test</h1>
             </BrowserRouter>
         // </div>
     );
