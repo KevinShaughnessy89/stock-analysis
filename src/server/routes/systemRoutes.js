@@ -12,7 +12,7 @@ export const systemRoutes = {
             {
                 name: "setDefault",
                 handler: async (req, res, next) => {
-                    res.sendFile(join(__dirname, '..', '..', '..', 'public', '404.html'))
+                    res.sendFile(join(__dirname, '..', '..', '..', 'build', 'index.html'))
                 }
             }
         ]

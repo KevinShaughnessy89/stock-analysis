@@ -20,8 +20,6 @@ const PORT = process.env.PORT || 5000;
 // Routers
 import { routers, createEndpoints } from './routes/endpointManager.js'
 
-console.log("URI", uri);
-
 // Express app initialization
 const app = express();
 
@@ -44,6 +42,7 @@ function setupMiddleware(app) {
     }));
 
     app.use(express.static(join(__dirname, '..', '..', 'build')));
+    
     app.use(cors({
         origin: [
             'https://localhost:3000', 
@@ -62,7 +61,7 @@ function setupRouting(app) {
         createEndpoints();
         app.use('/api/user', routers.userRouter.data);
         app.use('/api/data', routers.dataRouter.data);
-        app.use('/api', routers.systemRouter.data);
+        app.use('/', routers.systemRouter.data);
 }
 
 // Setup process signal handlers

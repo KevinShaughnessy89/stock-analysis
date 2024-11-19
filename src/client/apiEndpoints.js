@@ -1,6 +1,6 @@
 import { useAuthStore } from "./authStore.js";
 
-const DOMAIN = 'https://kevinshaughnessy.ca'
+const DOMAIN = process.env.REACT_APP_ENV === 'development' ? 'http://localhost:5000' : 'https://kevinshaughnessy.ca'
 
 export const apiEndpoints = {
     getPriceData: { // Define endpoint base configuration
