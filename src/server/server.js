@@ -1,140 +1,141 @@
-import express from 'express';
-import { MongoClient } from 'mongodb';
-import cors from 'cors';
-import cron from 'node-cron';
-import { dirname, join, resolve } from 'path';
-import { fileURLToPath } from 'url';
-import dotenv from 'dotenv';
-import { connectDatabase } from './config/DatabaseRegistry.js';
-import mongoose from 'mongoose';
-import cookieParser from 'cookie-parser';
-import { globalErrorHandler } from './middleware/errorHandling.js';
+// import express from 'express';
+import { MongoClient } from "mongodb";
+import cors from "cors";
+import cron from "node-cron";
+import { dirname, join, resolve } from "path";
+import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+import { connectDatabase } from "./config/DatabaseRegistry.js";
+import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
+import { globalErrorHandler } from "./middleware/errorHandling.js";
+import express from "express";
 
 // Constants and configuration
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-dotenv.config({ path: resolve(__dirname, '../../.env')});
+dotenv.config({ path: resolve(__dirname, "../../.env") });
 const uri = process.env.DATABASE_URL;
 const PORT = process.env.PORT || 5000;
 
 // Routers
-import { routers, createEndpoints } from './routes/endpointManager.js'
+import { routers, createEndpoints } from "./routes/endpointManager.js";
 
 // Express app initialization
 const app = express();
 
 // Configure middleware
 function setupMiddleware(app) {
-    // Request logging
-    app.use((req, res, next) => {
-        console.log('==== Incoming Request ====');
-        console.log(`Time: ${new Date().toISOString()}`);
-        console.log(`Method: ${req.method}`);
-        console.log(`URL: ${req.url}`);
-        console.log(`Headers:`, req.headers);
-        console.log('========================');
-        next();
-    });
+	// Request logging
+	app.use((req, res, next) => {
+		console.log("==== Incoming Request ====");
+		console.log(`Time: ${new Date().toISOString()}`);
+		console.log(`Method: ${req.method}`);
+		console.log(`URL: ${req.url}`);
+		console.log(`Headers:`, req.headers);
+		console.log("========================");
+		next();
+	});
 
-    // Basic middleware
-    app.use(express.json({
-        strict: true
-    }));
+	// Basic middleware
+	app.use(
+		express.json({
+			strict: true,
+		})
+	);
 
-    app.use(express.static(join(__dirname, '..', '..', 'build')));
-    
-    app.use(cors({
-        origin: [
-            'https://localhost:3000', 
-            'https://localhost:5000',
-            'https://35.208.160.118',
-            'https://kevinshaughnessy.ca'
-		]
-    }));
+	app.use(express.static(join(__dirname, "..", "..", "build")));
 
-    app.use(cookieParser());
+	app.use(
+		cors({
+			origin: [
+				"https://localhost:3000",
+				"https://localhost:5000",
+				"https://35.208.160.118",
+				"https://kevinshaughnessy.ca",
+			],
+		})
+	);
 
-    app.use(globalErrorHandler);
+	app.use(cookieParser());
+
+	app.use(globalErrorHandler);
 }
 
 function setupRouting(app) {
-        createEndpoints();
-        app.use('/api/user', routers.userRouter.data);
-        app.use('/api/data', routers.dataRouter.data);
-        app.use('/', routers.systemRouter.data);
+	createEndpoints();
+	app.use("/api/user", routers.userRouter.data);
+	app.use("/api/data", routers.dataRouter.data);
+	app.use("/", routers.systemRouter.data);
 }
 
 // Setup process signal handlers
 function setupProcessHandlers(server) {
-    process.on('SIGTERM', () => {
-        console.log('SIGTERM signal received: closing HTTP server');
-        server.close(() => {
-            console.log('HTTP server closed');
-            process.exit(0);
-        });
-    });
-    
-    process.on('SIGINT', () => {
-        process.exit(0);
-    });
+	process.on("SIGTERM", () => {
+		console.log("SIGTERM signal received: closing HTTP server");
+		server.close(() => {
+			console.log("HTTP server closed");
+			process.exit(0);
+		});
+	});
+
+	process.on("SIGINT", () => {
+		process.exit(0);
+	});
 }
 
 async function setupSchedulers() {
-    cron.schedule('12 * * * *', async () => {
-        try {
-            console.log('Beginning scheduled update.');
-            // await updateDatabase();
-            console.log('Scheduled update complete.');
-        }
-        catch (error) {
-            console.error('Error updating stock price: ', error);
-        }
-    })
+	cron.schedule("12 * * * *", async () => {
+		try {
+			console.log("Beginning scheduled update.");
+			// await updateDatabase();
+			console.log("Scheduled update complete.");
+		} catch (error) {
+			console.error("Error updating stock price: ", error);
+		}
+	});
 }
 
 async function setupDatabase() {
-    try {
-        // Connect to MongoDB
-        const client = await MongoClient.connect(uri);
-        console.log("Connected to MongoDB.");
+	try {
+		// Connect to MongoDB
+		const client = await MongoClient.connect(uri);
+		console.log("Connected to MongoDB.");
 
-        // Connect to mongoose
-        await mongoose.connect(uri);
-        console.log("mongoose connected to MongoDB.");
+		// Connect to mongoose
+		await mongoose.connect(uri);
+		console.log("mongoose connected to MongoDB.");
 
-        connectDatabase(client);
-    }
-    catch (error) {
-        console.error("Error connecting to database: ", error);
-        process.exit(1);
-    }
+		connectDatabase(client);
+	} catch (error) {
+		console.error("Error connecting to database: ", error);
+		process.exit(1);
+	}
 }
 
 // Main initialization function
 async function initialize() {
-    try {
+	try {
+		setupDatabase();
 
-        setupDatabase();
+		// Setup Express middleware and routes
+		setupMiddleware(app);
 
-        // Setup Express middleware and routes
-        setupMiddleware(app);
+		setupSchedulers();
 
-        setupSchedulers();
+		setupRouting(app);
 
-        setupRouting(app);
+		// Start the server
+		const server = app.listen(PORT, "0.0.0.0", () => {
+			console.log(`Server listening at http://localhost:${PORT}`);
+		});
 
-        // Start the server
-        const server = app.listen(PORT, '0.0.0.0', () => {
-            console.log(`Server listening at http://localhost:${PORT}`);
-        });
-
-        // Setup process handlers
-        setupProcessHandlers(server);
-
-    } catch (error) {
-        console.error('Failed to initialize server:', error);
-        process.exit(1);
-    }
+		// Setup process handlers
+		setupProcessHandlers(server);
+	} catch (error) {
+		console.error("Failed to initialize server:", error);
+		process.exit(1);
+	}
 }
 
 // Start the server

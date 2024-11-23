@@ -1,0 +1,112 @@
+[
+  {
+    "_id": "672011ebf4eed08c9c408464",
+    "timestamp": "2024-10-28T00:00:00.000Z",
+    "symbol": "APD",
+    "open": 319.96,
+    "high": 319.96,
+    "low": 315.48,
+    "close": 318.26,
+    "volume": 1183534
+  },
+  {
+    "_id": "672011ecf4eed08c9c408465",
+    "timestamp": "2024-10-25T00:00:00.000Z",
+    "symbol": "APD",
+    "open": 322.75,
+    "high": 322.75,
+    "low": 317.89,
+    "close": 318.02,
+    "volume": 1294777
+  },
+  {
+    "_id": "672011ecf4eed08c9c408466",
+    "timestamp": "2024-10-24T00:00:00.000Z",
+    "symbol": "APD",
+    "open": 325.4,
+    "high": 325.8,
+    "low": 320.387,
+    "close": 322.1,
+    "volume": 1588528
+  },
+  {
+    "_id": "672011ecf4eed08c9c408467",
+    "timestamp": "2024-10-23T00:00:00.000Z",
+    "symbol": "APD",
+    "open": 329.73,
+    "high": 330.37,
+    "low": 325.05,
+    "close": 326.62,
+    "volume": 1045136
+  },
+  {
+    "_id": "672011ecf4eed08c9c408468",
+    "timestamp": "2024-10-22T00:00:00.000Z",
+    "symbol": "APD",
+    "open": 330.09,
+    "high": 330.59,
+    "low": 326.92,
+    "close": 330.37,
+    "volume": 1246877
+  },
+  {
+    "_id": "672011ecf4eed08c9c408469",
+    "timestamp": "2024-10-21T00:00:00.000Z",
+    "symbol": "APD",
+    "open": 330.42,
+    "high": 332.425,
+    "low": 328.98,
+    "close": 331.56,
+    "volume": 857804
+  },
+  {
+    "_id": "672011ecf4eed08c9c40846a",
+    "timestamp": "2024-10-18T00:00:00.000Z",
+    "symbol": "APD",
+    "open": 329.95,
+    "high": 332.17,
+    "low": 328.04,
+    "close": 332.1,
+    "volume": 1074148
+  },
+  {
+    "_id": "672011ecf4eed08c9c40846b",
+    "timestamp": "2024-10-17T00:00:00.000Z",
+    "symbol": "APD",
+    "open": 326.7,
+    "high": 329.03,
+    "low": 324.51,
+    "close": 328.77,
+    "volume": 1182021
+  },
+  {
+    "_id": "672011ecf4eed08c9c40846c",
+    "timestamp": "2024-10-16T00:00:00.000Z",
+    "symbol": "APD",
+    "open": 323.88,
+    "high": 328.72,
+    "low": 323.07,
+    "close": 326.7,
+    "volume": 1886503
+  },
+  {
+    "_id": "672011ecf4eed08c9c40846d",
+    "timestamp": "2024-10-15T00:00:00.000Z",
+    "symbol": "APD",
+    "open": 321.42,
+    "high": 324.52,
+    "low": 320.0851,
+    "close": 323.23,
+    "volume": 2092365
+  },
+  {
+    "_id": "672011ecf4eed08c9c40846e",
+    "timestamp": "2024-10-14T00:00:00.000Z",
+    "symbol": "APD",
+    "open": 316.88,
+    "high": 320.61,
+    "low": 316.01,
+    "close": 320.34,
+    "volume": 1058246
+  }
+]
