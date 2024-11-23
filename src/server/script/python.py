@@ -5,11 +5,9 @@ import sys
 
 def main():
     # Print a message indicating that the script has started
-    print("Starting the script...")
 
     # Load the JSON data into a DataFrame
-    df = pd.read_json('/home/kevinshaughessy89/Projects/stock-analysis/temp-data-cleaned.json')
-    print(f"Data loaded. First few rows:\n{df.head()}")  # Print first few rows to inspect the data
+    df = pd.read_json('/home/kevinshaughnessy89/Projects/stock-analysis/temp-data-cleaned.json')
 
     # Calculate the daily change in the 'Close' column
     df['change'] = df['close'].diff()
@@ -29,7 +27,7 @@ def main():
     df['rs'] = df['average gain'] / df['average loss']
     df['rsi'] = 100 - (100 / (1 + df['rs']))
 
-    df.drop(columns=['high', 'low', 'open', 'close', 'volume'], inplace=True)
+    df.drop(columns=['high', 'low', 'open', 'close', 'volume', 'symbol', '_id'], inplace=True)
 
     print(df.to_json(orient="records"), flush=True)
 

@@ -1,6 +1,6 @@
 import { StockMarket_DB } from "../config/DatabaseRegistry.js";
 import { getAdvancedStatistics } from "../script/database_script.js";
-import { calculateAverage } from "../statistics/processPriceData.js";
+import queryConfigs from "../config/queryConfigs.js";
 
 const COLLECTION_NAME_DAILY = "daily_price";
 
@@ -117,17 +117,22 @@ export const dataRoutes = {
 					console.log("did we get here");
 					const { symbol, startDate, endDate } = req.query;
 
-					const averages = await calculateAverage(
-						symbol,
-						startDate,
-						endDate
+					const averages = await StockMarket_DB.query(
+						queryConfigs.averageDailyPrice,
+						{
+							symbol,
+							startDate,
+							endDate,
+						}
 					);
+
 					const statistics = await getAdvancedStatistics(
 						symbol,
 						startDate,
 						endDate
 					);
-					const date = [averages, statistics];
+
+					const data = [averages, statistics];
 					if (data) {
 						res.status(200).json(data);
 					} else {

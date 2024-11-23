@@ -98,7 +98,7 @@ export async function getAdvancedStatistics(symbol, startDate, endDate) {
 		);
 
 		console.log("Completed Python script with data:", result);
-		return result;
+		return JSON.parse(result);
 	} catch (error) {
 		console.error("Error in getAdvancedStatistics:", error);
 		throw error;

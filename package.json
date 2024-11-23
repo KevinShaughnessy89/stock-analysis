@@ -102,7 +102,7 @@
     "build": "GENERATE_SOURCEMAP=false CI=false craco build",
     "test": "craco test",
     "eject": "craco eject",
-    "server:dev": "NODE_ENV=development nodemon --inspect=0.0.0.0:9229 src/server/server.js --delay 500ms",
+    "server:dev": "NODE_ENV=development nodemon --verbose --inspect=0.0.0.0:9229 src/server/server.js --delay 500ms",
     "dev": "concurrently \"yarn server:dev\" \"yarn start\"",
     "server": "yarn build && yarn server:dev"
   },

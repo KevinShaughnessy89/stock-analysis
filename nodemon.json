@@ -1,0 +1,3 @@
+{
+    "ignore": ["temp-data.json", "temp-data-cleaned.json"]
+}

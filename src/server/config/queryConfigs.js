@@ -6,7 +6,7 @@ const queryConfigs = {
 			startDate: true,
 			endDate: true,
 		},
-		pipleline: [
+		pipeline: [
 			{
 				$match: {
 					symbol: NaN,
