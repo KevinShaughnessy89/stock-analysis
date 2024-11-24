@@ -51,7 +51,6 @@ const StockAnalysis = () => {
 							endDate: endDate,
 						}
 					);
-					console.log;
 					setGraphState({
 						isValid: true,
 						priceData: prices,
