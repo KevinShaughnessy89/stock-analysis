@@ -51,16 +51,10 @@ jobs:
 
       - name: Deploy To VM
         run: |
-          # 2. Create app directory if it doesn't exist
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
-            sudo mkdir -p /home/sa_107039506943432980720/production && \
-            sudo chown sa_107039506943432980720:sa_107039506943432980720 /home/sa_107039506943432980720/production
-            export PM2_HOME="/home/sa_107039506943432980720/.pm2"
-            sudo mkdir -p /home/sa_107039506943432980720/.pm2
-            sudo chown -R sa_107039506943432980720:sa_107039506943432980720 /home/sa_107039506943432980720/.pm2
-            sudo chmod -R 755 /home/sa_107039506943432980720/production
+            whoami
           "
-          # 3. Copy the files using rsync
+          # Copy the files using rsync
           gcloud compute scp --recurse \
             src/ build/ craco.config.cjs package.json public/ tailwind.config.js tsconfig.json yarn.lock \
             ${{ secrets.VM_NAME }}:/home/sa_107039506943432980720/production --zone=${{ secrets.ZONE }}
