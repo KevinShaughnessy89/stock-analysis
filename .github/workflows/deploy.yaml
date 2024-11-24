@@ -51,8 +51,10 @@ jobs:
 
       - name: Deploy To VM
         run: |
+          # Set permissions because that always gets fucked somehow
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
-            whoami
+            sudo chown -R sa_107039506943432980720 /home/sa_107039506943432980720/production
+            chmod -R u+w /home/sa_107039506943432980720/production
           "
           # Copy the files using rsync
           gcloud compute scp --recurse \
@@ -62,6 +64,6 @@ jobs:
           # 4. Install dependencies and restart
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
           cd /home/sa_107039506943432980720/production && \
-          yarn install --frozen-lockfile --production && \
-          cd src/server && pm2 kill && pm2 start server.js
+          sudo yarn install --frozen-lockfile --production && \
+          cd src/server && sudo pm2 restart server
           "
