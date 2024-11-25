@@ -10,6 +10,9 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { globalErrorHandler } from "./middleware/errorHandling.js";
 import express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import { registerSocketHandlers } from "../socket-io/socket.js";
 
 // Constants and configuration
 const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +26,14 @@ import { routers, createEndpoints } from "./routes/endpointManager.js";
 
 // Express app initialization
 const app = express();
+const websocket = createServer(app);
+
+const io = new Server(websocket, {
+	cors: {
+		origin: process.env.CLIENT_URL || "http://localhost:3000",
+		methods: ["GET", "POST"],
+	},
+});
 
 // Configure middleware
 function setupMiddleware(app) {
@@ -84,6 +95,10 @@ function setupProcessHandlers(server) {
 	});
 }
 
+function setupChatMessaging(io) {
+	registerSocketHandlers(io);
+}
+
 async function setupSchedulers() {
 	cron.schedule("12 * * * *", async () => {
 		try {
@@ -125,8 +140,10 @@ async function initialize() {
 
 		setupRouting(app);
 
+		setupChatMessaging(io);
+
 		// Start the server
-		const server = app.listen(PORT, "0.0.0.0", () => {
+		const server = websocket.listen(PORT, "0.0.0.0", () => {
 			console.log(`Server listening at http://localhost:${PORT}`);
 		});
 

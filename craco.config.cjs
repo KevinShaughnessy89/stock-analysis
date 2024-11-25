@@ -1,8 +1,8 @@
-const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
-const threadLoader = require('thread-loader');
-const os = require('os');
-const webpack = require('webpack');
+const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
+const threadLoader = require("thread-loader");
+const os = require("os");
+const webpack = require("webpack");
 
 // Optimized worker pool settings
 const jsWorkerPool = {
@@ -10,33 +10,33 @@ const jsWorkerPool = {
   poolTimeout: 2000,
   poolParallelJobs: 100,
   workerParallelJobs: 50,
-  workerNodeArgs: ['--max-old-space-size=4096'],
+  workerNodeArgs: ["--max-old-space-size=4096"],
 };
 
 // Warm up thread-loader
 threadLoader.warmup(jsWorkerPool, [
-  'babel-loader',
-  '@babel/preset-env',
-  '@babel/preset-react',
-  '@babel/preset-typescript'
+  "babel-loader",
+  "@babel/preset-env",
+  "@babel/preset-react",
+  "@babel/preset-typescript",
 ]);
 
 module.exports = {
   webpack: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      "@": path.resolve(__dirname, "src"),
     },
     plugins: {
       add: [
         new webpack.ProvidePlugin({
-          React: 'react',
-          JSX: 'react'
-        })
-      ]
+          React: "react",
+          JSX: "react",
+        }),
+      ],
     },
     configure: (webpackConfig) => {
       // Extensions
-      webpackConfig.resolve.extensions = ['.js', '.jsx', '.ts', '.tsx'];
+      webpackConfig.resolve.extensions = [".js", ".jsx", ".ts", ".tsx"];
 
       // Simplified Node.js polyfills - explicitly false out problematic ones
       webpackConfig.resolve.fallback = {
@@ -60,32 +60,32 @@ module.exports = {
         dns: false,
         net: false,
         tls: false,
-        child_process: false
+        child_process: false,
       };
 
       // Enhanced plugins configuration
       webpackConfig.plugins = [
         ...webpackConfig.plugins,
         new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-        })
+          "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+        }),
       ];
 
       // Filesystem cache
       webpackConfig.cache = {
-        type: 'filesystem',
-        cacheDirectory: path.resolve(__dirname, '.webpack-cache'),
-        compression: 'gzip',
+        type: "filesystem",
+        cacheDirectory: path.resolve(__dirname, ".webpack-cache"),
+        compression: "gzip",
         maxAge: 172800000, // 48 hours
         buildDependencies: {
-          config: [__filename]
-        }
+          config: [__filename],
+        },
       };
 
       // Optimization configuration
       webpackConfig.optimization = {
         ...webpackConfig.optimization,
-        minimize: process.env.NODE_ENV === 'production',
+        minimize: process.env.NODE_ENV === "production",
         minimizer: [
           new TerserPlugin({
             parallel: true,
@@ -110,10 +110,10 @@ module.exports = {
             },
           }),
         ],
-        moduleIds: 'deterministic',
-        runtimeChunk: 'single',
+        moduleIds: "deterministic",
+        runtimeChunk: "single",
         splitChunks: {
-          chunks: 'all',
+          chunks: "all",
           maxInitialRequests: Infinity,
           minSize: 0,
           cacheGroups: {
@@ -123,7 +123,7 @@ module.exports = {
                 const packageName = module.context.match(
                   /[\\/]node_modules[\\/](.*?)([\\/]|$)/
                 )[1];
-                return `vendor.${packageName.replace('@', '')}`;
+                return `vendor.${packageName.replace("@", "")}`;
               },
               priority: -10,
               reuseExistingChunk: true,
@@ -142,39 +142,52 @@ module.exports = {
         test: /\.(js|jsx|ts|tsx)$/,
         use: [
           {
-            loader: 'thread-loader',
-            options: jsWorkerPool
+            loader: "thread-loader",
+            options: jsWorkerPool,
           },
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
               cacheDirectory: true,
               cacheCompression: false,
-              compact: process.env.NODE_ENV === 'production',
+              compact: process.env.NODE_ENV === "production",
               presets: [
-                ['@babel/preset-env', {
-                  useBuiltIns: 'usage',
-                  corejs: 3,
-                  modules: false,
-                }],
-                ['@babel/preset-react', {
-                  runtime: 'automatic',
-                  development: process.env.NODE_ENV === 'development',
-                  importSource: 'react'
-                }],
-                '@babel/preset-typescript'
+                [
+                  "@babel/preset-env",
+                  {
+                    useBuiltIns: "usage",
+                    corejs: 3,
+                    modules: false,
+                  },
+                ],
+                [
+                  "@babel/preset-react",
+                  {
+                    runtime: "automatic",
+                    development: process.env.NODE_ENV === "development",
+                    importSource: "react",
+                  },
+                ],
+                "@babel/preset-typescript",
               ],
               plugins: [
-                process.env.NODE_ENV === 'development' && require.resolve('react-refresh/babel'),
-                ['@babel/plugin-transform-runtime', {
-                  regenerator: true,
-                }],
-                ['@babel/plugin-transform-react-jsx', {
-                  runtime: 'automatic'
-                }]
-              ].filter(Boolean)
-            }
-          }
+                process.env.NODE_ENV === "development" &&
+                  require.resolve("react-refresh/babel"),
+                [
+                  "@babel/plugin-transform-runtime",
+                  {
+                    regenerator: true,
+                  },
+                ],
+                [
+                  "@babel/plugin-transform-react-jsx",
+                  {
+                    runtime: "automatic",
+                  },
+                ],
+              ].filter(Boolean),
+            },
+          },
         ],
         exclude: /node_modules/,
       });
@@ -183,41 +196,54 @@ module.exports = {
       webpackConfig.performance = {
         maxEntrypointSize: 512000,
         maxAssetSize: 512000,
-        hints: process.env.NODE_ENV === 'production' ? 'warning' : false
+        hints: process.env.NODE_ENV === "production" ? "warning" : false,
       };
 
       return webpackConfig;
-    }
+    },
   },
   babel: {
     presets: [
-      ['@babel/preset-env', {
-        useBuiltIns: 'usage',
-        corejs: 3,
-        modules: false,
-      }],
-      ['@babel/preset-react', {
-        runtime: 'automatic',
-        development: process.env.NODE_ENV === 'development',
-        importSource: 'react'
-      }],
-      '@babel/preset-typescript'
+      [
+        "@babel/preset-env",
+        {
+          useBuiltIns: "usage",
+          corejs: 3,
+          modules: false,
+        },
+      ],
+      [
+        "@babel/preset-react",
+        {
+          runtime: "automatic",
+          development: process.env.NODE_ENV === "development",
+          importSource: "react",
+        },
+      ],
+      "@babel/preset-typescript",
     ],
     plugins: [
-      process.env.NODE_ENV === 'development' && require.resolve('react-refresh/babel'),
-      ['@babel/plugin-transform-runtime', {
-        regenerator: true,
-      }],
-      ['@babel/plugin-transform-react-jsx', {
-        runtime: 'automatic'
-      }]
-    ].filter(Boolean)
+      process.env.NODE_ENV === "development" &&
+        require.resolve("react-refresh/babel"),
+      [
+        "@babel/plugin-transform-runtime",
+        {
+          regenerator: true,
+        },
+      ],
+      [
+        "@babel/plugin-transform-react-jsx",
+        {
+          runtime: "automatic",
+        },
+      ],
+    ].filter(Boolean),
   },
   devServer: {
     hot: true,
     watchOptions: {
       poll: false,
       ignored: /node_modules/,
-    }
-  }
+    },
+  },
 };

@@ -1,8 +1,7 @@
 import { StockMarket_DB } from "../config/DatabaseRegistry.js";
 import { getAdvancedStatistics } from "../script/database_script.js";
 import queryConfigs from "../config/queryConfigs.js";
-
-const COLLECTION_NAME_DAILY = "daily_price";
+import { ChatHistory } from "../models/chatModel.js";
 
 export const dataRoutes = {
 	getSymbols: {
@@ -13,30 +12,11 @@ export const dataRoutes = {
 				name: "core",
 				handler: async (req, res, next) => {
 					try {
-						console.log("We are in");
-						const collection = StockMarket_DB.getDb().collection(
-							COLLECTION_NAME_DAILY
+						const results = StockMarket_DB.query(
+							queryConfigs.getSymbols,
+							{}
 						);
 
-						let groupStage = {
-							$group: {
-								_id: "$symbol",
-							},
-						};
-
-						let projectStage = {
-							$project: {
-								_id: 0,
-								value: "$_id",
-								label: "$_id",
-							},
-						};
-
-						const pipeline = [groupStage, projectStage];
-
-						const results = await collection
-							.aggregate(pipeline)
-							.toArray();
 						res.status(200).json(results);
 					} catch (error) {
 						console.log("Error getting symbols: ", error);
@@ -55,9 +35,6 @@ export const dataRoutes = {
 				handler: async (req, res, next) => {
 					try {
 						console.log("Get request for daily stock prices");
-						const collection = StockMarket_DB.getDb().collection(
-							COLLECTION_NAME_DAILY
-						);
 
 						const count = await collection.countDocuments();
 						if (count === 0) {
@@ -69,37 +46,22 @@ export const dataRoutes = {
 
 						const { symbol, startDate, endDate } = req.query;
 
-						console.log("Query parameters:", {
-							symbol,
-							startDate,
-							endDate,
-						});
+						const priceData = StockMarket_DB.query(
+							queryConfigs.rawPriceData,
+							{
+								symbol,
+								startDate,
+								endDate,
+							}
+						);
 
-						const pipeline = [];
-
-						const matchStage = {
-							$match: {
-								symbol: symbol,
-								timestamp: {
-									$gte: new Date(startDate),
-									$lte: new Date(endDate),
-								},
-							},
-						};
-
-						pipeline.push(matchStage);
-
-						const result = await collection
-							.aggregate(pipeline)
-							.toArray();
-
-						if (result.length == 0) {
+						if (priceData.length == 0) {
 							return res.json({
 								message: "No documents found",
 								criteria: { symbol, startDate, endDate },
 							});
 						}
-						res.status(200).json(result);
+						res.status(200).json(priceData);
 					} catch (error) {
 						next(error);
 					}
@@ -139,6 +101,38 @@ export const dataRoutes = {
 						res.status(400).json({
 							message: "Error retrieving price averages",
 						});
+					}
+				},
+			},
+		],
+	},
+	saveChatHistory: {
+		path: "/chat/save",
+		params: {
+			username: true,
+			entry: true,
+		},
+		pipeline: [
+			{
+				name: "saveHistory",
+				handler: async (req, res, next) => {
+					try {
+						console.log("Saving chat history");
+						const newEntry = {
+							username: req.body.username,
+							entry: req.body.entry,
+						};
+						const updatedChat = ChatHistory.findOneAndUpdate(
+							{},
+							{ $push: { entries: newEntry } },
+							{ $upsert: true, new: true }
+						);
+
+						console.log("Updated chat history: ", updatedChat);
+
+						res.status(200);
+					} catch (error) {
+						next(error);
 					}
 				},
 			},

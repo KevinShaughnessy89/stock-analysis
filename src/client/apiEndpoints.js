@@ -7,7 +7,7 @@ export const apiEndpoints = {
 		// Define endpoint base configuration
 		method: "GET",
 		baseURL: DOMAIN,
-		endpoint: "api/data/prices",
+		endpoint: "/api/data/prices",
 		headers: {
 			"Content-Type": "application/JSON",
 		},
@@ -34,7 +34,7 @@ export const apiEndpoints = {
 	getPriceAverage: {
 		method: "GET",
 		baseURL: DOMAIN,
-		endpoint: "api/data/prices/average",
+		endpoint: "/api/data/prices/average",
 		headers: {
 			"Content-Type": "applications/JSON",
 		},
@@ -46,8 +46,8 @@ export const apiEndpoints = {
 	},
 	getRSS: {
 		method: "GET",
-		baseURL: "https:/api.rss2json.com",
-		endpoint: "/v1api.json",
+		baseURL: "https://api.rss2json.com",
+		endpoint: "/v1/api.json",
 		headers: {
 			"Content-Type": "applications/JSON",
 		},
@@ -62,7 +62,7 @@ export const apiEndpoints = {
 	registerUser: {
 		method: "POST",
 		baseURL: DOMAIN,
-		endpoint: `api/user/register`,
+		endpoint: `/api/user/register`,
 		data: {
 			username: true,
 			password: true,
@@ -73,7 +73,7 @@ export const apiEndpoints = {
 	loginUser: {
 		method: "POST",
 		baseURL: DOMAIN,
-		endpoint: `api/user/login`,
+		endpoint: `/api/user/login`,
 		data: {
 			username: true,
 			password: true,
@@ -88,7 +88,7 @@ export const apiEndpoints = {
 	logoutUser: {
 		method: "POST",
 		baseURL: DOMAIN,
-		endpoint: "api/user/logout",
+		endpoint: "/api/user/logout",
 		responseHandlers: {
 			200: (response) => {
 				useAuthStore.getState().setIsAuthenticated(false);
@@ -98,7 +98,7 @@ export const apiEndpoints = {
 	verifyCookie: {
 		method: "GET",
 		baseURL: DOMAIN,
-		endpoint: "api/auth/verify",
+		endpoint: "/api/auth/verify",
 		optional: {
 			credentials: "include",
 		},
@@ -112,7 +112,7 @@ export const apiEndpoints = {
 	getUserInfo: {
 		method: "GET",
 		baseURL: DOMAIN,
-		endpoint: "api/user/info",
+		endpoint: "/api/user/info",
 		params: {
 			fields: true,
 		},
@@ -123,7 +123,7 @@ export const apiEndpoints = {
 	scrapeWebsite: {
 		method: "POST",
 		baseURL: DOMAIN,
-		endpoint: "api/scrape",
+		endpoint: "/api/scrape",
 		data: {
 			url: true,
 		},
@@ -131,7 +131,7 @@ export const apiEndpoints = {
 	getStockSymbols: {
 		method: "GET",
 		baseURL: DOMAIN,
-		endpoint: "api/data/symbols",
+		endpoint: "/api/data/symbols",
 		params: {},
 	},
 	queryNews: {
@@ -150,7 +150,7 @@ export const apiEndpoints = {
 	getUserPreferences: {
 		method: "GET",
 		baseURL: DOMAIN,
-		endpoint: "api/user/preferences",
+		endpoint: "/api/user/preferences",
 		params: {},
 		optional: {
 			credentials: "include",
@@ -159,7 +159,7 @@ export const apiEndpoints = {
 	saveFeedItem: {
 		method: "POST",
 		baseURL: DOMAIN,
-		endpoint: "api/user/feed",
+		endpoint: "/api/user/feed",
 		data: {
 			title: true,
 			link: true,

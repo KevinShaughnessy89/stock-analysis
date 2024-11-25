@@ -85,6 +85,8 @@
     "select": "^1.1.2",
     "shadcn": "^2.1.2",
     "shadcn-ui": "^0.9.2",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "stream-browserify": "^3.0.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss": "^3.4.14",

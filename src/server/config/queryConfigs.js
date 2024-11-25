@@ -55,6 +55,24 @@ const queryConfigs = {
 			},
 		],
 	},
+	getSymbols: {
+		collection: "daily_price",
+		params: {},
+		pipeline: [
+			{
+				$group: {
+					_id: "$symbol",
+				},
+			},
+			{
+				$project: {
+					_id: 0,
+					value: "$_id",
+					label: "$_id",
+				},
+			},
+		],
+	},
 };
 
 export default queryConfigs;

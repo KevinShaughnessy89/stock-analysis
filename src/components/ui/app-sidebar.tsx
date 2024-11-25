@@ -1,4 +1,4 @@
-import { LineChart, Home, Inbox, Settings } from "lucide-react"
+import { LineChart, Home, Inbox, Settings, SpeechIcon } from "lucide-react"
 import UserDisplay from "@/client/UserDisplay.js";
 import { Separator } from '@/components/ui/separator'
 import {
@@ -32,7 +32,12 @@ const items = [
         title: 'Dashboard',
         url: '/dashboard',
         icon: Home
-    }
+    },
+    {
+        title: 'Chat',
+        url: '/chat',
+        icon: SpeechIcon
+    },
 ]
 
 export function AppSidebar() {
