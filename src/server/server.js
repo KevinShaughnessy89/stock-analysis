@@ -13,6 +13,7 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { registerSocketHandlers } from "../socket-io/socket.js";
+import AuthService from "./services/authService.js";
 
 // Constants and configuration
 const __filename = fileURLToPath(import.meta.url);
@@ -74,10 +75,14 @@ function setupMiddleware(app) {
 }
 
 function setupRouting(app) {
+	// Auth token for every request
+	app.use("/api", AuthService.verifyToken);
+	// The rest..
 	createEndpoints();
-	app.use("/api/user", routers.userRouter.data);
-	app.use("/api/data", routers.dataRouter.data);
-	app.use("/", routers.systemRouter.data);
+	app.use("/api/user", routers.userRouter.routerObject);
+	app.use("/api/data", routers.dataRouter.routerObject);
+	app.use("/api/chat", routers.chatRouter.routerObject);
+	app.use("/", routers.systemRouter.routerObject);
 }
 
 // Setup process signal handlers

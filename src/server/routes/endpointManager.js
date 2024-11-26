@@ -1,39 +1,42 @@
-import express from 'express';
-import { systemRoutes } from './systemRoutes.js';
-import { userRoutes } from './userRoutes.js';
-import { dataRoutes } from './dataRoutes.js';
+import express from "express";
+import { systemRoutes } from "./systemRoutes.js";
+import { userRoutes } from "./userRoutes.js";
+import { dataRoutes } from "./dataRoutes.js";
+import { chatRoutes } from "./chatRoutes.js";
 
 export const routers = {
-    systemRouter: {
-        data: express.Router(),
-        routes: systemRoutes
-    },
-    userRouter: {
-        data: express.Router(),
-        routes: userRoutes
-    },
-    dataRouter: {
-        data: express.Router(),
-        routes: dataRoutes
-    }
-}
+	systemRouter: {
+		routerObject: express.Router(),
+		routes: systemRoutes,
+	},
+	userRouter: {
+		routerObject: express.Router(),
+		routes: userRoutes,
+	},
+	dataRouter: {
+		routerObject: express.Router(),
+		routes: dataRoutes,
+	},
+	chatRouter: {
+		routerObject: express.Router(),
+		routes: chatRoutes,
+	},
+};
 
-function createEndpoint(router, config) {
-    try {
-        const {path, method, pipeline} = config;
-        const handlers = pipeline.map((entry) => entry.handler);
-        router[method.toLowerCase()](path, ...handlers);
-    }
-    catch (error) {
-        console.error("Error creating endpoint: ", error)
-    }
+function createEndpoint(routerObject, config) {
+	try {
+		const { path, method, pipeline } = config;
+		const handlers = pipeline.map((entry) => entry.handler);
+		routerObject[method.toLowerCase()](path, ...handlers);
+	} catch (error) {
+		console.error("Error creating endpoint: ", error);
+	}
 }
 
 export function createEndpoints() {
-    for (const [routername, {data, routes}] of Object.entries(routers)) {
-        for (const config of Object.values(routes)) {
-
-            createEndpoint(data, config)
-        }
-    }
+	for (const [_, { routerObject, routes }] of Object.entries(routers)) {
+		for (const config of Object.values(routes)) {
+			createEndpoint(routerObject, config);
+		}
+	}
 }

@@ -1,4 +1,4 @@
-const queryConfigs = {
+const stockQueryConfigs = {
 	averageDailyPrice: {
 		collection: "daily_price",
 		params: {
@@ -75,4 +75,4 @@ const queryConfigs = {
 	},
 };
 
-export default queryConfigs;
+export default stockQueryConfigs;

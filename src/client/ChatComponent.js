@@ -1,9 +1,22 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { io } from "socket.io-client";
+import { makeApiCall } from "@/common/makeApiCall.js";
+import { apiEndpoints } from "./apiEndpoints.js";
+import { useAuthStore } from "./authStore.js";
 
 const ChatComponent = () => {
+	const { isAuthenticated, username } = useAuthStore();
+
+	const storedUsername = isAuthenticated ? username : "Guest";
+
+	const messageRef = useRef(null);
+
 	const [socket, setSocket] = useState(null);
-	const [message, setMessage] = useState("");
+	const [message, setMessage] = useState({
+		username: storedUsername,
+		message: "",
+		timestamp: null,
+	});
 	const [messages, setMessages] = useState([]);
 	const [isTyping, setIsTyping] = useState(false);
 	const [typingTimeout, setTypingTimeout] = useState(null);
@@ -25,6 +38,17 @@ const ChatComponent = () => {
 
 		setSocket(newSocket);
 
+		const fetchChatHistory = async () => {
+			const chatHistory = await makeApiCall(apiEndpoints.getChatHistory);
+			console.log(
+				"Chat history: ",
+				chatHistory.history.chatHistory.entries
+			);
+			setMessages(chatHistory.history.chatHistory.entries);
+		};
+
+		fetchChatHistory();
+
 		return () => {
 			newSocket.close();
 		};
@@ -32,17 +56,40 @@ const ChatComponent = () => {
 
 	const sendMessage = useCallback((e) => {
 		e.preventDefault();
-		if (message.trim() && socket) {
+
+		const appendToHistory = async () => {
+			await makeApiCall(
+				apiEndpoints.saveChatHistory,
+				{},
+				{
+					username: storedUsername,
+					entry: messageRef.current.value,
+					timestamp: new Date(),
+				}
+			);
+		};
+
+		if (message.message.trim() && socket) {
 			socket.emit("message", {
-				text: message,
-				timestamp: new Date().toISOString,
+				username: storedUsername,
+				text: messageRef.current.value,
+				timestamp: new Date(),
 			});
-			setMessage("");
+			appendToHistory();
+			setMessage({
+				username: storedUsername,
+				message: "",
+				timestamp: null,
+			});
 		}
 	});
 
 	const handleTyping = useCallback((e) => {
-		setMessage(e.target.value);
+		setMessage({
+			username: storedUsername,
+			message: messageRef.current.value,
+			timestamp: null,
+		});
 
 		if (socket) {
 			socket.emit("typing", {
@@ -66,7 +113,9 @@ const ChatComponent = () => {
 			<div>
 				{messages.map((message, index) => (
 					<div key={index}>
-						<span>{message.text}</span>
+						<span>
+							`{message.username}: {message.message}`
+						</span>
 					</div>
 				))}
 				{isTyping && <span>Someone is typing...</span>}
@@ -75,7 +124,8 @@ const ChatComponent = () => {
 			<form onSubmit={sendMessage}>
 				<input
 					type="text"
-					value={message}
+					value={message.message}
+					ref={messageRef}
 					onChange={handleTyping}
 					placeholder="Type a message..."
 					className="text-black"

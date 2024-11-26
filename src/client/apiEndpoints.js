@@ -1,6 +1,9 @@
 import { useAuthStore } from "./authStore.js";
 
-const DOMAIN = "https://kevinshaughnessy.ca";
+const DOMAIN =
+	process.env.REACT_APP_ENV === "development"
+		? "http://localhost:5000"
+		: "https://kevinshaughnessy.ca";
 
 export const apiEndpoints = {
 	getPriceData: {
@@ -81,6 +84,7 @@ export const apiEndpoints = {
 		responseHandlers: {
 			200: (response) => {
 				useAuthStore.getState().setIsAuthenticated(true);
+				useAuthStore.getState().setUsername(response.userInfo.username);
 				return response.success;
 			},
 		},
@@ -92,6 +96,7 @@ export const apiEndpoints = {
 		responseHandlers: {
 			200: (response) => {
 				useAuthStore.getState().setIsAuthenticated(false);
+				useAuthStore.getState().setUsername("");
 			},
 		},
 	},
@@ -118,6 +123,12 @@ export const apiEndpoints = {
 		},
 		optional: {
 			credentials: "include",
+		},
+		responseHandlers: {
+			200: (response) => {
+				useAuthStore.getState().setUsername(response.userInfo.username);
+				return response.userInfo;
+			},
 		},
 	},
 	scrapeWebsite: {
@@ -168,6 +179,21 @@ export const apiEndpoints = {
 		},
 		optional: {
 			credentials: "include",
+		},
+	},
+	getChatHistory: {
+		method: "GET",
+		baseURL: DOMAIN,
+		endpoint: "/api/chat/history",
+		params: {},
+	},
+	saveChatHistory: {
+		method: "POST",
+		baseURL: DOMAIN,
+		endpoint: "/api/chat/history",
+		data: {
+			username: true,
+			entry: true,
 		},
 	},
 };

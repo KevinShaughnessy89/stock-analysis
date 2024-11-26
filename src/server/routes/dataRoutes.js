@@ -1,7 +1,6 @@
 import { StockMarket_DB } from "../config/DatabaseRegistry.js";
 import { getAdvancedStatistics } from "../script/database_script.js";
-import queryConfigs from "../config/queryConfigs.js";
-import { ChatHistory } from "../models/chatModel.js";
+import stockQueryConfigs from "../config/stockQueryConfigs.js";
 
 export const dataRoutes = {
 	getSymbols: {
@@ -12,10 +11,11 @@ export const dataRoutes = {
 				name: "core",
 				handler: async (req, res, next) => {
 					try {
-						const results = StockMarket_DB.query(
-							queryConfigs.getSymbols,
-							{}
+						const results = await StockMarket_DB.query(
+							stockQueryConfigs.getSymbols
 						);
+
+						console.log("Symbols: ", results);
 
 						res.status(200).json(results);
 					} catch (error) {
@@ -47,7 +47,7 @@ export const dataRoutes = {
 						const { symbol, startDate, endDate } = req.query;
 
 						const priceData = StockMarket_DB.query(
-							queryConfigs.rawPriceData,
+							stockQueryConfigs.rawPriceData,
 							{
 								symbol,
 								startDate,
@@ -80,7 +80,7 @@ export const dataRoutes = {
 					const { symbol, startDate, endDate } = req.query;
 
 					const averages = await StockMarket_DB.query(
-						queryConfigs.averageDailyPrice,
+						stockQueryConfigs.averageDailyPrice,
 						{
 							symbol,
 							startDate,
@@ -101,38 +101,6 @@ export const dataRoutes = {
 						res.status(400).json({
 							message: "Error retrieving price averages",
 						});
-					}
-				},
-			},
-		],
-	},
-	saveChatHistory: {
-		path: "/chat/save",
-		params: {
-			username: true,
-			entry: true,
-		},
-		pipeline: [
-			{
-				name: "saveHistory",
-				handler: async (req, res, next) => {
-					try {
-						console.log("Saving chat history");
-						const newEntry = {
-							username: req.body.username,
-							entry: req.body.entry,
-						};
-						const updatedChat = ChatHistory.findOneAndUpdate(
-							{},
-							{ $push: { entries: newEntry } },
-							{ $upsert: true, new: true }
-						);
-
-						console.log("Updated chat history: ", updatedChat);
-
-						res.status(200);
-					} catch (error) {
-						next(error);
 					}
 				},
 			},

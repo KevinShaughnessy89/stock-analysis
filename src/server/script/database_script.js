@@ -1,7 +1,7 @@
 import { spawn } from "child_process";
 import fs from "fs";
 import { StockMarket_DB } from "../config/DatabaseRegistry.js";
-import queryConfigs from "../config/queryConfigs.js";
+import queryConfigs from "../config/stockQueryConfigs.js";
 
 export async function runPythonScript(filepath) {
 	console.log("Starting Python process...", filepath);

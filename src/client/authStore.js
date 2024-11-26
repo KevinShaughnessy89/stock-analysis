@@ -1,12 +1,13 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-export const useAuthStore = create( (set) => ({
+export const useAuthStore = create((set) => ({
+	isAuthenticated: false,
+	username: "",
 
-    isAuthenticated: false,
+	setIsAuthenticated: (value) => set({ isAuthenticated: value }),
+	setUsername: (username) => set({ username }),
 
-    setIsAuthenticated: (value) => set({isAuthenticated: value}),
-
-    logout: () => {
-        set({isAuthenticated: false})
-    }
+	logout: () => {
+		set({ isAuthenticated: false });
+	},
 }));

@@ -73,6 +73,7 @@ export async function makeApiCall(config, params = {}, data = {}) {
 		}
 
 		logApiDetails("RESPONSE_RECEIVED", {
+			endpoint: config.endpoint,
 			status: response.status,
 			statusText: response.statusText,
 			headers: response.headers,

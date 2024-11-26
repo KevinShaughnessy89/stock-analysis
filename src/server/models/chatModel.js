@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ChatSchema = new mongoose.Schema({
+const Chat = new mongoose.Schema({
 	chatHistory: {
 		entries: [
 			{
@@ -26,19 +26,30 @@ const ChatSchema = new mongoose.Schema({
 	default: [],
 });
 
-chatSchema.methods.addChatEntry = function (chatEntry) {
+Chat.methods.addChatEntry = async function (chatEntry) {
+	console.log("Chat entry: ", chatEntry);
 	if (
 		this.chatHistory.entries.some(
 			(entry) =>
 				entry.username === chatEntry.username &&
-				entry.message === chatEntry.message
+				entry.message === chatEntry.message &&
+				entry.timestamp === chatEntry.timestamp
 		)
 	) {
 		return;
 	} else {
-		this.entries.push(chatEntry);
-		return this.save();
+		this.chatHistory.entries.push(chatEntry);
+		return await this.save();
 	}
 };
 
-export const ChatHistory = mongoose.model("ChatSchema", ChatSchema);
+Chat.statics.getInstance = async function () {
+	let chat = await this.findOne();
+	if (!chat) {
+		chat = new this();
+		await chat.save();
+	}
+	return chat;
+};
+
+export const ChatHistory = mongoose.model("Chat", Chat);
