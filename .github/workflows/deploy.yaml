@@ -37,6 +37,8 @@ jobs:
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
           echo "ALPHA_VANTAGE_KEY=${{ secrets.ALPHA_VANTAGE_KEY }}" >> .env
           echo "RSS_KEY=${{ secrets.RSS_KEY }}" >> .env
+          echo "REACT_APP_ENV=production" >> .env
+          echo "CLIENT_URL=https://kevinshaughnessy.ca" >> .env
 
       - name: Build Application
         run: yarn build

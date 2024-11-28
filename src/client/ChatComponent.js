@@ -14,7 +14,7 @@ const ChatComponent = () => {
 	const [socket, setSocket] = useState(null);
 	const [message, setMessage] = useState({
 		username: username,
-		message: null,
+		message: "",
 		timestamp: null,
 	});
 	const [messages, setMessages] = useState([]);
@@ -78,7 +78,7 @@ const ChatComponent = () => {
 			appendToHistory();
 			setMessage({
 				username: username,
-				message: null,
+				message: "",
 				timestamp: null,
 			});
 		}

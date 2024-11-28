@@ -27,7 +27,7 @@ export const chatRoutes = {
 
 						res.status(200);
 					} catch (error) {
-						next(error);
+						console.error("Error saving chat history: ", error);
 					}
 				},
 			},
