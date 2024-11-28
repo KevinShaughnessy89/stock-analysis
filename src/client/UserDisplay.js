@@ -1,57 +1,39 @@
-import LoginDialog from './LoginDialog.js';
-import { Skeleton } from '@/components/ui/skeleton'
-import UserDropdownMenu from './UserDropDownMenu.js';
-import UserAvatar from './UserAvatar.js';
-import { useState, useEffect } from 'react'
-import { makeApiCall } from '../common/makeApiCall.js';
-import { apiEndpoints } from './apiEndpoints.js';
+import LoginDialog from "./LoginDialog.js";
+import { Skeleton } from "@/components/ui/skeleton";
+import UserDropdownMenu from "./UserDropDownMenu.js";
+import UserAvatar from "./UserAvatar.js";
+import { useState, useEffect } from "react";
+import { makeApiCall } from "../common/makeApiCall.js";
+import { apiEndpoints } from "./apiEndpoints.js";
+import { useAuthStore } from "./authStore.js";
 
-export function UserDisplay({className = ""}) {
+export function UserDisplay({ className = "" }) {
+	const { username } = useAuthStore();
 
-    const [username, setUsername] = useState("Guest");
-    const [loading, setLoading] = useState(true);
+	const [displayName, setDisplayName] = useState(username);
+	const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchData = (async () => {
-            try {
-                const data = await makeApiCall(apiEndpoints['getUserInfo'], {
-                    fields: 'username'
-                });
-                console.log("Username: ", data);
-                if (data.guest === true) {
-                    return;
-                } else {
-                    setUsername(data.username)
-                }
-            }
-            catch (error) {
+	useEffect(() => {
+		setDisplayName(username);
+		setLoading(false);
+	}, [username]);
 
-            } finally {
-                setLoading(false)
-            }
-        })
+	if (loading) {
+		return (
+			<div className="flex items-center gap-2">
+				<Skeleton className="h-10 w-10 rounded-full" />
+				<Skeleton className="h-10 w-24" />
+			</div>
+		);
+	}
 
-        fetchData();
-
-    }, [])
-
-    if (loading) {
-        return (
-        <div className="flex items-center gap-2">
-            <Skeleton className="h-10 w-10 rounded-full" />
-            <Skeleton className="h-10 w-24" />
-        </div>
-        );
-    }
-
-
-    return (
-        <div className={`w-full flex flex-row items-center gap-4 ${className}`}>
-            <UserAvatar username={username}/>
-            <UserDropdownMenu username={username}/>
-            <LoginDialog />
-        </div>
-    );
+	return (
+		<div className={`w-full flex flex-row items-center gap-4 ${className}`}>
+			<UserAvatar displayName={displayName} />
+			<UserDropdownMenu displayName={displayName} />
+			<LoginDialog />
+		</div>
+	);
 }
 
 export default UserDisplay;

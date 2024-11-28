@@ -81,37 +81,18 @@ export const apiEndpoints = {
 			username: true,
 			password: true,
 		},
-		responseHandlers: {
-			200: (response) => {
-				useAuthStore.getState().setIsAuthenticated(true);
-				useAuthStore.getState().setUsername(response.userInfo.username);
-				return response.success;
-			},
-		},
 	},
 	logoutUser: {
 		method: "POST",
 		baseURL: DOMAIN,
 		endpoint: "/api/user/logout",
-		responseHandlers: {
-			200: (response) => {
-				useAuthStore.getState().setIsAuthenticated(false);
-				useAuthStore.getState().setUsername("");
-			},
-		},
 	},
 	verifyCookie: {
 		method: "GET",
 		baseURL: DOMAIN,
-		endpoint: "/api/auth/verify",
+		endpoint: "/api/user/auth/verify",
 		optional: {
 			credentials: "include",
-		},
-		responseHandlers: {
-			200: (response) => {
-				useAuthStore.getState().setIsAuthenticated(true);
-				return response.success;
-			},
 		},
 	},
 	getUserInfo: {
@@ -126,7 +107,6 @@ export const apiEndpoints = {
 		},
 		responseHandlers: {
 			200: (response) => {
-				useAuthStore.getState().setUsername(response.userInfo.username);
 				return response.userInfo;
 			},
 		},
@@ -194,6 +174,7 @@ export const apiEndpoints = {
 		data: {
 			username: true,
 			entry: true,
+			timestamp: true,
 		},
 	},
 };

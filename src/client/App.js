@@ -1,33 +1,46 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuthStore } from "./authStore.js";
 import StockAnalysis from "./StockAnalysis.js";
 import UserPreferences from "./UserPreferences.js";
 import RSSComponent from "./RSSComponent.js";
-import { makeApiCall } from "@/common/makeApiCall.js";
-import { apiEndpoints } from "./apiEndpoints.js";
+// import { makeApiCall } from "@/common/makeApiCall.js";
+// import { apiEndpoints } from "./apiEndpoints.js";
 import ChatComponent from "./ChatComponent.js";
 
 function App() {
-	useEffect(() => {
-		const checkAuthStatus = async () => {
-			try {
-				await makeApiCall(apiEndpoints.verifyCookie);
-			} catch (error) {
-				console.error("Error verifying cookie: ", error);
-			}
-		};
+	// const location = useLocation();
+	// // Have to initialize these here, can't use react hooks in nested functions or conditionally
+	// const { isAuthenticated, setIsAuthenticated, setUsername, logout } =
+	// 	useAuthStore();
 
-		checkAuthStatus();
+	// useEffect(() => {
+	// 	const checkAuthStatus = async () => {
+	// 		try {
+	// 			const result = await makeApiCall(apiEndpoints.verifyCookie);
+	// 			console.log("result: ", JSON.stringify(result));
+	// 			if (result.success) {
+	// 				if (!isAuthenticated) {
+	// 					setIsAuthenticated(true);
+	// 					setUsername(result.userInfo.username);
+	// 				}
+	// 			}
+	// 		} catch (error) {
+	// 			console.error("Error verifying cookie: ", error);
+	// 		}
+	// 	};
 
-		return useAuthStore.getState().logout();
-	}, []);
+	// 	checkAuthStatus();
+
+	// 	return () => {
+	// 		logout();
+	// 	};
+	// }, [location]);
 
 	return (
-		// <div className='m-6'>
-		<BrowserRouter>
+		<div className="m-6 w-full h-full">
 			<SidebarProvider>
 				<div className="flex min-h-screen bg-background text-foreground  w-full h-full">
 					<AppSidebar />
@@ -47,9 +60,7 @@ function App() {
 					</main>
 				</div>
 			</SidebarProvider>
-			<h1>This is a test</h1>
-		</BrowserRouter>
-		// </div>
+		</div>
 	);
 }
 

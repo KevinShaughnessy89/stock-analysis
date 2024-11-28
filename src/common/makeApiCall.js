@@ -65,13 +65,6 @@ export async function makeApiCall(config, params = {}, data = {}) {
 
 		const response = await axios(requestConfig);
 
-		if (
-			config.responseHandlers &&
-			config.responseHandlers[response.status]
-		) {
-			return config.responseHandlers[response.status](response);
-		}
-
 		logApiDetails("RESPONSE_RECEIVED", {
 			endpoint: config.endpoint,
 			status: response.status,
@@ -81,7 +74,14 @@ export async function makeApiCall(config, params = {}, data = {}) {
 			timestamp: new Date().toISOString(),
 		});
 
-		return response.data;
+		if (
+			config.responseHandlers &&
+			config.responseHandlers[response.status]
+		) {
+			return config.responseHandlers[response.status](response);
+		} else {
+			return response.data;
+		}
 	} catch (error) {
 		// More detailed error logging
 		console.error({

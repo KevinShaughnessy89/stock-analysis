@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { User } from "../models/userModel.js";
+import { useAuthStore } from "../../client/authStore.js";
 
 class AuthService {
 	static async register(userData) {
@@ -41,7 +42,7 @@ class AuthService {
 			}).select("+password");
 
 			if (!user) {
-				throw new Error("Invalid credentials.");
+				return false;
 			}
 			console.log("User: ", user);
 
@@ -50,12 +51,14 @@ class AuthService {
 				user.password
 			);
 
+			console.log("isValid: ", isValid);
+
 			if (!isValid) {
 				throw new Error("Invalid password.");
 			}
 
 			const token = this.generateToken(user);
-
+			console.log("returning from login...");
 			return { user, token };
 		} catch (error) {
 			console.error(
@@ -93,11 +96,32 @@ class AuthService {
 
 			const decoded = await jwt.verify(token, process.env.JWT_SECRET);
 			req.decoded = decoded;
+
 			return next();
 		} catch (error) {
 			console.log("Token verification failed:", error.message);
 			return next();
 		}
+	}
+
+	static async getUserInfo(token) {
+		console.log("decoding token");
+		const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+		console.log("decoded, finding user");
+		const existingUser = await User.findById(decoded.id, {
+			username: 1,
+		});
+		console.log("user found, creating userInfo");
+		const userInfo = {
+			username: existingUser.username,
+			token: token,
+		};
+		console.log(
+			"userInfo created, returning it: ",
+			JSON.stringify(userInfo)
+		);
+
+		return userInfo;
 	}
 
 	static sameOrigin(req, res, next) {

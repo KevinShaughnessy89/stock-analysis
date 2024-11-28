@@ -5,16 +5,16 @@ import { apiEndpoints } from "./apiEndpoints.js";
 import { useAuthStore } from "./authStore.js";
 
 const ChatComponent = () => {
-	const { isAuthenticated, username } = useAuthStore();
+	const { username } = useAuthStore();
 
-	const storedUsername = isAuthenticated ? username : "Guest";
+	console.log(`username: ${username}`);
 
 	const messageRef = useRef(null);
 
 	const [socket, setSocket] = useState(null);
 	const [message, setMessage] = useState({
-		username: storedUsername,
-		message: "",
+		username: username,
+		message: null,
 		timestamp: null,
 	});
 	const [messages, setMessages] = useState([]);
@@ -62,7 +62,7 @@ const ChatComponent = () => {
 				apiEndpoints.saveChatHistory,
 				{},
 				{
-					username: storedUsername,
+					username: username,
 					entry: messageRef.current.value,
 					timestamp: new Date(),
 				}
@@ -71,14 +71,14 @@ const ChatComponent = () => {
 
 		if (message.message.trim() && socket) {
 			socket.emit("message", {
-				username: storedUsername,
-				text: messageRef.current.value,
+				username: username,
+				message: messageRef.current.value,
 				timestamp: new Date(),
 			});
 			appendToHistory();
 			setMessage({
-				username: storedUsername,
-				message: "",
+				username: username,
+				message: null,
 				timestamp: null,
 			});
 		}
@@ -86,7 +86,7 @@ const ChatComponent = () => {
 
 	const handleTyping = useCallback((e) => {
 		setMessage({
-			username: storedUsername,
+			username: username,
 			message: messageRef.current.value,
 			timestamp: null,
 		});
@@ -114,7 +114,7 @@ const ChatComponent = () => {
 				{messages.map((message, index) => (
 					<div key={index}>
 						<span>
-							`{message.username}: {message.message}`
+							{message.username}: {message.message}
 						</span>
 					</div>
 				))}

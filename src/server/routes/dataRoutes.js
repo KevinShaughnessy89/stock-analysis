@@ -36,14 +36,6 @@ export const dataRoutes = {
 					try {
 						console.log("Get request for daily stock prices");
 
-						const count = await collection.countDocuments();
-						if (count === 0) {
-							return res.json({
-								message: "No documents found in the collection",
-								totalDocuments: 0,
-							});
-						}
-
 						const { symbol, startDate, endDate } = req.query;
 
 						const priceData = StockMarket_DB.query(

@@ -1,5 +1,6 @@
 import AuthService from "../services/authService.js";
 import { User } from "../models/userModel.js";
+import { useAuthStore } from "../../client/authStore.js";
 
 export const userRoutes = {
 	register: {
@@ -45,29 +46,40 @@ export const userRoutes = {
 							password: password,
 						});
 
-						req.token = result.token;
-						req.userInfo = result.user;
+						console.log("got result");
 
-						next();
+						if (!result) {
+							console.log("no such user");
+							res.json({
+								isAuthenticated: false,
+							});
+						} else {
+							req.token = result.token;
+							req.isAuthenticated = true;
+							next();
+						}
 					} catch (error) {
-						next(error);
+						console.log("Error logging in: ", error);
 					}
 				},
 			},
 			{
 				name: "getToken",
-				handler: (req, res, next) => {
-					res.cookie("jwt", req.token, {
-						httpOnly: true,
-						secure: true,
-						sameSite: "strict",
-						maxAge: 3600000,
-					});
-
-					res.json({
-						success: true,
-						username: req.userInfo.username,
-					});
+				handler: async (req, res, next) => {
+					console.log("I bet it's here. token: ", req.token);
+					if (req.isAuthenticated) {
+						res.cookie("jwt", req.token, {
+							httpOnly: true,
+							secure: true,
+							sameSite: "strict",
+							maxAge: 3600000,
+						});
+						console.log("did we get here");
+						res.json({
+							isAuthenticated: true,
+							userInfo: await AuthService.getUserInfo(req.token),
+						});
+					}
 				},
 			},
 		],
@@ -96,12 +108,19 @@ export const userRoutes = {
 			{
 				name: "sendResponse",
 				handler: async (req, res, next) => {
-					if (req.decoded) {
+					console.log("this: ", req.cookies.jwt);
+					if (req.cookies.jwt) {
+						console.log("sending confirmation...");
 						res.status(200).json({
+							success: true,
 							message: `user: ${req.decoded.id} authenticated`,
+							userInfo: await AuthService.getUserInfo(
+								req.cookies.jwt
+							),
 						});
 					} else {
 						res.status(400).json({
+							success: false,
 							message: "Server could not verify user token",
 						});
 					}
@@ -152,12 +171,6 @@ export const userRoutes = {
 		method: "POST",
 		pipeline: [
 			{
-				name: "verifyToken",
-				handler: async (req, res, next) => {
-					AuthService.verifyToken(req, res, next);
-				},
-			},
-			{
 				name: "save_feed",
 				handler: async (req, res, next) => {
 					try {
@@ -192,12 +205,6 @@ export const userRoutes = {
 		path: "/preferences",
 		method: "GET",
 		pipeline: [
-			{
-				name: "findUser",
-				handler: async (req, res, next) => {
-					AuthService.verifyToken(req, res, next);
-				},
-			},
 			{
 				name: "sendPreferences",
 				handler: async (req, res, next) => {
