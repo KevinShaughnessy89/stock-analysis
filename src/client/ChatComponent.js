@@ -1,8 +1,17 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import {
+	useEffect,
+	useState,
+	useCallback,
+	useRef,
+	useLayoutEffect,
+} from "react";
 import { io } from "socket.io-client";
 import { makeApiCall } from "@/common/makeApiCall.js";
 import { apiEndpoints } from "./apiEndpoints.js";
 import { useAuthStore } from "./authStore.js";
+import { MessagesSquare, MessageSquareReply } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ChatComponent = () => {
 	const { username } = useAuthStore();
@@ -10,7 +19,9 @@ const ChatComponent = () => {
 	console.log(`username: ${username}`);
 
 	const messageRef = useRef(null);
+	const messageEndRef = useRef(null);
 
+	const [isOpen, setIsOpen] = useState(false);
 	const [socket, setSocket] = useState(null);
 	const [message, setMessage] = useState({
 		username: username,
@@ -84,6 +95,22 @@ const ChatComponent = () => {
 		}
 	});
 
+	useLayoutEffect(() => {
+		console.log("isOpen: ", isOpen);
+		console.log("ref: ", messageEndRef.current);
+		if (messageEndRef.current && isOpen) {
+			messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+		}
+	}, [messages]);
+
+	useLayoutEffect(() => {
+		console.log("isOpen: ", isOpen);
+		console.log("ref: ", messageEndRef.current);
+		if (messageEndRef.current && isOpen) {
+			messageEndRef.current.scrollIntoView({ behavior: "instant" });
+		}
+	}, [isOpen]);
+
 	const handleTyping = useCallback((e) => {
 		setMessage({
 			username: username,
@@ -109,29 +136,52 @@ const ChatComponent = () => {
 	});
 
 	return (
-		<div>
-			<div>
-				{messages.map((message, index) => (
-					<div key={index}>
-						<span>
-							{message.username}: {message.message}
-						</span>
+		<div className="w-[250px] h-[350px] flex flex-col">
+			{isOpen ? (
+				<div className="flex flex-col w-[100%] h-[80%] border">
+					<div className="w-[100%] h-[80%]">
+						<ScrollArea className="w-full h-full">
+							{messages.map((message, index) => (
+								<div key={index}>
+									<span>
+										{message.username}: {message.message}
+									</span>
+								</div>
+							))}
+							<div ref={messageEndRef} />
+						</ScrollArea>
 					</div>
-				))}
-				{isTyping && <span>Someone is typing...</span>}
+					<div className="w-[100%] h-[20%]">
+						<form
+							onSubmit={sendMessage}
+							className="flex flex-row h-full w-full"
+						>
+							<input
+								type="text"
+								value={message.message}
+								ref={messageRef}
+								onChange={handleTyping}
+								placeholder="Type a message..."
+								className="text-black h-full w-[80%]"
+							/>
+							<Button className="flex-1 h-full" type="submit">
+								<MessageSquareReply />
+							</Button>
+						</form>
+					</div>
+				</div>
+			) : (
+				<div className="w-[100%] h-[80%] pointer-events-none bg-transparent"></div>
+			)}
+			<div className="flex w-[100%] h-[20%] justify-end">
+				<Button
+					onClick={() => {
+						setIsOpen(!isOpen);
+					}}
+				>
+					<MessagesSquare size={680} color="red" />
+				</Button>
 			</div>
-
-			<form onSubmit={sendMessage}>
-				<input
-					type="text"
-					value={message.message}
-					ref={messageRef}
-					onChange={handleTyping}
-					placeholder="Type a message..."
-					className="text-black"
-				/>
-				<button type="submit">Send</button>
-			</form>
 		</div>
 	);
 };

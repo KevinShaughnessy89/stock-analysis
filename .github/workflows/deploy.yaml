@@ -53,19 +53,21 @@ jobs:
 
       - name: Deploy To VM
         run: |
-          # Set permissions because that always gets fucked somehow
+          echo "Setting production folder permission to service account user"
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
             sudo chown -R sa_107039506943432980720 /home/sa_107039506943432980720/production
             chmod -R u+w /home/sa_107039506943432980720/production
           "
-          # Copy the files using rsync
+          echo "Copying files to server..."
           gcloud compute scp --recurse \
             src/ build/ craco.config.cjs package.json public/ tailwind.config.js tsconfig.json yarn.lock \
             ${{ secrets.VM_NAME }}:/home/sa_107039506943432980720/production --zone=${{ secrets.ZONE }}
-
-          # 4. Install dependencies and restart
+          echo "Copying complete."
+          echo "Installing dependencies if needed..."
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
           cd /home/sa_107039506943432980720/production && \
           sudo yarn install --frozen-lockfile --production && \
+          echo "Restarting server..." && \
           cd src/server && sudo pm2 restart server
           "
+          echo "Done."

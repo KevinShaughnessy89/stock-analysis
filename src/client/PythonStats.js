@@ -1,4 +1,4 @@
-import { ScrollArea } from "@/components/ui/scrollarea";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const PythonStats = ({ graphState }) => {
