@@ -12,6 +12,7 @@ import { useAuthStore } from "./authStore.js";
 import { MessagesSquare, MessageSquareReply } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import ChatMenu from "./chat-menu.js";
 
 const ChatComponent = () => {
 	const { username } = useAuthStore();
@@ -174,6 +175,9 @@ const ChatComponent = () => {
 				<div className="w-[100%] h-[80%] pointer-events-none bg-transparent"></div>
 			)}
 			<div className="flex w-[100%] h-[20%] justify-end">
+				<div className="bg-black ">
+					<ChatMenu />
+				</div>
 				<Button
 					onClick={() => {
 						setIsOpen(!isOpen);
