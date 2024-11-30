@@ -66,8 +66,7 @@ jobs:
           echo "Installing dependencies if needed..."
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
             cd /home/sa_107039506943432980720/production && \
-            sudo yarn install --frozen-lockfile --production && \
-            cd src/server && sudo pm2 restart server
+            sudo yarn install --frozen-lockfile --production
           "
           echo "Installation complete."
           echo "Restarting server..."
