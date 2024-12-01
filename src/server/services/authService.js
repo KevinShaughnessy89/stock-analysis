@@ -2,7 +2,6 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { User } from "../models/userModel.js";
-import { useAuthStore } from "../../client/authStore.js";
 
 class AuthService {
 	static async register(userData) {

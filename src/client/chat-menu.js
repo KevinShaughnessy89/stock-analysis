@@ -13,10 +13,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, House, HousePlus, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { makeApiCall } from "@/common/makeApiCall.js";
+import { apiEndpoints } from "./apiEndpoints.js";
 
-const ChatMenu = () => {
+const ChatMenu = ({ setRoomList, className = "" }) => {
+	const updateRoomList = () => {
+		const result = makeApiCall(apiEndpoints.getRoomList);
+		if (result.success) {
+			setRoomList(result.payload);
+		}
+	};
+
 	return (
-		<DropdownMenu>
+		<DropdownMenu className={className}>
 			<DropdownMenuTrigger asChild>
 				<Button>
 					<MoreHorizontal />
@@ -31,8 +40,10 @@ const ChatMenu = () => {
 					<DropdownMenuPortal>
 						<DropdownMenuSubContent>
 							<DropdownMenuItem>
-								<HousePlus />
-								<span>Create Room</span>
+								<Button onClick={updateRoomList}>
+									<HousePlus />
+									<span>Create Room</span>
+								</Button>
 							</DropdownMenuItem>
 							<DropdownMenuItem>
 								<Search />

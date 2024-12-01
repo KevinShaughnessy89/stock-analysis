@@ -177,4 +177,9 @@ export const apiEndpoints = {
 			timestamp: true,
 		},
 	},
+	getRoomList: {
+		method: "GET",
+		baseURL: DOMAIN,
+		endpoint: "/api/chat/info/rooms",
+	},
 };

@@ -22,6 +22,8 @@ const ChatComponent = () => {
 	const messageRef = useRef(null);
 	const messageEndRef = useRef(null);
 
+	const [roomList, setRoomList] = useState({});
+
 	const [isOpen, setIsOpen] = useState(false);
 	const [socket, setSocket] = useState(null);
 	const [message, setMessage] = useState({
@@ -175,16 +177,17 @@ const ChatComponent = () => {
 				<div className="w-[100%] h-[80%] pointer-events-none bg-transparent"></div>
 			)}
 			<div className="flex w-[100%] h-[20%] justify-end">
-				<div className="bg-black ">
-					<ChatMenu />
+				<div className="flex flex-row bg-black w-full h-full">
+					<ChatMenu className="self-start" />
+					<Button
+						className="justify-end"
+						onClick={() => {
+							setIsOpen(!isOpen);
+						}}
+					>
+						<MessagesSquare size={680} color="red" />
+					</Button>
 				</div>
-				<Button
-					onClick={() => {
-						setIsOpen(!isOpen);
-					}}
-				>
-					<MessagesSquare size={680} color="red" />
-				</Button>
 			</div>
 		</div>
 	);

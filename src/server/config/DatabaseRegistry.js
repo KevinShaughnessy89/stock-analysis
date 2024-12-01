@@ -1,43 +1,67 @@
-import {MongoClient} from 'mongodb';
-import Database from './Database.js';
+import Database from "./Database.js";
 
-const DB_NAME = 'stock_db';
-const SYSTEM_FLAG = 'system_flags';
+const SYSTEM_FLAG = "system_flags";
 
-export const StockMarket_DB = new Database(DB_NAME);
+export const StockMarket_DB = new Database(STOCK_DB_NAME);
+export const ChatDatabase = new Database(CHAT_DB_NAME);
 
-const databaseParams = [ {
-        collectionName: 'daily_price', 
-        timeSeriesParams: { 
-            timeseries: {
-                timeField: 'timestamp',
-                metaField: 'symbol',
-                granularity: 'hours',
-            }
-        }
-    }
-]
+const stockDatabaseParams = [
+	{
+		collectionName: "daily_price",
+		timeSeriesParams: {
+			timeseries: {
+				timeField: "timestamp",
+				metaField: "symbol",
+				granularity: "hours",
+			},
+		},
+	},
+];
 
-export async function connectDatabase(client) {
-    // Daily Stock Prices
-    try{
-        const db = client.db(DB_NAME);
-        
-        const setupComplete = await db.collection(SYSTEM_FLAG).findOne({_id: 'database_setup'});
-        if (!setupComplete) {
-            console.log("Running initial database setup...");
-            await StockMarket_DB.setupDatabase(databaseParams);
+const chatDatabaseParams = [
+	{
+		collectionName: "rooms",
+	},
+];
 
-            await db.collection(SYSTEM_FLAG).updateOne(
-                { _id: 'database_setup'},
-                { $set: {completed: true, timestamp: new Date()}},
-                { upsert: true}
-            );
-        } else {
-            StockMarket_DB.connect();
-        }
-    }
-    catch (error) {
-        console.error("Error during initial database setup: ", error);
-    }
+const databases = [
+	{
+		name: "stock_db",
+		object: StockMarket_DB,
+		params: stockDatabaseParams,
+	},
+	{
+		name: "chat_db",
+		object: ChatDatabase,
+		paras: chatDatabaseParams,
+	},
+];
+
+export async function connectDatabases(client, params) {
+	// Daily Stock Prices
+	try {
+		databases.forEach(async (database) => {
+			const db = client.db(database.name);
+
+			const setupComplete = await db
+				.collection(SYSTEM_FLAG)
+				.findOne({ _id: "database_setup" });
+			if (!setupComplete) {
+				console.log("Running initial database setup...");
+				await database.object.setupDatabase(database.params);
+
+				await db
+					.collection(SYSTEM_FLAG)
+					.updateOne(
+						{ _id: "database_setup" },
+						{ $set: { completed: true, timestamp: new Date() } },
+						{ upsert: true }
+					);
+			} else {
+				database.object.connect();
+			}
+		});
+	} catch (error) {
+		console.error("Error during initial database setup: ", error);
+	}
 }
