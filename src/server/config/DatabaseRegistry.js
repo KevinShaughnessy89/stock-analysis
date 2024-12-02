@@ -1,9 +1,18 @@
 import Database from "./Database.js";
+import mongoose from "mongoose";
 
 const SYSTEM_FLAG = "system_flags";
+const STOCK_DB_NAME = "stock_db";
+const CHAT_DB_NAME = "chat_db";
 
 export const StockMarket_DB = new Database(STOCK_DB_NAME);
 export const ChatDatabase = new Database(CHAT_DB_NAME);
+export const mongooseStockDb = await mongoose.createConnection(
+	"mongodb://kevinshaughnessy89:turkey@35.208.160.118:27017/stock_db?authSource=admin"
+);
+export const mongooseChatDb = await mongoose.createConnection(
+	"mongodb://kevinshaughnessy89:turkey@35.208.160.118:27017/chat_db?authSource=admin"
+);
 
 const stockDatabaseParams = [
 	{
@@ -26,18 +35,18 @@ const chatDatabaseParams = [
 
 const databases = [
 	{
-		name: "stock_db",
+		name: STOCK_DB_NAME,
 		object: StockMarket_DB,
 		params: stockDatabaseParams,
 	},
 	{
-		name: "chat_db",
+		name: CHAT_DB_NAME,
 		object: ChatDatabase,
 		paras: chatDatabaseParams,
 	},
 ];
 
-export async function connectDatabases(client, params) {
+export async function connectDatabases(client) {
 	// Daily Stock Prices
 	try {
 		databases.forEach(async (database) => {

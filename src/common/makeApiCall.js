@@ -209,3 +209,9 @@ export async function makeDetailedApiCall(config, params = {}, data = {}) {
 		throw enhancedError;
 	}
 }
+
+export const postData = (apiEndpoint, data) =>
+	makeApiCall(apiEndpoint, {}, data);
+
+export const getData = (apiEndpoint, data) =>
+	makeApiCall(apiEndpoint, data, {});

@@ -3,27 +3,18 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuTrigger,
-	DropdownMenuGroup,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuLabelSeperator,
-	DropdownMenuSubTrigger,
 	DropdownMenuSub,
+	DropdownMenuSubTrigger,
 	DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, House, HousePlus, Search } from "lucide-react";
+import { MoreHorizontal, House } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { makeApiCall } from "@/common/makeApiCall.js";
+import { getData } from "@/common/makeApiCall.js";
 import { apiEndpoints } from "./apiEndpoints.js";
+import CreateRoom from "./CreateRoom.js";
+import RoomList from "./RoomList.js";
 
-const ChatMenu = ({ setRoomList, className = "" }) => {
-	const updateRoomList = () => {
-		const result = makeApiCall(apiEndpoints.getRoomList);
-		if (result.success) {
-			setRoomList(result.payload);
-		}
-	};
-
+const ChatMenu = ({ className = "" }) => {
 	return (
 		<DropdownMenu className={className}>
 			<DropdownMenuTrigger asChild>
@@ -39,16 +30,8 @@ const ChatMenu = ({ setRoomList, className = "" }) => {
 					</DropdownMenuSubTrigger>
 					<DropdownMenuPortal>
 						<DropdownMenuSubContent>
-							<DropdownMenuItem>
-								<Button onClick={updateRoomList}>
-									<HousePlus />
-									<span>Create Room</span>
-								</Button>
-							</DropdownMenuItem>
-							<DropdownMenuItem>
-								<Search />
-								<span>Find Room</span>
-							</DropdownMenuItem>
+							<CreateRoom />
+							<RoomList />
 						</DropdownMenuSubContent>
 					</DropdownMenuPortal>
 				</DropdownMenuSub>

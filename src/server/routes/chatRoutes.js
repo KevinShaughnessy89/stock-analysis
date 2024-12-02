@@ -7,7 +7,8 @@ export const chatRoutes = {
 		pipeline: [
 			{
 				name: "save",
-				handler: ChatManger.saveRoomChatHistory(req, res, next),
+				handler: async (req, res, next) =>
+					await ChatManager.saveChatRoomHistory(req, res, next),
 			},
 		],
 	},
@@ -17,7 +18,8 @@ export const chatRoutes = {
 		pipeline: [
 			{
 				name: "return",
-				handler: ChatManager.getRoomChatHistory(req, res, next),
+				handler: async (req, res, next) =>
+					await ChatManager.getRoomChatHistory(req, res, next),
 			},
 		],
 	},
@@ -27,7 +29,8 @@ export const chatRoutes = {
 		pipeline: [
 			{
 				name: "create",
-				handler: ChatManager.createRoom(req, res, next),
+				handler: async (req, res, next) =>
+					await ChatManager.createRoom(req, res, next),
 			},
 		],
 	},
@@ -37,7 +40,8 @@ export const chatRoutes = {
 		pipeline: [
 			{
 				name: "getList",
-				handler: ChatManager.getRoomList(req, res, next),
+				handler: async (req, res, next) =>
+					await ChatManager.getRoomList(req, res, next),
 			},
 		],
 	},

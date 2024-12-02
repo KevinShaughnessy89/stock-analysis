@@ -6,23 +6,23 @@ import {
 	useLayoutEffect,
 } from "react";
 import { io } from "socket.io-client";
-import { makeApiCall } from "@/common/makeApiCall.js";
+import { postData, getData } from "@/common/makeApiCall.js";
 import { apiEndpoints } from "./apiEndpoints.js";
 import { useAuthStore } from "./authStore.js";
 import { MessagesSquare, MessageSquareReply } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import ChatMenu from "./chat-menu.js";
+import ChatMenu from "./ChatMenu.js";
+import { useChatStore } from "./chatStore.js";
 
 const ChatComponent = () => {
 	const { username } = useAuthStore();
+	const { currentRoom } = useChatStore();
 
 	console.log(`username: ${username}`);
 
 	const messageRef = useRef(null);
 	const messageEndRef = useRef(null);
-
-	const [roomList, setRoomList] = useState({});
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [socket, setSocket] = useState(null);
@@ -34,6 +34,14 @@ const ChatComponent = () => {
 	const [messages, setMessages] = useState([]);
 	const [isTyping, setIsTyping] = useState(false);
 	const [typingTimeout, setTypingTimeout] = useState(null);
+
+	const fetchChatHistory = async () => {
+		const chatHistory = await getData(apiEndpoints.getChatHistory, {
+			reqRoom: currentRoom,
+		});
+		console.log("Chat history: ", chatHistory.history);
+		setMessages(chatHistory.history);
+	};
 
 	useEffect(() => {
 		const newSocket = io(process.env.CLIENT_URL);
@@ -52,15 +60,6 @@ const ChatComponent = () => {
 
 		setSocket(newSocket);
 
-		const fetchChatHistory = async () => {
-			const chatHistory = await makeApiCall(apiEndpoints.getChatHistory);
-			console.log(
-				"Chat history: ",
-				chatHistory.history.chatHistory.entries
-			);
-			setMessages(chatHistory.history.chatHistory.entries);
-		};
-
 		fetchChatHistory();
 
 		return () => {
@@ -72,15 +71,14 @@ const ChatComponent = () => {
 		e.preventDefault();
 
 		const appendToHistory = async () => {
-			await makeApiCall(
-				apiEndpoints.saveChatHistory,
-				{},
-				{
+			await postData(apiEndpoints.saveChatHistory, {
+				reqRoom: currentRoom,
+				reqEntry: {
 					username: username,
-					entry: messageRef.current.value,
+					message: messageRef.current.value,
 					timestamp: new Date(),
-				}
-			);
+				},
+			});
 		};
 
 		if (message.message.trim() && socket) {
@@ -98,17 +96,17 @@ const ChatComponent = () => {
 		}
 	});
 
+	useEffect(() => {
+		fetchChatHistory();
+	}, [currentRoom]);
+
 	useLayoutEffect(() => {
-		console.log("isOpen: ", isOpen);
-		console.log("ref: ", messageEndRef.current);
 		if (messageEndRef.current && isOpen) {
 			messageEndRef.current.scrollIntoView({ behavior: "smooth" });
 		}
 	}, [messages]);
 
 	useLayoutEffect(() => {
-		console.log("isOpen: ", isOpen);
-		console.log("ref: ", messageEndRef.current);
 		if (messageEndRef.current && isOpen) {
 			messageEndRef.current.scrollIntoView({ behavior: "instant" });
 		}
