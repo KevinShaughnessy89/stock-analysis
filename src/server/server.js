@@ -5,7 +5,7 @@ import cron from "node-cron";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
-import { connectDatabase } from "./config/DatabaseRegistry.js";
+import { connectDatabases } from "./config/DatabaseRegistry.js";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { globalErrorHandler } from "./middleware/errorHandling.js";
@@ -126,7 +126,7 @@ async function setupDatabase() {
 		await mongoose.connect(uri);
 		console.log("mongoose connected to MongoDB.");
 
-		connectDatabase(client);
+		connectDatabases(client);
 	} catch (error) {
 		console.error("Error connecting to database: ", error);
 		process.exit(1);

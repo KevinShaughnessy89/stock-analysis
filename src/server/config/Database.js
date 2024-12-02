@@ -114,7 +114,9 @@ class Database {
 						} else {
 							await collection.insertOne(doc);
 							results.inserted++;
-							console.log(`inserted document in ${collection}`);
+							console.log(
+								`inserted document in ${collectionName}`
+							);
 						}
 					} catch (err) {
 						results.error.push({

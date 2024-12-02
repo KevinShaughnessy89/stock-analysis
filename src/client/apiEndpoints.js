@@ -165,16 +165,31 @@ export const apiEndpoints = {
 		method: "GET",
 		baseURL: DOMAIN,
 		endpoint: "/api/chat/history",
-		params: {},
+		params: {
+			reqRoom: true,
+		},
 	},
 	saveChatHistory: {
 		method: "POST",
 		baseURL: DOMAIN,
 		endpoint: "/api/chat/history",
 		data: {
-			username: true,
-			entry: true,
-			timestamp: true,
+			reqRoom: true,
+			reqEntry: true,
+		},
+	},
+	getRoomList: {
+		method: "GET",
+		baseURL: DOMAIN,
+		endpoint: "/api/chat/info/rooms",
+	},
+	createRoom: {
+		method: "POST",
+		baseURL: DOMAIN,
+		endpoint: "/api/chat/create",
+		data: {
+			name: true,
+			creator: true,
 		},
 	},
 };

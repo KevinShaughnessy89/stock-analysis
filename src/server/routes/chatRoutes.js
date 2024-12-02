@@ -1,4 +1,4 @@
-import { ChatHistory } from "../models/chatModel.js";
+import ChatManager from "../chat/ChatManager.js";
 
 export const chatRoutes = {
 	saveChatHistory: {
@@ -7,29 +7,8 @@ export const chatRoutes = {
 		pipeline: [
 			{
 				name: "save",
-				handler: async (req, res, next) => {
-					try {
-						console.log("Saving chat history");
-
-						const newEntry = {
-							username: req.body.username,
-							message: req.body.entry,
-							timestamp: req.body.timestamp,
-						};
-
-						const chatHistory = await ChatHistory.getInstance();
-						await chatHistory.addChatEntry(newEntry);
-
-						console.log(
-							"Updated chat history: ",
-							JSON.stringify(chatHistory)
-						);
-
-						res.status(200);
-					} catch (error) {
-						console.error("Error saving chat history: ", error);
-					}
-				},
+				handler: async (req, res, next) =>
+					await ChatManager.saveChatRoomHistory(req, res, next),
 			},
 		],
 	},
@@ -39,18 +18,30 @@ export const chatRoutes = {
 		pipeline: [
 			{
 				name: "return",
-				handler: async (req, res, next) => {
-					try {
-						const chatHistory = await ChatHistory.getInstance();
-						console.log(
-							"Current history: ",
-							JSON.stringify(chatHistory)
-						);
-						res.status(200).json({ history: chatHistory });
-					} catch (error) {
-						next(error);
-					}
-				},
+				handler: async (req, res, next) =>
+					await ChatManager.getRoomChatHistory(req, res, next),
+			},
+		],
+	},
+	creatRoom: {
+		path: "/create",
+		method: "POST",
+		pipeline: [
+			{
+				name: "create",
+				handler: async (req, res, next) =>
+					await ChatManager.createRoom(req, res, next),
+			},
+		],
+	},
+	getRoomList: {
+		path: "/info/rooms",
+		method: "GET",
+		pipeline: [
+			{
+				name: "getList",
+				handler: async (req, res, next) =>
+					await ChatManager.getRoomList(req, res, next),
 			},
 		],
 	},

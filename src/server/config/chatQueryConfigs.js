@@ -1,4 +1,4 @@
-import { ChatHistory } from "../models/chatModel.js";
+import { ChatLog } from "../chat/ChatLog.js";
 
 const chatQueryConfigs = {
 	getHistory: {
