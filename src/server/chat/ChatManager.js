@@ -105,7 +105,7 @@ class ChatManager {
 
 	static async getRoomList(req, res, next) {
 		try {
-			const roomQuery = await ChatDatabase.findDocuments("rooms");
+			const roomQuery = await ChatDatabase.findDocuments("chatrooms");
 
 			const roomList = roomQuery.map((room) => ({
 				name: room.name,

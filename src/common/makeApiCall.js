@@ -5,6 +5,7 @@ const logApiDetails = (stage, details) => {
 	console.log(`[${timestamp}] ${stage}:`, JSON.stringify(details, null, 2));
 };
 
+// NOTE: RESPONSE HANDLERS RECIEVE RAW RESPONSE OBJECT, NOT RESPONSE.DATA
 export async function makeApiCall(config, params = {}, data = {}) {
 	try {
 		let queryParams;

@@ -35,7 +35,7 @@ const StockAnalysis = () => {
 		if (symbol !== "" && isValid(startDate) && isValid(endDate)) {
 			const fetchData = async () => {
 				try {
-					const prices = await makeApiCall(
+					const graphResults = await makeApiCall(
 						apiEndpoints.getPriceData,
 						{
 							symbol: symbol,
@@ -43,7 +43,7 @@ const StockAnalysis = () => {
 							endDate: endDate,
 						}
 					);
-					const statistics = await makeApiCall(
+					const statisticsResults = await makeApiCall(
 						apiEndpoints.getPriceAverage,
 						{
 							symbol: symbol,
@@ -51,11 +51,12 @@ const StockAnalysis = () => {
 							endDate: endDate,
 						}
 					);
+
 					setGraphState({
 						isValid: true,
-						priceData: prices,
-						averages: statistics[0],
-						python: statistics[1],
+						priceData: graphResults,
+						averages: statisticsResults.averages,
+						python: statisticsResults.statistics,
 					});
 				} catch (error) {
 					console.error("Failed to fetch price data: ", error);

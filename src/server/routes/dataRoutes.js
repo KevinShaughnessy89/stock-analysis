@@ -37,14 +37,18 @@ export const dataRoutes = {
 						console.log("Get request for daily stock prices");
 
 						const { symbol, startDate, endDate } = req.query;
-
-						const priceData = StockMarket_DB.query(
+						const priceData = await StockMarket_DB.query(
 							stockQueryConfigs.rawPriceData,
 							{
 								symbol,
-								startDate,
-								endDate,
+								$gte: new Date(startDate),
+								$lte: new Date(endDate),
 							}
+						);
+
+						console.log(
+							"getPriceData - priceData: ",
+							JSON.stringify(priceData[0])
 						);
 
 						if (priceData.length == 0) {
@@ -53,7 +57,7 @@ export const dataRoutes = {
 								criteria: { symbol, startDate, endDate },
 							});
 						}
-						res.status(200).json(priceData);
+						res.status(200).json(priceData[0].allData);
 					} catch (error) {
 						next(error);
 					}
@@ -75,18 +79,22 @@ export const dataRoutes = {
 						stockQueryConfigs.averageDailyPrice,
 						{
 							symbol,
-							startDate,
-							endDate,
+							$gte: new Date(startDate),
+							$lte: new Date(endDate),
 						}
 					);
 
+					console.log("getPriceAverage - averages: ", averages);
 					const statistics = await getAdvancedStatistics(
 						symbol,
 						startDate,
 						endDate
 					);
+					console.log("getPriceAverage - statistics: ", statistics);
 
-					const data = [averages, statistics];
+					const data = [averages[0], statistics];
+
+					console.log("data from averages: ", JSON.stringify(data));
 					if (data) {
 						res.status(200).json(data);
 					} else {

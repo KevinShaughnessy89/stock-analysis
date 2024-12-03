@@ -190,9 +190,8 @@ class Database {
 	}
 
 	async query(queryConfig, params = {}) {
-		const processedPipeline = JSON.parse(
-			JSON.stringify(queryConfig.pipeline)
-		);
+		// Deep clone without using JSON methods
+		const processedPipeline = structuredClone(queryConfig.pipeline);
 
 		const updateNestedObject = (obj, params) => {
 			for (const [key, value] of Object.entries(obj)) {
@@ -206,8 +205,10 @@ class Database {
 
 				if (key in params) {
 					if (params[key] instanceof Date) {
-						obj[key] = new Date(params[key]);
+						console.log("Found date: ", key, params[key]);
+						obj[key] = params[key]; // Use the Date object directly
 					} else {
+						console.log("Found other: ", key, params[key]);
 						obj[key] = params[key];
 					}
 				}
@@ -219,7 +220,18 @@ class Database {
 		});
 
 		console.log("\n=== Final Processed Pipeline ===");
-		console.log(JSON.stringify(processedPipeline, null, 2));
+		console.log(
+			JSON.stringify(
+				processedPipeline,
+				(key, value) => {
+					if (value instanceof Date) {
+						return `Date(${value.toISOString()})`;
+					}
+					return value;
+				},
+				2
+			)
+		);
 
 		const result = await this.db
 			.collection(queryConfig.collection)

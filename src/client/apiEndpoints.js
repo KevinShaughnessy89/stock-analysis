@@ -21,6 +21,8 @@ export const apiEndpoints = {
 		},
 		responseHandlers: {
 			200: (response) => {
+				console.log("response", response);
+				// finalOutput is structured in a way Chart.js expects. Don't change it
 				let finalOutput = [
 					{
 						id: "stockPrice",
@@ -45,6 +47,16 @@ export const apiEndpoints = {
 			symbol: true,
 			startDate: true,
 			endDate: true,
+		},
+		responseHandlers: {
+			200: (response) => {
+				console.log("getPriceAverage response", response);
+
+				return {
+					averages: response.data[0],
+					statistics: response.data[1],
+				};
+			},
 		},
 	},
 	getRSS: {
