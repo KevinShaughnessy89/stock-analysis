@@ -71,6 +71,6 @@ jobs:
           echo "Installation complete."
           echo "Restarting server..."
           gcloud compute ssh ${{ secrets.VM_NAME }} --zone=${{ secrets.ZONE }} --command="
-            cd src/server && sudo pm2 restart server
+            cd /home/sa_107039506943432980720/production/src/server && sudo pm2 restart server
           "
           echo "Done."
